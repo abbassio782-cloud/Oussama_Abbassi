@@ -1,0 +1,544 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --red: #ed1c24;
+  --dark: #090a0e;
+  --card: #15171e;
+  --gray: #a5a7af;
+  --white: #ffffff;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: "Cairo", sans-serif;
+}
+
+.header {
+  min-height: 75px;
+  padding: 15px 7%;
+  background: #101116;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #252630;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  direction: ltr;
+}
+
+.logo span,
+.hero h1 span,
+.section-heading span,
+.contact-section h2 span {
+  color: var(--red);
+}
+
+nav {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: var(--red);
+}
+
+.hero {
+  min-height: 480px;
+  padding: 80px 8%;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(5,5,8,.96), rgba(5,5,8,.65)),
+    url("https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.small-title {
+  color: var(--red);
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 75px);
+  font-weight: 900;
+  direction: ltr;
+  text-align: right;
+}
+
+.hero h2 {
+  font-size: 23px;
+  margin: 12px 0;
+}
+
+.hero p {
+  color: #c5c5ca;
+  line-height: 2;
+}
+
+.main-btn {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 7px;
+  margin-top: 25px;
+  font-weight: 800;
+  transition: .3s;
+}
+
+.main-btn:hover {
+  background: #b80e17;
+  transform: translateY(-3px);
+}
+
+.catalog-section,
+.team-section {
+  padding: 75px 7%;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-heading > p {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.section-heading h2 {
+  font-size: 32px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.filters input,
+.filters select {
+  width: 100%;
+  padding: 14px;
+  color: white;
+  background: #171920;
+  border: 1px solid #30323b;
+  border-radius: 8px;
+  font-family: inherit;
+  outline: none;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: var(--red);
+}
+
+.filters select option {
+  background: #171920;
+}
+
+.results-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  color: var(--gray);
+  gap: 15px;
+}
+
+.reset-btn {
+  background: transparent;
+  color: var(--red);
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  padding: 8px 15px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.bike-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.bike-card {
+  background: var(--card);
+  border: 1px solid #282a33;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: .3s;
+}
+
+.bike-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--red);
+  box-shadow: 0 12px 30px #0008;
+}
+
+.bike-image-wrap {
+  height: 190px;
+  background: #171920;
+  overflow: hidden;
+}
+
+.bike-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #171920;
+}
+
+.image-placeholder {
+  background: #171920;
+  color: transparent;
+  width: 100%;
+  height: 100%;
+}
+
+.bike-info {
+  padding: 16px;
+}
+
+.bike-brand {
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.bike-info h3 {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.bike-type {
+  color: var(--gray);
+  font-size: 13px;
+}
+
+.bike-price {
+  color: #ff4148;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 12px 0;
+  direction: rtl;
+}
+
+.details-btn {
+  width: 100%;
+  background: var(--red);
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  padding: 10px;
+  font-family: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.details-btn:hover {
+  background: #b80e17;
+}
+
+.no-results {
+  text-align: center;
+  color: var(--gray);
+  padding: 50px 10px;
+}
+
+.about-section {
+  padding: 65px 9%;
+  background: #14161d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.about-section > div:first-child {
+  max-width: 700px;
+}
+
+.about-section h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.about-section p:last-child {
+  color: #b9bac2;
+  line-height: 2;
+}
+
+.about-icon {
+  font-size: 100px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.team-card {
+  background: var(--card);
+  border: 1px solid #292b35;
+  border-radius: 12px;
+  text-align: center;
+  padding: 30px 15px;
+}
+
+.team-avatar {
+  width: 75px;
+  height: 75px;
+  margin: auto auto 15px;
+  display: grid;
+  place-items: center;
+  background: var(--red);
+  border-radius: 50%;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.team-card p {
+  color: var(--gray);
+  font-size: 14px;
+}
+
+.contact-section {
+  background: #15171e;
+  text-align: center;
+  padding: 65px 20px;
+}
+
+.contact-section h2 {
+  font-size: 35px;
+  margin-bottom: 12px;
+}
+
+.contact-section > p:not(.small-title) {
+  color: #bbb;
+}
+
+.email-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: white;
+  background: var(--red);
+  padding: 12px 22px;
+  border-radius: 7px;
+  text-decoration: none;
+  direction: ltr;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  background: #08090c;
+  text-align: center;
+  padding: 22px;
+  color: #858791;
+  font-size: 13px;
+  line-height: 2;
+}
+
+/* نافذة تفاصيل الدراجة */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #000d;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 750px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #171920;
+  border: 1px solid #393b45;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.close-modal {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.modal-image-wrap {
+  min-height: 300px;
+  background: #101116;
+}
+
+.modal-image-wrap img {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  object-fit: contain;
+}
+
+.modal-info {
+  padding: 35px 22px;
+}
+
+.modal-brand {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.modal-info h2 {
+  margin: 8px 0;
+}
+
+.modal-price {
+  color: #ff4148;
+  font-size: 23px;
+  font-weight: 900;
+  margin: 12px 0;
+}
+
+.details-list {
+  line-height: 2.5;
+  color: #c8c8ce;
+}
+
+.details-list strong {
+  color: white;
+}
+
+.price-note {
+  color: #999;
+  font-size: 12px;
+  margin-top: 15px;
+  line-height: 1.8;
+}
+
+@media (max-width: 1000px) {
+  .bike-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .header {
+    justify-content: center;
+  }
+
+  nav {
+    justify-content: center;
+    gap: 13px;
+  }
+
+  .hero {
+    min-height: 400px;
+    padding: 55px 7%;
+  }
+
+  .hero h2 {
+    font-size: 19px;
+  }
+
+  .bike-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .bike-image-wrap {
+    height: 140px;
+  }
+
+  .bike-info {
+    padding: 11px;
+  }
+
+  .bike-info h3 {
+    font-size: 15px;
+  }
+
+  .bike-price {
+    font-size: 16px;
+  }
+
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .modal-content {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-image-wrap,
+  .modal-image-wrap img {
+    min-height: 210px;
+    max-height: 250px;
+  }
+
+  .modal-info {
+    padding: 20px;
+  }
+}
