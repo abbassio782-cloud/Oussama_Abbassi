@@ -1,157 +1,326 @@
 
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MOTO MAROC PRIX</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-</head>
-<body>
+// RIFII TEACHER
 
-  <header class="header">
-    <div class="logo">MOTO <span>MAROC</span></div>
-    <nav>
-      <a href="#home">الرئيسية</a>
-      <a href="#catalog">الدراجات</a>
-      <a href="#team">فريق العمل</a>
-      <a href="#contact">تواصل معنا</a>
-    </nav>
-  </header>
+const EMAIL = "ALAL1@TAALIM.MA";
+const PASSWORD = "RIFII";
 
-  <section class="hero" id="home">
-    <div class="hero-content">
-      <p class="small-title">مرحباً بك في عالم الدراجات النارية</p>
-      <h1>MOTO <span>MAROC</span> PRIX</h1>
-      <h2>اكتشف دراجتك المفضلة واعرف ثمنها</h2>
-      <p>كتالوج متنوع للدراجات النارية مع معلومات وأثمنة تقريبية بالدرهم المغربي.</p>
-      <a href="#catalog" class="main-btn">اكتشف الدراجات</a>
-    </div>
-  </section>
+const sections = [];
+["1", "2", "3"].forEach(level => {
+  for (let i = 1; i <= 9; i++) {
+    sections.push(`${level}/${i}`);
+  }
+});
 
-  <main>
-    <section class="catalog-section" id="catalog">
-      <div class="section-heading">
-        <p>كتالوج الدراجات</p>
-        <h2>اكتشف <span>أكثر من 200 دراجة</span></h2>
-      </div>
+const subjects = [
+  "اللغة العربية",
+  "اللغة الفرنسية",
+  "اللغة الإنجليزية",
+  "الرياضيات",
+  "علوم الحياة والأرض",
+  "الفيزياء والكيمياء",
+  "الاجتماعيات",
+  "التربية الإسلامية",
+  "التربية البدنية",
+  "التكنولوجيا",
+  "المعلوميات",
+  "التربية التشكيلية",
+  "التربية الموسيقية"
+];
 
-      <div class="filters">
-        <input id="searchInput" type="search" placeholder="قلب على اسم الدراجة أو الماركة...">
+let students = JSON.parse(localStorage.getItem("rifii_students") || "[]");
+let grades = JSON.parse(localStorage.getItem("rifii_grades") || "[]");
 
-        <select id="brandFilter">
-          <option value="">جميع الماركات</option>
-        </select>
+const $ = id => document.getElementById(id);
 
-        <select id="typeFilter">
-          <option value="">جميع الأنواع</option>
-          <option value="Sport">رياضية</option>
-          <option value="Naked">Naked</option>
-          <option value="Scooter">سكوتر</option>
-          <option value="Adventure">مغامرات</option>
-          <option value="Cruiser">كروزر</option>
-          <option value="Street">Street</option>
-          <option value="Touring">سياحية</option>
-          <option value="Dirt">طرق وعرة</option>
-        </select>
+function saveData() {
+  localStorage.setItem("rifii_students", JSON.stringify(students));
+  localStorage.setItem("rifii_grades", JSON.stringify(grades));
+}
 
-        <select id="priceFilter">
-          <option value="">جميع الأثمنة</option>
-          <option value="0-15000">أقل من 15,000 درهم</option>
-          <option value="15000-30000">15,000 - 30,000 درهم</option>
-          <option value="30000-60000">30,000 - 60,000 درهم</option>
-          <option value="60000-100000">60,000 - 100,000 درهم</option>
-          <option value="100000-9999999">أكثر من 100,000 درهم</option>
-        </select>
-      </div>
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
+}
 
-      <div class="results-bar">
-        <span id="resultsCount">جاري عرض الدراجات...</span>
-        <button id="resetFilters" class="reset-btn">إعادة ضبط البحث</button>
-      </div>
+// تسجيل الدخول
+$("loginForm").addEventListener("submit", function(event) {
+  event.preventDefault();
 
-      <div class="bike-grid" id="bikeGrid"></div>
+  const email = $("email").value.trim().toUpperCase();
+  const password = $("password").value;
 
-      <p id="noResults" class="no-results" hidden>ما لقيناش دراجات بهاد المواصفات.</p>
-    </section>
+  if (email === EMAIL && password === PASSWORD) {
+    $("loginPage").classList.add("hidden");
+    $("app").classList.remove("hidden");
+    $("loginError").textContent = "";
+    initializeApp();
+  } else {
+    $("loginError").textContent = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+  }
+});
 
-    <section class="about-section">
-      <div>
-        <p class="small-title">MOTO MAROC PRIX</p>
-        <h2>كل ما تحتاج معرفته عن الدراجات النارية</h2>
-        <p>
-          هذا الموقع عبارة عن كتالوج تعريفي يساعدك على اكتشاف موديلات
-          مختلفة من الدراجات النارية والتعرف على أثمنتها التقريبية.
-          الأثمنة قابلة للتغيير حسب الحالة والسنة والسوق.
-        </p>
-      </div>
-      <div class="about-icon">🏍️</div>
-    </section>
+// تسجيل الخروج
+$("logoutBtn").addEventListener("click", function() {
+  $("app").classList.add("hidden");
+  $("loginPage").classList.remove("hidden");
+  $("password").value = "";
+});
 
-    <section class="team-section" id="team">
-      <div class="section-heading">
-        <p>الأشخاص وراء المشروع</p>
-        <h2>فريق <span>العمل</span></h2>
-      </div>
+// تجهيز الأقسام والمواد
+function initializeApp() {
+  $("classSelect").innerHTML = sections.map(section =>
+    `<option value="${section}">القسم ${section}</option>`
+  ).join("");
 
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-avatar">O</div>
-          <h3>أسامة العباسي</h3>
-          <p>صاحب المشروع</p>
-        </div>
+  $("gradeSubject").innerHTML =
+    '<option value="">اختار المادة</option>' +
+    subjects.map(subject =>
+      `<option value="${escapeHTML(subject)}">${escapeHTML(subject)}</option>`
+    ).join("");
 
-        <div class="team-card">
-          <div class="team-avatar">M</div>
-          <h3>محمد أمين الدوادي</h3>
-          <p>فريق العمل</p>
-        </div>
+  renderAll();
+}
 
-        <div class="team-card">
-          <div class="team-avatar">A</div>
-          <h3>أيوب البالي</h3>
-          <p>فريق العمل</p>
-        </div>
-      </div>
-    </section>
+function currentClass() {
+  return $("classSelect").value;
+}
 
-    <section class="contact-section" id="contact">
-      <p class="small-title">نحن هنا للإجابة عن استفساراتكم</p>
-      <h2>تواصل <span>معنا</span></h2>
-      <p>للتواصل أو إرسال اقتراحاتكم عبر البريد الإلكتروني:</p>
-      <a class="email-link" href="mailto:oussamaabbassi733@gmail.com">
-        oussamaabbassi733@gmail.com
-      </a>
-    </section>
-  </main>
+// تغيير القسم
+$("classSelect").addEventListener("change", renderAll);
 
-  <footer>
-    <p>© 2026 MOTO MAROC PRIX - جميع الحقوق محفوظة</p>
-    <p>الأثمنة المعروضة تقريبية وليست عروض بيع رسمية.</p>
-  </footer>
+// إضافة تلميذ
+$("studentForm").addEventListener("submit", function(event) {
+  event.preventDefault();
 
-  <div class="modal" id="bikeModal" aria-hidden="true">
-    <div class="modal-content">
-      <button class="close-modal" id="closeModal" aria-label="إغلاق">×</button>
-      <div class="modal-image-wrap">
-        <img id="modalImage" alt="صورة الدراجة">
-      </div>
-      <div class="modal-info">
-        <p class="modal-brand" id="modalBrand"></p>
-        <h2 id="modalName"></h2>
-        <p class="modal-price" id="modalPrice"></p>
-        <div class="details-list">
-          <p>النوع: <strong id="modalType"></strong></p>
-          <p>سعة المحرك: <strong id="modalCC"></strong></p>
-          <p>القوة: <strong id="modalPower"></strong></p>
-          <p>السنة: <strong id="modalYear"></strong></p>
-        </div>
-        <p class="price-note">الثمن تقريبي وقد يختلف حسب السنة والحالة والسوق.</p>
-      </div>
-    </div>
-  </div>
+  const name = $("studentName").value.trim();
+  const section = currentClass();
 
-  <script src="script.js"></script>
-</body>
-</html>
+  if (!name || !section) return;
+
+  students.push({
+    id: Date.now().toString() + Math.random().toString(16).slice(2),
+    name,
+    section
+  });
+
+  saveData();
+  $("studentName").value = "";
+  renderAll();
+});
+
+// حذف تلميذ
+function deleteStudent(id) {
+  if (!confirm("واش متأكد بغيتي تحذف هاد التلميذ وجميع النقط ديالو؟")) return;
+
+  students = students.filter(student => student.id !== id);
+  grades = grades.filter(grade => grade.studentId !== id);
+
+  saveData();
+  renderAll();
+}
+
+// حساب معدل تلميذ
+function calculateAverage(studentId) {
+  const studentGrades = grades.filter(grade =>
+    grade.studentId === studentId
+  );
+
+  if (studentGrades.length === 0) return null;
+
+  let totalPoints = 0;
+  let totalCoefficients = 0;
+
+  studentGrades.forEach(grade => {
+    totalPoints += Number(grade.value) * Number(grade.coefficient);
+    totalCoefficients += Number(grade.coefficient);
+  });
+
+  if (totalCoefficients === 0) return null;
+
+  return totalPoints / totalCoefficients;
+}
+
+function averageText(studentId) {
+  const average = calculateAverage(studentId);
+  return average === null ? "لا توجد نقط" : average.toFixed(2) + " / 20";
+}
+
+function resultText(studentId) {
+  const average = calculateAverage(studentId);
+
+  if (average === null) {
+    return '<span>غير متوفر</span>';
+  }
+
+  if (average >= 10) {
+    return '<span class="result-pass">فوق المعدل</span>';
+  }
+
+  return '<span class="result-fail">دون المعدل</span>';
+}
+
+// عرض لائحة التلاميذ
+function renderStudents() {
+  const section = currentClass();
+
+  const classStudents = students.filter(student =>
+    student.section === section
+  );
+
+  $("studentsTable").innerHTML = classStudents.length
+    ? classStudents.map((student, index) => `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${escapeHTML(student.name)}</td>
+        <td>${escapeHTML(student.section)}</td>
+        <td>${averageText(student.id)}</td>
+        <td>${resultText(student.id)}</td>
+        <td>
+          <button class="delete-btn" onclick="deleteStudent('${student.id}')">
+            حذف
+          </button>
+        </td>
+      </tr>
+    `).join("")
+    : '<tr><td colspan="6">مازال ما زدتي حتى تلميذ فهاد القسم</td></tr>';
+
+  $("gradeStudent").innerHTML =
+    '<option value="">اختار التلميذ</option>' +
+    classStudents.map(student =>
+      `<option value="${student.id}">${escapeHTML(student.name)}</option>`
+    ).join("");
+}
+
+// إضافة أو تحديث نقطة
+$("gradeForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const studentId = $("gradeStudent").value;
+  const subject = $("gradeSubject").value;
+  const value = Number($("gradeValue").value);
+  const coefficient = Number($("gradeCoefficient").value);
+
+  if (!studentId || !subject) {
+    alert("اختار التلميذ والمادة");
+    return;
+  }
+
+  if (!Number.isFinite(value) || value < 0 || value > 20) {
+    alert("النقطة خاصها تكون بين 0 و20");
+    return;
+  }
+
+  if (!Number.isFinite(coefficient) || coefficient <= 0) {
+    alert("المعامل خاصو يكون أكبر من صفر");
+    return;
+  }
+
+  const existingGrade = grades.find(grade =>
+    grade.studentId === studentId &&
+    grade.subject === subject
+  );
+
+  if (existingGrade) {
+    existingGrade.value = value;
+    existingGrade.coefficient = coefficient;
+  } else {
+    grades.push({
+      id: Date.now().toString() + Math.random().toString(16).slice(2),
+      studentId,
+      subject,
+      value,
+      coefficient
+    });
+  }
+
+  saveData();
+
+  $("gradeValue").value = "";
+  $("gradeCoefficient").value = "1";
+
+  renderAll();
+  alert("تم حفظ النقطة بنجاح");
+});
+
+// عرض جدول النقط
+function renderGrades() {
+  const section = currentClass();
+
+  const classStudents = students.filter(student =>
+    student.section === section
+  );
+
+  const studentIds = classStudents.map(student => student.id);
+
+  const classGrades = grades.filter(grade =>
+    studentIds.includes(grade.studentId)
+  );
+
+  $("gradesTable").innerHTML = classGrades.length
+    ? classGrades.map(grade => {
+        const student = students.find(s => s.id === grade.studentId);
+
+        return `
+          <tr>
+            <td>${escapeHTML(student ? student.name : "غير معروف")}</td>
+            <td>${escapeHTML(grade.subject)}</td>
+            <td>${Number(grade.value).toFixed(2)}</td>
+            <td>${Number(grade.coefficient)}</td>
+            <td>
+              <button class="delete-btn" onclick="deleteGrade('${grade.id}')">
+                حذف
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join("")
+    : '<tr><td colspan="5">مازال ما تسجلات حتى نقطة</td></tr>';
+}
+
+// حذف نقطة
+function deleteGrade(id) {
+  if (!confirm("واش متأكد بغيتي تحذف هاد النقطة؟")) return;
+
+  grades = grades.filter(grade => grade.id !== id);
+
+  saveData();
+  renderAll();
+}
+
+// عرض النتائج
+function renderResults() {
+  const section = currentClass();
+
+  const classStudents = students.filter(student =>
+    student.section === section
+  );
+
+  $("resultsTable").innerHTML = classStudents.length
+    ? classStudents.map(student => `
+      <tr>
+        <td>${escapeHTML(student.name)}</td>
+        <td>${averageText(student.id)}</td>
+        <td>${resultText(student.id)}</td>
+      </tr>
+    `).join("")
+    : '<tr><td colspan="3">لا يوجد تلاميذ في هذا القسم</td></tr>';
+}
+
+// تحديث الإحصائيات
+function renderStats() {
+  $("totalStudents").textContent = students.length;
+  $("totalGrades").textContent = grades.length;
+}
+
+// تحديث جميع أجزاء المنصة
+function renderAll() {
+  renderStudents();
+  renderGrades();
+  renderResults();
+  renderStats();
+}
