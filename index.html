@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIFII TEACHER</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <section id="loginPage" class="login-page">
+    <div class="login-card">
+      <div class="logo">R</div>
+      <h1>RIFII TEACHER</h1>
+      <p>منصة تدبير التلاميذ والنقط</p>
+      <form id="loginForm">
+        <input id="email" type="email" placeholder="رمز الدخول" required>
+        <input id="password" type="password" placeholder="كلمة المرور" required>
+        <button type="submit">دخول إلى المنصة</button>
+        <p id="loginError" class="error"></p>
+      </form>
+    </div>
+  </section>
+
+  <main id="app" class="app hidden">
+    <header class="topbar">
+      <div>
+        <h1>RIFII <span>TEACHER</span></h1>
+        <p>منصة تدبير الأقسام والنقط</p>
+      </div>
+      <button id="logoutBtn" class="logout">تسجيل الخروج</button>
+    </header>
+
+    <section class="welcome">
+      <h2>مرحبا بك في لوحة الأستاذ 👨‍🏫</h2>
+      <p>تدبير التلاميذ، النقط، المعاملات والنتائج في مكان واحد.</p>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card">
+        <span>عدد الأقسام</span>
+        <strong>27</strong>
+      </div>
+      <div class="stat-card">
+        <span>عدد التلاميذ</span>
+        <strong id="totalStudents">0</strong>
+      </div>
+      <div class="stat-card">
+        <span>عدد النقط المسجلة</span>
+        <strong id="totalGrades">0</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>📚 اختيار القسم</h2>
+      <label for="classSelect">القسم الدراسي</label>
+      <select id="classSelect"></select>
+    </section>
+
+    <section class="panel">
+      <h2>👥 لائحة التلاميذ</h2>
+      <form id="studentForm" class="form-grid">
+        <input id="studentName" type="text" placeholder="الاسم الكامل للتلميذ" required>
+        <button type="submit">＋ إضافة تلميذ</button>
+      </form>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>رقم</th>
+              <th>الاسم الكامل</th>
+              <th>القسم</th>
+              <th>المعدل</th>
+              <th>النتيجة</th>
+              <th>حذف</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>📝 إدخال النقط</h2>
+      <form id="gradeForm" class="form-grid">
+        <select id="gradeStudent" required>
+          <option value="">اختار التلميذ</option>
+        </select>
+        <select id="gradeSubject" required></select>
+        <input id="gradeValue" type="number" min="0" max="20" step="0.01" placeholder="النقطة من 20" required>
+        <input id="gradeCoefficient" type="number" min="0.1" max="20" step="0.1" value="1" placeholder="المعامل" required>
+        <button type="submit">حفظ النقطة</button>
+      </form>
+      <p class="hint">يمكنك إدخال نقطة لكل مادة، وتغيير المعامل حسب المادة والقسم.</p>
+    </section>
+
+    <section class="panel">
+      <h2>📊 جدول نقط التلاميذ</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>التلميذ</th>
+              <th>المادة</th>
+              <th>النقطة</th>
+              <th>المعامل</th>
+              <th>حذف</th>
+            </tr>
+          </thead>
+          <tbody id="gradesTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>📈 النتائج والمعدلات</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>التلميذ</th>
+              <th>المعدل العام</th>
+              <th>النتيجة</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTable"></tbody>
+        </table>
+      </div>
+      <p class="hint">المعدل العام يُحسب من النقط المسجلة ومعاملاتها فقط.</p>
+    </section>
+
+    <footer>
+      <h3>RIFII TEACHER 🇲🇦</h3>
+      <p>منصة خاصة بتدبير الحياة المدرسية</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
