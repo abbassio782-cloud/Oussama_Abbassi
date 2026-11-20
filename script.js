@@ -3,7 +3,7 @@
 // RIFII SCHOOL - الإعدادات
 // =====================================
 
-const TEACHER_CODE = "ALAL1@TAALIM.COM";
+const TEACHER_CODE = "ALAL1@TAALIM.MA";
 const TEACHER_PASSWORD = "RIFII";
 
 const STUDENTS_KEY = "rifii_students_v3";
