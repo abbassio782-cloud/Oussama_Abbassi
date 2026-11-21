@@ -1,225 +1,155 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RIFII SCHOOL</title>
+  <meta name="theme-color" content="#080d20">
+  <title>TEACHER OUSSAMA | تعلم اللغات</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<header class="topbar">
-  <div class="brand">
-    <div class="logo">R</div>
-    <div><h1>RIFII SCHOOL</h1><small>منصة تدبير النقط والنتائج</small></div>
-  </div>
-  <span class="top-tag">فضاء مدرسي</span>
-</header>
 
-<main class="container">
-  <section id="homePanel" class="panel welcome">
-    <div class="welcome-icon">🎓</div>
-    <h2>مرحبا بك في RIFII SCHOOL</h2>
-    <p>منصة خاصة بالأساتذة والتلاميذ</p>
-    <div class="home-actions">
-      <button class="btn primary" id="showTeacherLogin">فضاء الأستاذ</button>
-      <button class="btn secondary" id="showStudentLogin">فضاء التلميذ</button>
-    </div>
-  </section>
+  <header class="navbar">
+    <a href="#" class="logo">🎓 TEACHER <span>OUSSAMA</span></a>
+    <a class="nav-link" href="#learn">ابدأ التعلم</a>
+  </header>
 
-  <section id="teacherLoginPanel" class="panel login-panel hidden">
-    <button class="back-btn" id="backFromTeacher">← رجوع</button>
-    <h2>دخول الأستاذ</h2>
-    <label>رمز الدخول</label>
-    <input id="teacherCode" placeholder="رمز الدخول">
-    <label>كلمة المرور</label>
-    <input id="teacherPassword" type="password" placeholder="كلمة المرور">
-    <button class="btn primary full" id="teacherLoginBtn">تسجيل الدخول</button>
-    <p id="teacherLoginMessage" class="message"></p>
-  </section>
-
-  <section id="studentLoginPanel" class="panel login-panel hidden">
-    <button class="back-btn" id="backFromStudent">← رجوع</button>
-    <h2>دخول التلميذ</h2>
-    <label>كود التلميذ</label>
-    <input id="studentCode" placeholder="مثال RF-1234567">
-    <label>كلمة المرور</label>
-    <input id="studentPassword" type="password" placeholder="كلمة المرور">
-    <button class="btn primary full" id="studentLoginBtn">دخول</button>
-    <p id="studentLoginMessage" class="message"></p>
-  </section>
-
-  <section id="teacherDashboard" class="hidden">
-    <div class="dashboard-heading">
-      <div><h2>لوحة الأستاذ</h2><p class="muted">إدارة التلاميذ والنقط والنتائج</p></div>
-      <button class="btn danger" id="teacherLogoutBtn">خروج</button>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card"><span>التلاميذ</span><strong id="totalStudents">0</strong></div>
-      <div class="stat-card"><span>الأقسام</span><strong>27</strong></div>
-      <div class="stat-card"><span>المواد</span><strong id="totalSubjects">10</strong></div>
-    </div>
-
-    <nav class="tabs">
-      <button class="tab active" data-tab="studentsTab">التلاميذ</button>
-      <button class="tab" data-tab="accountsTab">الحسابات</button>
-      <button class="tab" data-tab="marksTab">النقط</button>
-      <button class="tab" data-tab="resultsTab">النتائج</button>
-    </nav>
-
-    <section id="studentsTab" class="panel tab-content">
-      <h3>إضافة تلميذ</h3>
-      <div class="form-grid">
-        <div><label>اسم التلميذ</label><input id="studentNameInput" placeholder="الاسم الكامل"></div>
-        <div><label>القسم</label><select id="studentClassInput"></select></div>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="small-label">WELCOME TO YOUR LANGUAGE SCHOOL</span>
+        <h1>تعلم لغة جديدة<br><span>وافتح آفاقاً جديدة!</span></h1>
+        <p>تعلم الإنجليزية والإسبانية بطريقة سهلة، مع الترجمة والنطق والاختبارات.</p>
+        <a href="#learn" class="main-btn">ابدأ التعلم الآن ←</a>
       </div>
-      <button class="btn primary" id="addStudentBtn">إضافة التلميذ</button>
-      <p id="addStudentMessage" class="message"></p>
 
-      <div class="divider"></div>
-      <h3>إضافة مجموعة تلاميذ</h3>
-      <p class="muted">اكتب كل اسم في سطر مستقل.</p>
-      <textarea id="bulkStudentNames" rows="5" placeholder="محمد أمين&#10;يوسف العباسي&#10;سارة أحمد"></textarea>
-      <label>القسم</label>
-      <select id="bulkStudentClass"></select>
-      <button class="btn secondary" id="bulkAddStudentsBtn">إنشاء حسابات المجموعة</button>
-      <p id="bulkMessage" class="message"></p>
-
-      <div class="divider"></div>
-      <h3>لائحة التلاميذ</h3>
-      <div class="form-grid">
-        <div><label>القسم</label><select id="studentListClass"></select></div>
-        <div><label>البحث</label><input id="studentSearch" placeholder="اسم التلميذ"></div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>الاسم</th><th>القسم</th><th>كود الدخول</th><th>حذف</th></tr></thead>
-          <tbody id="studentsTableBody"></tbody>
-        </table>
-      </div>
+      <div class="hero-icon">🌍</div>
     </section>
 
-    <section id="accountsTab" class="panel tab-content hidden">
-      <h3>حسابات التلاميذ</h3>
-      <label>القسم</label>
-      <select id="accountSection"></select>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>الاسم</th><th>الكود</th><th>كلمة المرور</th><th>نسخ</th></tr></thead>
-          <tbody id="accountsTableBody"></tbody>
-        </table>
+    <section class="learning-section" id="learn">
+      <div class="section-heading">
+        <span class="small-label">YOUR LEARNING JOURNEY</span>
+        <h2>شنو بغيتي تتعلم اليوم؟</h2>
+        <p>اختار اللغة ديالك، ومن بعد اختار نوع الدرس.</p>
       </div>
-      <button class="btn secondary" id="copyAllAccountsBtn">نسخ الحسابات كاملة</button>
-      <button class="btn secondary" id="printAccountsBtn">طباعة الحسابات</button>
-    </section>
 
-    <section id="marksTab" class="panel tab-content hidden">
-      <h3>إضافة نقط الامتحانات</h3>
-      <p class="muted">كل امتحان كتسجلو بوحدو. التطبيق كيحسب معدل المادة من جميع الامتحانات المسجلة في الدورة.</p>
-      <div class="form-grid">
-        <div><label>القسم</label><select id="markClass"></select></div>
-        <div><label>التلميذ</label><select id="markStudent"></select></div>
-        <div><label>الدورة</label>
-          <select id="markTerm">
-            <option value="1">الدورة الأولى</option>
-            <option value="2">الدورة الثانية</option>
-          </select>
-        </div>
-        <div><label>المادة</label><select id="markSubject"></select></div>
-        <div><label>رقم الامتحان</label><input id="examName" placeholder="مثال: الفرض 1"></div>
-        <div><label>النقطة من 20</label><input id="markValue" type="number" min="0" max="20" step="0.25"></div>
-        <div><label>معامل المادة</label><input id="markCoefficient" type="number" min="1" max="20" value="1"></div>
-      </div>
-      <button class="btn primary" id="saveMarkBtn">حفظ نقطة الامتحان</button>
-      <p id="markMessage" class="message"></p>
+      <div class="step">
+        <h3><span>01</span> اختار اللغة</h3>
+        <div class="choice-grid">
+          <button class="choice-card language-card active"
+                  data-language="en">
+            <span class="choice-emoji">🇬🇧</span>
+            <strong>اللغة الإنجليزية</strong>
+            <small>Learn English</small>
+          </button>
 
-      <div class="divider"></div>
-      <h3>النقط المسجلة</h3>
-      <div class="form-grid">
-        <div><label>التلميذ</label><select id="marksViewStudent"></select></div>
-        <div><label>الدورة</label>
-          <select id="marksViewTerm">
-            <option value="1">الدورة الأولى</option>
-            <option value="2">الدورة الثانية</option>
-          </select>
+          <button class="choice-card language-card"
+                  data-language="es">
+            <span class="choice-emoji">🇪🇸</span>
+            <strong>اللغة الإسبانية</strong>
+            <small>Aprender Español</small>
+          </button>
         </div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>المادة</th><th>الامتحان</th><th>النقطة</th><th>المعامل</th><th>حذف</th></tr></thead>
-          <tbody id="marksTableBody"></tbody>
-        </table>
-      </div>
 
-      <div class="divider"></div>
-      <h3>معدلات المواد</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>المادة</th><th>معدل المادة</th><th>المعامل</th><th>عدد الامتحانات</th></tr></thead>
-          <tbody id="subjectAveragesBody"></tbody>
-        </table>
-      </div>
-      <div class="average-box">
-        المعدل العام للدورة: <strong id="teacherAverage">--</strong>
-      </div>
-    </section>
+      <div class="step">
+        <h3><span>02</span> شنو بغيتي تتعلم؟</h3>
+        <div class="choice-grid">
+          <button class="choice-card type-card active"
+                  data-type="words">
+            <span class="choice-emoji">📚</span>
+            <strong>الكلمات</strong>
+            <small>Vocabulary</small>
+          </button>
 
-    <section id="resultsTab" class="panel tab-content hidden">
-      <h3>النتائج الدراسية</h3>
-      <p class="muted">المعدل كيتحسب تلقائياً، أما النتيجة النهائية فالأستاذ هو اللي كيكتبها.</p>
-      <div class="form-grid">
-        <div><label>القسم</label><select id="resultClass"></select></div>
-        <div><label>الدورة</label>
-          <select id="resultTerm">
-            <option value="1">الدورة الأولى</option>
-            <option value="2">الدورة الثانية</option>
-          </select>
+          <button class="choice-card type-card"
+                  data-type="sentences">
+            <span class="choice-emoji">💬</span>
+            <strong>الجمل</strong>
+            <small>Sentences</small>
+          </button>
         </div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>التلميذ</th><th>المعدل المحسوب</th><th>النتيجة التي يكتبها الأستاذ</th><th>حفظ</th></tr></thead>
-          <tbody id="resultsTableBody"></tbody>
-        </table>
-      </div>
-      <button class="btn secondary" id="printResultsBtn">طباعة النتائج</button>
-    </section>
-  </section>
 
-  <section id="studentDashboard" class="hidden">
-    <div class="dashboard-heading">
-      <div><h2>فضاء التلميذ</h2><p id="studentInfo" class="muted"></p></div>
-      <button class="btn danger" id="logoutStudentBtn">خروج</button>
-    </div>
-    <section class="panel">
-      <h3>نقطي ونتائجي</h3>
-      <label>اختيار الدورة</label>
-      <select id="studentTermView">
-        <option value="1">الدورة الأولى</option>
-        <option value="2">الدورة الثانية</option>
-      </select>
-      <div class="student-average">
-        <span>المعدل العام</span>
-        <strong id="studentAverage">--</strong>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>المادة</th><th>الامتحانات</th><th>معدل المادة</th><th>المعامل</th></tr></thead>
-          <tbody id="studentGradesBody"></tbody>
-        </table>
-      </div>
-      <div class="student-result">
-        <span>النتيجة الدراسية التي كتبها الأستاذ</span>
-        <strong id="studentFinalResult">لم يتم إدخال النتيجة بعد</strong>
-        <p id="studentTeacherNote"></p>
+      <div class="lesson-area">
+        <div class="lesson-top">
+          <div>
+            <span class="small-label">YOUR LESSON</span>
+            <h3 id="lessonTitle">درس الكلمات الإنجليزية</h3>
+          </div>
+          <span class="lesson-count" id="lessonCount">1 / 10</span>
+        </div>
+
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="lesson-card">
+          <div class="lesson-symbol" id="lessonSymbol">📖</div>
+          <span class="translation-label">تعلم وترجم</span>
+
+          <h2 id="foreignText">Hello</h2>
+          <p class="arabic-meaning" id="arabicText">مرحبا</p>
+          <p class="pronunciation" id="pronunciationText">
+            النطق: هَـلّو
+          </p>
+
+          <div class="lesson-actions">
+            <button class="sound-btn" id="speakBtn">
+              🔊 استمع للنطق
+            </button>
+            <button class="slow-btn" id="slowBtn">
+              🐢 نطق بطيء
+            </button>
+          </div>
+
+          <div class="navigation-buttons">
+            <button id="previousBtn" class="secondary-btn">السابق</button>
+            <button id="nextBtn" class="next-btn">الدرس التالي ←</button>
+          </div>
+        </div>
+
+        <p class="lesson-tip">
+          💡 نصيحة: سمع النطق وعاود الكلمة بصوتك باش تحسن مستواك.
+        </p>
       </div>
     </section>
-  </section>
-</main>
 
-<footer><p>RIFII SCHOOL © 2026</p><small>منصة تدبير النقط والنتائج المدرسية</small></footer>
-<script src="script.js"></script>
+    <section class="quiz-section" id="quiz">
+      <span class="small-label">TEST YOURSELF</span>
+      <h2>🎯 اختبر معلوماتك</h2>
+      <p>جاوب على السؤال وشوف واش تعلمتي مزيان.</p>
+
+      <div class="quiz-card">
+        <div class="quiz-number" id="quizNumber">السؤال 1</div>
+        <h3 id="quizQuestion">شنو معنى Hello؟</h3>
+        <div id="quizAnswers" class="quiz-answers"></div>
+        <p id="quizFeedback" class="quiz-feedback"></p>
+        <button id="nextQuestionBtn" class="next-btn" hidden>
+          السؤال التالي
+        </button>
+      </div>
+    </section>
+
+    <section class="whatsapp-section">
+      <div class="whatsapp-icon">✆</div>
+      <div>
+        <h2>بغيتي تتعلم أكثر؟</h2>
+        <p>انضم لقناة واتساب واستافد من الدروس المجانية.</p>
+        <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+           target="_blank" class="whatsapp-btn">
+          انضم للقناة
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <h3>🎓 TEACHER OUSSAMA</h3>
+    <p>Learn Today... Achieve Tomorrow!</p>
+    <small>© 2026 جميع الحقوق محفوظة</small>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
