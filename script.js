@@ -1,344 +1,347 @@
-// ===============================
-// TEACHER OUSSAMA - LEARNING APP
-// ===============================
+// =====================================
+// TEACHER OUSSAMA - LESSONS
+// =====================================
 
 const lessons = {
   en: {
     words: [
-      { text: "Hello", ar: "مرحبا", pron: "هَـلّو" },
-      { text: "Goodbye", ar: "إلى اللقاء", pron: "غود باي" },
-      { text: "Thank you", ar: "شكرا لك", pron: "ثانك يو" },
-      { text: "Please", ar: "من فضلك", pron: "بليز" },
-      { text: "Water", ar: "ماء", pron: "ووتر" },
-      { text: "Friend", ar: "صديق", pron: "فريند" },
-      { text: "School", ar: "مدرسة", pron: "سكول" },
-      { text: "Book", ar: "كتاب", pron: "بوك" },
-      { text: "Beautiful", ar: "جميل", pron: "بيوتيفول" },
-      { text: "Family", ar: "عائلة", pron: "فاميلي" }
+      ["Hello", "مرحبا", "هالو"],
+      ["Goodbye", "إلى اللقاء", "غود باي"],
+      ["Thank you", "شكرا", "ثانك يو"],
+      ["Please", "من فضلك", "بليز"],
+      ["Yes", "نعم", "يَس"],
+      ["No", "لا", "نو"],
+      ["Water", "ماء", "ووتر"],
+      ["Book", "كتاب", "بوك"],
+      ["School", "مدرسة", "سكول"],
+      ["Teacher", "أستاذ", "تيتشر"],
+      ["Student", "تلميذ", "ستيودنت"],
+      ["Friend", "صديق", "فريند"],
+      ["Family", "عائلة", "فاميلي"],
+      ["House", "منزل", "هاوس"],
+      ["Food", "طعام", "فود"],
+      ["Apple", "تفاحة", "آبل"],
+      ["Beautiful", "جميل", "بيوتيفول"],
+      ["Happy", "سعيد", "هابي"],
+      ["Sad", "حزين", "ساد"],
+      ["Good", "جيد", "غود"],
+      ["Bad", "سيئ", "باد"],
+      ["Morning", "الصباح", "مورنينغ"],
+      ["Night", "الليل", "نايت"],
+      ["Love", "حب", "لاف"],
+      ["Learn", "يتعلم", "ليرن"]
     ],
 
     sentences: [
-      { text: "How are you?", ar: "كيف حالك؟", pron: "هاو آر يو؟" },
-      { text: "My name is Oussama.", ar: "اسمي أسامة.", pron: "ماي نايم إز أسامة." },
-      { text: "I am happy.", ar: "أنا سعيد.", pron: "آي آم هابي." },
-      { text: "Where are you from?", ar: "من أين أنت؟", pron: "وير آر يو فروم؟" },
-      { text: "I love learning.", ar: "أنا أحب التعلم.", pron: "آي لاف ليرنينغ." },
-      { text: "Good morning.", ar: "صباح الخير.", pron: "غود مورنينغ." },
-      { text: "See you tomorrow.", ar: "أراك غدا.", pron: "سي يو تومورو." },
-      { text: "I don't understand.", ar: "أنا لا أفهم.", pron: "آي دونت أندرستاند." },
-      { text: "Can you help me?", ar: "هل يمكنك مساعدتي؟", pron: "كان يو هيلب مي؟" },
-      { text: "Have a nice day.", ar: "أتمنى لك يوما جميلا.", pron: "هاف أ نايس داي." }
+      ["How are you?", "كيف حالك؟", "هاو آر يو"],
+      ["I am fine.", "أنا بخير.", "آي آم فاين"],
+      ["What is your name?", "ما اسمك؟", "وات إز يور نايم"],
+      ["My name is Oussama.", "اسمي أسامة.", "ماي نايم إز أسامة"],
+      ["Nice to meet you.", "سعيد بلقائك.", "نايس تو ميت يو"],
+      ["Where are you from?", "من أين أنت؟", "وير آر يو فروم"],
+      ["I am from Morocco.", "أنا من المغرب.", "آي آم فروم موروكو"],
+      ["I love English.", "أحب الإنجليزية.", "آي لاف إنغليش"],
+      ["I am a student.", "أنا تلميذ.", "آي آم أ ستيودنت"],
+      ["This is my book.", "هذا كتابي.", "ذيس إز ماي بوك"],
+      ["Open the door.", "افتح الباب.", "أوبن ذا دور"],
+      ["Close the window.", "أغلق النافذة.", "كلوز ذا ويندو"],
+      ["I want some water.", "أريد بعض الماء.", "آي وانت سام ووتر"],
+      ["Good morning.", "صباح الخير.", "غود مورنينغ"],
+      ["Good night.", "تصبح على خير.", "غود نايت"],
+      ["See you tomorrow.", "أراك غدا.", "سي يو تومورو"],
+      ["Can you help me?", "هل يمكنك مساعدتي؟", "كان يو هيلب مي"],
+      ["I understand.", "أنا أفهم.", "آي أندرستاند"],
+      ["I don't understand.", "أنا لا أفهم.", "آي دونت أندرستاند"],
+      ["Please speak slowly.", "تحدث ببطء من فضلك.", "بليز سبيك سلولي"],
+      ["Where is the school?", "أين المدرسة؟", "وير إز ذا سكول"],
+      ["I am happy today.", "أنا سعيد اليوم.", "آي آم هابي توداي"],
+      ["What time is it?", "كم الساعة؟", "وات تايم إز إت"],
+      ["Have a nice day.", "أتمنى لك يوما سعيدا.", "هاف أ نايس داي"],
+      ["Never give up.", "لا تستسلم أبدا.", "نيفر غيف أب"]
     ]
   },
 
   es: {
     words: [
-      { text: "Hola", ar: "مرحبا", pron: "أولا" },
-      { text: "Adiós", ar: "إلى اللقاء", pron: "أديوس" },
-      { text: "Gracias", ar: "شكرا", pron: "غراسياس" },
-      { text: "Por favor", ar: "من فضلك", pron: "بور فابور" },
-      { text: "Agua", ar: "ماء", pron: "أغوا" },
-      { text: "Amigo", ar: "صديق", pron: "أميغو" },
-      { text: "Escuela", ar: "مدرسة", pron: "إسكويلا" },
-      { text: "Libro", ar: "كتاب", pron: "ليبرو" },
-      { text: "Bonito", ar: "جميل", pron: "بونيتو" },
-      { text: "Familia", ar: "عائلة", pron: "فاميليا" }
+      ["Hola", "مرحبا", "أولا"],
+      ["Adiós", "إلى اللقاء", "أديوس"],
+      ["Gracias", "شكرا", "غراسياس"],
+      ["Por favor", "من فضلك", "بور فافور"],
+      ["Sí", "نعم", "سي"],
+      ["No", "لا", "نو"],
+      ["Agua", "ماء", "أغوا"],
+      ["Libro", "كتاب", "ليبرو"],
+      ["Escuela", "مدرسة", "إسكويلا"],
+      ["Profesor", "أستاذ", "بروفيسور"],
+      ["Estudiante", "تلميذ", "إستوديانتِه"],
+      ["Amigo", "صديق", "أميغو"],
+      ["Familia", "عائلة", "فاميليا"],
+      ["Casa", "منزل", "كاسا"],
+      ["Comida", "طعام", "كوميدا"],
+      ["Manzana", "تفاحة", "مانثانا"],
+      ["Bonito", "جميل", "بونيتو"],
+      ["Feliz", "سعيد", "فيليس"],
+      ["Triste", "حزين", "تريستي"],
+      ["Bueno", "جيد", "بوينو"],
+      ["Malo", "سيئ", "مالو"],
+      ["Mañana", "الصباح / غدا", "مانيانا"],
+      ["Noche", "الليل", "نوتشي"],
+      ["Amor", "حب", "أمور"],
+      ["Aprender", "يتعلم", "أبريندير"]
     ],
 
     sentences: [
-      { text: "¿Cómo estás?", ar: "كيف حالك؟", pron: "كومو إستاس؟" },
-      { text: "Me llamo Oussama.", ar: "اسمي أسامة.", pron: "مي يامو أسامة." },
-      { text: "Estoy feliz.", ar: "أنا سعيد.", pron: "إستوي فيليث" },
-      { text: "¿De dónde eres?", ar: "من أين أنت؟", pron: "دي دوندي إيريس؟" },
-      { text: "Me gusta aprender.", ar: "أحب التعلم.", pron: "مي غوستا أبريندير." },
-      { text: "Buenos días.", ar: "صباح الخير.", pron: "بوينوس دياس." },
-      { text: "Hasta mañana.", ar: "أراك غدا.", pron: "أستا مانيانا." },
-      { text: "No entiendo.", ar: "أنا لا أفهم.", pron: "نو إنتييندو." },
-      { text: "¿Puedes ayudarme?", ar: "هل يمكنك مساعدتي؟", pron: "بويديس أيودارمي؟" },
-      { text: "Que tengas un buen día.", ar: "أتمنى لك يوما جميلا.", pron: "كي تينغاس أون بوين ديا." }
+      ["¿Cómo estás?", "كيف حالك؟", "كومو إستاس"],
+      ["Estoy bien.", "أنا بخير.", "إستوي بيين"],
+      ["¿Cómo te llamas?", "ما اسمك؟", "كومو تي ياماس"],
+      ["Me llamo Oussama.", "اسمي أسامة.", "مي يامو أسامة"],
+      ["Mucho gusto.", "سعيد بلقائك.", "موتشو غوستو"],
+      ["¿De dónde eres?", "من أين أنت؟", "دي دوندي إيريس"],
+      ["Soy de Marruecos.", "أنا من المغرب.", "سوي دي مارويكوس"],
+      ["Me gusta el español.", "أحب الإسبانية.", "مي غوستا إل إسبانيول"],
+      ["Soy estudiante.", "أنا تلميذ.", "سوي إستوديانتِه"],
+      ["Este es mi libro.", "هذا كتابي.", "إيستي إس مي ليبرو"],
+      ["Abre la puerta.", "افتح الباب.", "أبري لا بويرتا"],
+      ["Cierra la ventana.", "أغلق النافذة.", "سييرا لا فينتانا"],
+      ["Quiero agua.", "أريد الماء.", "كييرو أغوا"],
+      ["Buenos días.", "صباح الخير.", "بوينوس دياس"],
+      ["Buenas noches.", "تصبح على خير.", "بويناس نوتشيس"],
+      ["Hasta mañana.", "إلى الغد.", "أستا مانيانا"],
+      ["¿Puedes ayudarme?", "هل يمكنك مساعدتي؟", "بويديس أيودارمي"],
+      ["Entiendo.", "أنا أفهم.", "إنتييندو"],
+      ["No entiendo.", "أنا لا أفهم.", "نو إنتييندو"],
+      ["Habla despacio, por favor.", "تحدث ببطء من فضلك.", "أبلا ديسباسيو بور فافور"],
+      ["¿Dónde está la escuela?", "أين المدرسة؟", "دوندي إستا لا إسكويلا"],
+      ["Estoy feliz hoy.", "أنا سعيد اليوم.", "إستوي فيليس أوي"],
+      ["¿Qué hora es?", "كم الساعة؟", "كي أورا إس"],
+      ["Que tengas un buen día.", "أتمنى لك يوما سعيدا.", "كي تينغاس أون بوين ديا"],
+      ["Nunca te rindas.", "لا تستسلم أبدا.", "نونكا تي رينداس"]
     ]
   }
 };
 
-// ===============================
-// VARIABLES
-// ===============================
+// =====================================
+// ELEMENTS
+// =====================================
+
+const $ = id => document.getElementById(id);
 
 let currentLanguage = "en";
 let currentType = "words";
 let currentIndex = 0;
-let quizIndex = 0;
-let quizAnswered = false;
 
-const foreignText = document.getElementById("foreignText");
-const arabicText = document.getElementById("arabicText");
-const pronunciationText = document.getElementById("pronunciationText");
-const lessonTitle = document.getElementById("lessonTitle");
-const lessonCount = document.getElementById("lessonCount");
-const progressFill = document.getElementById("progressFill");
-const previousBtn = document.getElementById("previousBtn");
-const nextBtn = document.getElementById("nextBtn");
+const foreignText = $("foreignText");
+const arabicText = $("arabicText");
+const pronunciation = $("pronunciation");
+const lessonNumber = $("lessonNumber");
+const progressBar = $("progressBar");
+const progressText = $("progressText");
 
-// ===============================
-// GET CURRENT LESSONS
-// ===============================
+// =====================================
+// LESSON DISPLAY
+// =====================================
 
 function getCurrentLessons() {
   return lessons[currentLanguage][currentType];
 }
 
-// ===============================
-// DISPLAY LESSON
-// ===============================
-
-function displayLesson() {
+function showLesson() {
   const list = getCurrentLessons();
   const lesson = list[currentIndex];
 
-  foreignText.textContent = lesson.text;
-  arabicText.textContent = lesson.ar;
-  pronunciationText.textContent = "النطق التقريبي: " + lesson.pron;
+  if (!lesson) return;
 
-  const languageName = currentLanguage === "en"
-    ? "الإنجليزية"
-    : "الإسبانية";
+  foreignText.textContent = lesson[0];
+  arabicText.textContent = lesson[1];
+  pronunciation.textContent = "النطق التقريبي: " + lesson[2];
 
-  const typeName = currentType === "words"
-    ? "الكلمات"
-    : "الجمل";
+  lessonNumber.textContent =
+    `الدرس ${currentIndex + 1} من ${list.length}`;
 
-  lessonTitle.textContent = "درس " + typeName + " " + languageName;
+  const percent = Math.round(
+    ((currentIndex + 1) / list.length) * 100
+  );
 
-  lessonCount.textContent = (currentIndex + 1) + " / " + list.length;
+  progressBar.style.width = percent + "%";
+  progressText.textContent = percent + "%";
 
-  progressFill.style.width =
-    ((currentIndex + 1) / list.length * 100) + "%";
+  $("previousBtn").disabled = currentIndex === 0;
+  $("nextBtn").disabled = currentIndex === list.length - 1;
 
-  previousBtn.disabled = currentIndex === 0;
-  nextBtn.disabled = currentIndex === list.length - 1;
-
-  nextBtn.textContent =
-    currentIndex === list.length - 1
-      ? "نهاية الدرس"
-      : "الدرس التالي ←";
-
-  document.getElementById("lessonSymbol").textContent =
-    currentType === "words" ? "📖" : "💬";
+  localStorage.setItem(
+    "teacherOussamaProgress",
+    JSON.stringify({
+      language: currentLanguage,
+      type: currentType,
+      index: currentIndex
+    })
+  );
 }
 
-// ===============================
-// LANGUAGE SELECTION
-// ===============================
+function changeLesson(step) {
+  const list = getCurrentLessons();
 
-document.querySelectorAll(".language-card").forEach(button => {
+  currentIndex += step;
+
+  if (currentIndex < 0) currentIndex = 0;
+  if (currentIndex >= list.length) {
+    currentIndex = list.length - 1;
+  }
+
+  showLesson();
+}
+
+$("nextBtn").addEventListener("click", () => {
+  changeLesson(1);
+});
+
+$("previousBtn").addEventListener("click", () => {
+  changeLesson(-1);
+});
+
+// =====================================
+// LANGUAGE AND TYPE SELECTION
+// =====================================
+
+document.querySelectorAll("[data-language]").forEach(button => {
   button.addEventListener("click", () => {
     currentLanguage = button.dataset.language;
     currentIndex = 0;
 
-    document.querySelectorAll(".language-card").forEach(card => {
-      card.classList.remove("active");
+    document.querySelectorAll("[data-language]").forEach(btn => {
+      btn.classList.remove("active");
     });
 
     button.classList.add("active");
-
-    displayLesson();
-    resetQuiz();
+    showLesson();
   });
 });
 
-// ===============================
-// TYPE SELECTION
-// ===============================
-
-document.querySelectorAll(".type-card").forEach(button => {
+document.querySelectorAll("[data-type]").forEach(button => {
   button.addEventListener("click", () => {
     currentType = button.dataset.type;
     currentIndex = 0;
 
-    document.querySelectorAll(".type-card").forEach(card => {
-      card.classList.remove("active");
+    document.querySelectorAll("[data-type]").forEach(btn => {
+      btn.classList.remove("active");
     });
 
     button.classList.add("active");
-
-    displayLesson();
+    showLesson();
   });
 });
 
-// ===============================
-// NEXT AND PREVIOUS
-// ===============================
+// =====================================
+// VOICE
+// =====================================
 
-nextBtn.addEventListener("click", () => {
-  const list = getCurrentLessons();
-
-  if (currentIndex < list.length - 1) {
-    currentIndex++;
-    displayLesson();
-  }
-});
-
-previousBtn.addEventListener("click", () => {
-  if (currentIndex > 0) {
-    currentIndex--;
-    displayLesson();
-  }
-});
-
-// ===============================
-// TEXT TO SPEECH
-// ===============================
-
-function speakLesson(rate = 0.8) {
+function speakText(rate) {
   if (!("speechSynthesis" in window)) {
-    alert("المتصفح ديالك لا يدعم النطق الصوتي.");
+    alert("المتصفح ديالك لا يدعم خاصية النطق.");
     return;
   }
 
   window.speechSynthesis.cancel();
 
-  const lesson = getCurrentLessons()[currentIndex];
-  const utterance = new SpeechSynthesisUtterance(lesson.text);
+  const text = foreignText.textContent;
+  const utterance = new SpeechSynthesisUtterance(text);
 
   utterance.lang = currentLanguage === "en" ? "en-US" : "es-ES";
   utterance.rate = rate;
   utterance.pitch = 1;
-  utterance.volume = 1;
-
-  const voices = window.speechSynthesis.getVoices();
-
-  const voice = voices.find(v =>
-    v.lang.toLowerCase().startsWith(
-      currentLanguage === "en" ? "en" : "es"
-    )
-  );
-
-  if (voice) {
-    utterance.voice = voice;
-  }
 
   window.speechSynthesis.speak(utterance);
 }
 
-document.getElementById("speakBtn").addEventListener("click", () => {
-  speakLesson(0.85);
+$("normalBtn").addEventListener("click", () => {
+  speakText(0.9);
 });
 
-document.getElementById("slowBtn").addEventListener("click", () => {
-  speakLesson(0.55);
+$("slowBtn").addEventListener("click", () => {
+  speakText(0.55);
 });
 
-// ===============================
-// QUIZ DATA
-// ===============================
+// =====================================
+// QUIZ SYSTEM
+// =====================================
 
-const quizData = {
-  en: [
-    {
-      question: "شنو معنى Hello؟",
-      answers: ["مرحبا", "كتاب", "ماء", "مدرسة"],
-      correct: "مرحبا"
-    },
-    {
-      question: "شنو معنى Thank you؟",
-      answers: ["صباح الخير", "شكرا", "وداعا", "صديق"],
-      correct: "شكرا"
-    },
-    {
-      question: "شنو معنى Water؟",
-      answers: ["كتاب", "عائلة", "ماء", "جميل"],
-      correct: "ماء"
-    },
-    {
-      question: "شنو معنى School؟",
-      answers: ["مدرسة", "صديق", "مرحبا", "جميل"],
-      correct: "مدرسة"
-    },
-    {
-      question: "شنو معنى Friend؟",
-      answers: ["ماء", "صديق", "كتاب", "عائلة"],
-      correct: "صديق"
-    }
-  ],
+let quizQuestions = [];
+let quizIndex = 0;
+let score = 0;
+let answered = false;
 
-  es: [
-    {
-      question: "شنو معنى Hola؟",
-      answers: ["مرحبا", "كتاب", "ماء", "مدرسة"],
-      correct: "مرحبا"
-    },
-    {
-      question: "شنو معنى Gracias؟",
-      answers: ["وداعا", "شكرا", "صديق", "ماء"],
-      correct: "شكرا"
-    },
-    {
-      question: "شنو معنى Agua؟",
-      answers: ["كتاب", "عائلة", "ماء", "مدرسة"],
-      correct: "ماء"
-    },
-    {
-      question: "شنو معنى Escuela؟",
-      answers: ["مدرسة", "مرحبا", "جميل", "صديق"],
-      correct: "مدرسة"
-    },
-    {
-      question: "شنو معنى Amigo؟",
-      answers: ["ماء", "صديق", "كتاب", "عائلة"],
-      correct: "صديق"
-    }
-  ]
-};
+function makeQuizQuestions() {
+  const allLessons = getCurrentLessons();
 
-// ===============================
-// DISPLAY QUIZ
-// ===============================
+  const shuffled = [...allLessons].sort(() => Math.random() - 0.5);
 
-function displayQuiz() {
-  const questions = quizData[currentLanguage];
-  const question = questions[quizIndex];
+  return shuffled.slice(0, 10).map(item => {
+    const wrongAnswers = allLessons
+      .filter(other => other[1] !== item[1])
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3)
+      .map(other => other[1]);
 
-  quizAnswered = false;
+    const options = [...wrongAnswers, item[1]]
+      .sort(() => Math.random() - 0.5);
 
-  document.getElementById("quizNumber").textContent =
-    "السؤال " + (quizIndex + 1) + " من " + questions.length;
-
-  document.getElementById("quizQuestion").textContent =
-    question.question;
-
-  document.getElementById("quizFeedback").textContent = "";
-  document.getElementById("quizFeedback").className = "quiz-feedback";
-
-  document.getElementById("nextQuestionBtn").hidden = true;
-
-  const answersArea = document.getElementById("quizAnswers");
-  answersArea.innerHTML = "";
-
-  question.answers.forEach(answer => {
-    const button = document.createElement("button");
-
-    button.className = "answer-btn";
-    button.textContent = answer;
-
-    button.addEventListener("click", () => {
-      checkAnswer(button, answer, question.correct);
-    });
-
-    answersArea.appendChild(button);
+    return {
+      question: item[0],
+      correct: item[1],
+      options
+    };
   });
 }
 
-// ===============================
-// CHECK ANSWER
-// ===============================
+function startQuiz() {
+  quizQuestions = makeQuizQuestions();
+  quizIndex = 0;
+  score = 0;
+  answered = false;
 
-function checkAnswer(button, answer, correct) {
-  if (quizAnswered) return;
+  $("startQuizBtn").hidden = true;
+  $("nextQuestionBtn").hidden = true;
 
-  quizAnswered = true;
+  showQuestion();
+}
 
-  const feedback = document.getElementById("quizFeedback");
-  const buttons = document.querySelectorAll(".answer-btn");
+function showQuestion() {
+  const question = quizQuestions[quizIndex];
+
+  answered = false;
+
+  $("quizCounter").textContent =
+    `السؤال ${quizIndex + 1} من ${quizQuestions.length}`;
+
+  $("questionText").textContent =
+    `ما معنى: ${question.question} ؟`;
+
+  $("quizFeedback").textContent = "";
+  $("answers").innerHTML = "";
+
+  question.options.forEach(option => {
+    const button = document.createElement("button");
+
+    button.className = "answer-option";
+    button.textContent = option;
+
+    button.addEventListener("click", () => {
+      checkAnswer(button, option);
+    });
+
+    $("answers").appendChild(button);
+  });
+
+  $("nextQuestionBtn").hidden = true;
+}
+
+function checkAnswer(button, selected) {
+  if (answered) return;
+
+  answered = true;
+
+  const correct = quizQuestions[quizIndex].correct;
+  const buttons = document.querySelectorAll(".answer-option");
 
   buttons.forEach(btn => {
     btn.disabled = true;
@@ -348,52 +351,106 @@ function checkAnswer(button, answer, correct) {
     }
   });
 
-  if (answer === correct) {
-    feedback.textContent = "🎉 ممتاز! الجواب صحيح.";
-    feedback.classList.add("good");
+  if (selected === correct) {
+    score++;
+    $("quizFeedback").textContent = "✅ إجابة صحيحة! أحسنت.";
+    $("quizFeedback").style.color = "#4ade80";
   } else {
     button.classList.add("wrong");
-    feedback.textContent = "❌ الجواب الصحيح هو: " + correct;
-    feedback.classList.add("bad");
+    $("quizFeedback").textContent =
+      "❌ جواب غير صحيح. الجواب الصحيح هو: " + correct;
+    $("quizFeedback").style.color = "#fb7185";
   }
 
-  document.getElementById("nextQuestionBtn").hidden = false;
-
-  if (quizIndex === quizData[currentLanguage].length - 1) {
-    document.getElementById("nextQuestionBtn").textContent = "إعادة الاختبار";
-  } else {
-    document.getElementById("nextQuestionBtn").textContent = "السؤال التالي";
-  }
+  $("nextQuestionBtn").hidden = false;
+  $("nextQuestionBtn").textContent =
+    quizIndex === quizQuestions.length - 1
+      ? "عرض النتيجة"
+      : "السؤال التالي";
 }
 
-// ===============================
-// NEXT QUIZ QUESTION
-// ===============================
-
-document.getElementById("nextQuestionBtn").addEventListener("click", () => {
-  const total = quizData[currentLanguage].length;
-
-  if (quizIndex < total - 1) {
+function nextQuizQuestion() {
+  if (quizIndex < quizQuestions.length - 1) {
     quizIndex++;
+    showQuestion();
   } else {
-    quizIndex = 0;
+    showQuizResult();
   }
-
-  displayQuiz();
-});
-
-// ===============================
-// RESET QUIZ WHEN LANGUAGE CHANGES
-// ===============================
-
-function resetQuiz() {
-  quizIndex = 0;
-  displayQuiz();
 }
 
-// ===============================
-// INITIALIZE WEBSITE
-// ===============================
+function showQuizResult() {
+  $("quizCounter").textContent = "انتهى الاختبار 🎉";
+  $("questionText").textContent =
+    `نتيجتك هي ${score} من ${quizQuestions.length}`;
 
-displayLesson();
-displayQuiz();
+  $("answers").innerHTML = "";
+
+  const message = document.createElement("p");
+
+  if (score >= 8) {
+    message.textContent = "ممتاز! مستواك رائع 🌟";
+  } else if (score >= 5) {
+    message.textContent = "عمل جيد! استمر في التعلم 💪";
+  } else {
+    message.textContent = "حاول مرة أخرى، ستتحسن مع التدريب ❤️";
+  }
+
+  $("answers").appendChild(message);
+
+  $("quizFeedback").textContent =
+    `النسبة: ${Math.round(score / quizQuestions.length * 100)}%`;
+
+  $("nextQuestionBtn").hidden = true;
+  $("startQuizBtn").hidden = false;
+  $("startQuizBtn").textContent = "إعادة الاختبار";
+}
+
+$("startQuizBtn").addEventListener("click", startQuiz);
+$("nextQuestionBtn").addEventListener("click", nextQuizQuestion);
+
+// =====================================
+// RESTORE SAVED PROGRESS
+// =====================================
+
+function restoreProgress() {
+  const saved = localStorage.getItem("teacherOussamaProgress");
+
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+
+      if (
+        lessons[data.language] &&
+        lessons[data.language][data.type] &&
+        Number.isInteger(data.index) &&
+        data.index >= 0 &&
+        data.index < lessons[data.language][data.type].length
+      ) {
+        currentLanguage = data.language;
+        currentType = data.type;
+        currentIndex = data.index;
+
+        document.querySelectorAll("[data-language]").forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.language === currentLanguage
+          );
+        });
+
+        document.querySelectorAll("[data-type]").forEach(button => {
+          button.classList.toggle(
+            "active",
+            button.dataset.type === currentType
+          );
+        });
+      }
+    } catch (error) {
+      console.log("تعذر استرجاع التقدم المحفوظ.");
+    }
+  }
+
+  showLesson();
+}
+
+// تشغيل الموقع
+restoreProgress();
