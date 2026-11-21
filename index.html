@@ -3,151 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d20">
-  <title>TEACHER OUSSAMA | تعلم اللغات</title>
+  <title>TEACHER OUSSAMA</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <header class="navbar">
-    <a href="#" class="logo">🎓 TEACHER <span>OUSSAMA</span></a>
-    <a class="nav-link" href="#learn">ابدأ التعلم</a>
+    <div class="brand">🎓 TEACHER OUSSAMA</div>
+
+    <div class="top-links">
+      <a class="whatsapp-btn"
+         href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+         target="_blank">واتساب</a>
+
+      <a class="subscribe-btn" href="#subscriptions">شراء الاشتراك</a>
+    </div>
+
+    <div class="start-container">
+      <a href="#learn" class="start-btn">ابدأ التعلم 🚀</a>
+    </div>
   </header>
 
   <main>
+
     <section class="hero">
-      <div class="hero-content">
-        <span class="small-label">WELCOME TO YOUR LANGUAGE SCHOOL</span>
-        <h1>تعلم لغة جديدة<br><span>وافتح آفاقاً جديدة!</span></h1>
-        <p>تعلم الإنجليزية والإسبانية بطريقة سهلة، مع الترجمة والنطق والاختبارات.</p>
-        <a href="#learn" class="main-btn">ابدأ التعلم الآن ←</a>
-      </div>
-
-      <div class="hero-icon">🌍</div>
+      <div class="hero-icon">📚</div>
+      <h1>مرحبا بك في TEACHER OUSSAMA</h1>
+      <p>تعلم اللغات بطريقة سهلة وممتعة، وطور مستواك كل يوم.</p>
     </section>
 
-    <section class="learning-section" id="learn">
-      <div class="section-heading">
-        <span class="small-label">YOUR LEARNING JOURNEY</span>
-        <h2>شنو بغيتي تتعلم اليوم؟</h2>
-        <p>اختار اللغة ديالك، ومن بعد اختار نوع الدرس.</p>
+    <section class="section" id="learn">
+      <h2>🌍 اختر اللغة التي تريد تعلمها</h2>
+
+      <div class="choice-list">
+        <button class="choice active" data-language="en">🇬🇧 اللغة الإنجليزية</button>
+        <button class="choice" data-language="es">🇪🇸 اللغة الإسبانية</button>
       </div>
 
-      <div class="step">
-        <h3><span>01</span> اختار اللغة</h3>
-        <div class="choice-grid">
-          <button class="choice-card language-card active"
-                  data-language="en">
-            <span class="choice-emoji">🇬🇧</span>
-            <strong>اللغة الإنجليزية</strong>
-            <small>Learn English</small>
-          </button>
+      <h2>📖 ماذا تريد أن تتعلم؟</h2>
 
-          <button class="choice-card language-card"
-                  data-language="es">
-            <span class="choice-emoji">🇪🇸</span>
-            <strong>اللغة الإسبانية</strong>
-            <small>Aprender Español</small>
-          </button>
+      <div class="choice-list">
+        <button class="choice active" data-type="words">الكلمات</button>
+        <button class="choice" data-type="sentences">الجمل</button>
+      </div>
+
+      <div class="lesson-card">
+        <div class="lesson-number" id="lessonNumber">الدرس 1</div>
+        <h2 id="foreignText">Hello</h2>
+        <p class="translation" id="arabicText">مرحبا</p>
+        <p class="pronunciation" id="pronunciation">النطق: هالو</p>
+
+        <div class="lesson-buttons">
+          <button id="slowBtn">🐢 نطق بطيء</button>
+          <button id="normalBtn">🔊 نطق عادي</button>
+        </div>
+
+        <div class="navigation">
+          <button id="previousBtn">السابق</button>
+          <button id="nextBtn">التالي</button>
         </div>
       </div>
 
-      <div class="step">
-        <h3><span>02</span> شنو بغيتي تتعلم؟</h3>
-        <div class="choice-grid">
-          <button class="choice-card type-card active"
-                  data-type="words">
-            <span class="choice-emoji">📚</span>
-            <strong>الكلمات</strong>
-            <small>Vocabulary</small>
-          </button>
-
-          <button class="choice-card type-card"
-                  data-type="sentences">
-            <span class="choice-emoji">💬</span>
-            <strong>الجمل</strong>
-            <small>Sentences</small>
-          </button>
-        </div>
-      </div>
-
-      <div class="lesson-area">
-        <div class="lesson-top">
-          <div>
-            <span class="small-label">YOUR LESSON</span>
-            <h3 id="lessonTitle">درس الكلمات الإنجليزية</h3>
-          </div>
-          <span class="lesson-count" id="lessonCount">1 / 10</span>
-        </div>
-
+      <div class="progress-box">
+        <p>تقدمك في التعلم</p>
         <div class="progress-track">
-          <div class="progress-fill" id="progressFill"></div>
+          <div id="progressBar"></div>
         </div>
-
-        <div class="lesson-card">
-          <div class="lesson-symbol" id="lessonSymbol">📖</div>
-          <span class="translation-label">تعلم وترجم</span>
-
-          <h2 id="foreignText">Hello</h2>
-          <p class="arabic-meaning" id="arabicText">مرحبا</p>
-          <p class="pronunciation" id="pronunciationText">
-            النطق: هَـلّو
-          </p>
-
-          <div class="lesson-actions">
-            <button class="sound-btn" id="speakBtn">
-              🔊 استمع للنطق
-            </button>
-            <button class="slow-btn" id="slowBtn">
-              🐢 نطق بطيء
-            </button>
-          </div>
-
-          <div class="navigation-buttons">
-            <button id="previousBtn" class="secondary-btn">السابق</button>
-            <button id="nextBtn" class="next-btn">الدرس التالي ←</button>
-          </div>
-        </div>
-
-        <p class="lesson-tip">
-          💡 نصيحة: سمع النطق وعاود الكلمة بصوتك باش تحسن مستواك.
-        </p>
+        <p id="progressText">0%</p>
       </div>
     </section>
 
-    <section class="quiz-section" id="quiz">
-      <span class="small-label">TEST YOURSELF</span>
-      <h2>🎯 اختبر معلوماتك</h2>
-      <p>جاوب على السؤال وشوف واش تعلمتي مزيان.</p>
+    <section class="section quiz-section" id="quiz">
+      <h2>📝 اختبر معلوماتك</h2>
+      <p>جاوب على الأسئلة وشوف شحال تعلمتي!</p>
 
       <div class="quiz-card">
-        <div class="quiz-number" id="quizNumber">السؤال 1</div>
-        <h3 id="quizQuestion">شنو معنى Hello؟</h3>
-        <div id="quizAnswers" class="quiz-answers"></div>
-        <p id="quizFeedback" class="quiz-feedback"></p>
-        <button id="nextQuestionBtn" class="next-btn" hidden>
-          السؤال التالي
-        </button>
+        <div id="quizCounter">السؤال 1</div>
+        <h3 id="questionText">اضغط على ابدأ الاختبار</h3>
+        <div id="answers"></div>
+        <p id="quizFeedback"></p>
+        <button id="startQuizBtn">ابدأ الاختبار</button>
+        <button id="nextQuestionBtn" hidden>السؤال التالي</button>
       </div>
     </section>
 
-    <section class="whatsapp-section">
-      <div class="whatsapp-icon">✆</div>
-      <div>
-        <h2>بغيتي تتعلم أكثر؟</h2>
-        <p>انضم لقناة واتساب واستافد من الدروس المجانية.</p>
-        <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
-           target="_blank" class="whatsapp-btn">
-          انضم للقناة
-        </a>
+    <section class="section" id="subscriptions">
+      <h2>💎 باقات الاشتراك</h2>
+      <p>اختر الباقة المناسبة لك وتواصل معنا عبر قناة واتساب.</p>
+
+      <div class="plans">
+        <div class="plan-card">
+          <h3>🥉 الباقة الأولى</h3>
+          <div class="price">50 DH</div>
+          <p>شهر واحد</p>
+          <p>5 حصص تعليمية</p>
+          <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v" target="_blank">شراء الاشتراك</a>
+        </div>
+
+        <div class="plan-card featured">
+          <h3>🥈 الباقة الثانية</h3>
+          <div class="price">100 DH</div>
+          <p>شهران</p>
+          <p>10 حصص تعليمية</p>
+          <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v" target="_blank">شراء الاشتراك</a>
+        </div>
+
+        <div class="plan-card">
+          <h3>🥇 الباقة الثالثة</h3>
+          <div class="price">150 DH</div>
+          <p>ثلاثة أشهر</p>
+          <p>15 حصة تعليمية</p>
+          <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v" target="_blank">شراء الاشتراك</a>
+        </div>
       </div>
     </section>
+
+    <section class="section whatsapp-section">
+      <h2>📢 تابع جديد الدروس</h2>
+      <p>انضم إلى قناة واتساب الخاصة بنا ليصلك كل جديد.</p>
+      <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+         target="_blank" class="big-whatsapp">انضم إلى قناة واتساب</a>
+    </section>
+
   </main>
 
   <footer>
-    <h3>🎓 TEACHER OUSSAMA</h3>
-    <p>Learn Today... Achieve Tomorrow!</p>
-    <small>© 2026 جميع الحقوق محفوظة</small>
+    <h3>TEACHER OUSSAMA</h3>
+    <p>التعلم اليوم هو نجاح الغد ❤️</p>
+    <p>© 2026 جميع الحقوق محفوظة</p>
   </footer>
 
   <script src="script.js"></script>
