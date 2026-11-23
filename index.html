@@ -4,134 +4,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d20">
-  <title>TEACHER OUSSAMA | تعلم اللغات</title>
+  <meta name="description" content="TEACHER OUSSAMA - Learn English step by step">
+  <title>TEACHER OUSSAMA | Learn English</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="navbar">
-  <a href="#" class="logo">🎓 TEACHER <span>OUSSAMA</span></a>
-  <a class="nav-link" href="#learn">ابدأ التعلم</a>
+<header class="topbar">
+  <a class="brand" href="#">
+    <span class="brand-icon">🎓</span>
+    <span>TEACHER <b>OUSSAMA</b></span>
+  </a>
+
+  <a class="vip-small" href="#vip">⭐ VIP</a>
 </header>
 
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">WELCOME TO TEACHER OUSSAMA</span>
+    <h1>
+      تعلم الإنجليزية
+      <span>بطريقة سهلة وممتعة</span>
+    </h1>
+    <p>
+      Learn English step by step.
+      تعلم الإنجليزية من الصفر حتى الاحتراف.
+    </p>
+    <a href="#lessons" class="main-btn">ابدأ التعلم الآن ←</a>
+  </div>
+
+  <div class="hero-art">
+    <div class="book">📚</div>
+    <div class="big-hello">HELLO!</div>
+    <div class="hero-caption">Your English journey starts here</div>
+  </div>
+</section>
+
 <main>
-  <section class="hero">
-    <div class="hero-content">
-      <span class="small-label">WELCOME TO YOUR LANGUAGE SCHOOL</span>
-      <h1>تعلم لغة جديدة<br><span>وافتح آفاقاً جديدة!</span></h1>
-      <p>تعلم الإنجليزية والإسبانية بطريقة سهلة، مع الترجمة والنطق والاختبارات.</p>
-      <a href="#learn" class="main-btn">ابدأ التعلم الآن ←</a>
-    </div>
-    <div class="hero-icon">🌍</div>
-  </section>
 
-  <section class="learning-section" id="learn">
+  <section class="section" id="lessons">
     <div class="section-heading">
-      <span class="small-label">YOUR LEARNING JOURNEY</span>
-      <h2>شنو بغيتي تتعلم اليوم؟</h2>
-      <p>اختار اللغة ديالك، ومن بعد اختار نوع الدرس.</p>
+      <span class="eyebrow">LEARNING CENTER</span>
+      <h2>الدروس التعليمية</h2>
+      <p>اختار المجال اللي بغيتي تتعلم.</p>
     </div>
 
-    <div class="step">
-      <h3><span>01</span> اختار اللغة</h3>
-      <div class="choice-grid">
-        <button class="choice-card language-card active" data-language="en">
-          <span class="choice-emoji">🇬🇧</span>
-          <strong>اللغة الإنجليزية</strong>
-          <small>Learn English</small>
-        </button>
-        <button class="choice-card language-card" data-language="es">
-          <span class="choice-emoji">🇪🇸</span>
-          <strong>اللغة الإسبانية</strong>
-          <small>Aprender Español</small>
-        </button>
-      </div>
+    <div class="lesson-tabs">
+      <button class="tab active" data-type="words">📘 الكلمات</button>
+      <button class="tab" data-type="sentences">💬 الجمل</button>
+      <button class="tab" data-type="grammar">📖 القواعد</button>
+      <button class="tab" data-type="conversation">🗣️ المحادثات</button>
     </div>
 
-    <div class="step">
-      <h3><span>02</span> شنو بغيتي تتعلم؟</h3>
-      <div class="choice-grid">
-        <button class="choice-card type-card active" data-type="words">
-          <span class="choice-emoji">📚</span>
-          <strong>الكلمات</strong>
-          <small>Vocabulary</small>
-        </button>
-        <button class="choice-card type-card" data-type="sentences">
-          <span class="choice-emoji">💬</span>
-          <strong>الجمل</strong>
-          <small>Sentences</small>
-        </button>
-      </div>
+    <div class="lesson-toolbar">
+      <input id="searchInput" type="search" placeholder="ابحث عن درس أو كلمة...">
+      <span id="lessonCount">الدروس</span>
     </div>
 
-    <div class="lesson-area">
-      <div class="lesson-top">
-        <div>
-          <span class="small-label">YOUR LESSON</span>
-          <h3 id="lessonTitle">درس الكلمات الإنجليزية</h3>
-        </div>
-        <span class="lesson-count" id="lessonCount">1 / 25</span>
-      </div>
-
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-
-      <div class="lesson-card">
-        <div class="lesson-symbol" id="lessonSymbol">📖</div>
-        <span class="translation-label">تعلم وترجم</span>
-        <h2 id="foreignText">Hello</h2>
-        <p class="arabic-meaning" id="arabicText">مرحبا</p>
-        <p class="pronunciation" id="pronunciationText">النطق: هَـلّو</p>
-
-        <div class="lesson-actions">
-          <button class="sound-btn" id="speakBtn">🔊 استمع للنطق</button>
-          <button class="slow-btn" id="slowBtn">🐢 نطق بطيء</button>
-        </div>
-
-        <div class="navigation-buttons">
-          <button id="previousBtn" class="secondary-btn">السابق</button>
-          <button id="nextBtn" class="next-btn">الدرس التالي ←</button>
-        </div>
-      </div>
-
-      <p class="lesson-tip">💡 نصيحة: سمع النطق وعاود الكلمة بصوتك باش تحسن مستواك.</p>
-      <p class="saved-progress" id="savedProgress"></p>
-    </div>
+    <div id="lessonList" class="lesson-grid"></div>
   </section>
 
-  <section class="quiz-section" id="quiz">
-    <span class="small-label">TEST YOURSELF</span>
-    <h2>🎯 اختبر معلوماتك</h2>
-    <p>جاوب على 10 أسئلة باش تعرف المستوى ديالك.</p>
+  <section class="section practice-section" id="practice">
+    <span class="eyebrow">TEST YOUR KNOWLEDGE</span>
+    <h2>اختبر معلوماتك</h2>
+    <p>جاوب على الأسئلة وشوف شحال تعلمتي.</p>
 
-    <div class="quiz-card">
-      <div class="quiz-number" id="quizNumber">السؤال 1</div>
-      <h3 id="quizQuestion">شنو معنى Hello؟</h3>
+    <div class="quiz-box">
+      <div class="quiz-top">
+        <span id="quizProgress">السؤال 1</span>
+        <span id="quizScore">النقطة: 0</span>
+      </div>
+
+      <h3 id="quizQuestion">What does Hello mean?</h3>
       <div id="quizAnswers" class="quiz-answers"></div>
-      <p id="quizFeedback" class="quiz-feedback"></p>
-      <button id="nextQuestionBtn" class="next-btn" hidden>السؤال التالي</button>
+      <p id="quizFeedback" class="feedback"></p>
+
+      <button id="nextQuestion" class="main-btn" disabled>
+        السؤال التالي
+      </button>
+
+      <button id="restartQuiz" class="outline-btn" hidden>
+        إعادة الاختبار
+      </button>
     </div>
   </section>
 
-  <section class="whatsapp-section">
-    <div class="whatsapp-icon">✆</div>
-    <div>
-      <h2>بغيتي تتعلم أكثر؟</h2>
-      <p>انضم لقناة واتساب واستافد من الدروس.</p>
-      <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
-         target="_blank" rel="noopener" class="whatsapp-btn">
-        انضم للقناة
-      </a>
+  <section class="section" id="vip">
+    <div class="vip-heading">
+      <div>
+        <span class="eyebrow">PREMIUM MEMBERSHIP</span>
+        <h2>عروض VIP</h2>
+        <p>اختار الاشتراك المناسب ليك.</p>
+      </div>
+
+      <button id="buyAllLessons" class="buy-all-btn">
+        🛒 اشتري جميع الدروس باختيارك
+      </button>
+    </div>
+
+    <div class="vip-grid">
+
+      <article class="vip-card">
+        <span class="plan">STARTER</span>
+        <h3>7 حصص</h3>
+        <div class="price">50 <small>DH</small></div>
+        <p>7 حصص خلال شهر واحد</p>
+        <button class="vip-button" data-plan="اشتراك 50 درهم - 7 حصص">
+          اشترك الآن
+        </button>
+      </article>
+
+      <article class="vip-card featured">
+        <span class="popular">الأكثر اختياراً</span>
+        <span class="plan">STANDARD</span>
+        <h3>14 حصة</h3>
+        <div class="price">100 <small>DH</small></div>
+        <p>14 حصة خلال شهر واحد</p>
+        <button class="vip-button" data-plan="اشتراك 100 درهم - 14 حصة">
+          اشترك الآن
+        </button>
+      </article>
+
+      <article class="vip-card">
+        <span class="plan">PREMIUM</span>
+        <h3>21 حصة</h3>
+        <div class="price">150 <small>DH</small></div>
+        <p>21 حصة خلال شهر واحد</p>
+        <button class="vip-button" data-plan="اشتراك 150 درهم - 21 حصة">
+          اشترك الآن
+        </button>
+      </article>
+
     </div>
   </section>
+
+  <section class="contact-section">
+    <h2>بغيتي تتواصل معنا؟</h2>
+    <p>تابع قناة واتساب باش توصلك آخر الدروس والتحديثات.</p>
+
+    <a
+      class="main-btn"
+      href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+      target="_blank"
+      rel="noopener"
+    >
+      انضم إلى قناة واتساب
+    </a>
+  </section>
+
 </main>
 
 <footer>
-  <h3>🎓 TEACHER OUSSAMA</h3>
-  <p>Learn Today... Achieve Tomorrow!</p>
-  <small>© 2026 جميع الحقوق محفوظة</small>
+  <div class="footer-brand">TEACHER OUSSAMA</div>
+  <p>Learn English • Practice Every Day • Succeed</p>
+  <p>© 2026 TEACHER OUSSAMA. All Rights Reserved.</p>
 </footer>
 
 <script src="script.js"></script>
