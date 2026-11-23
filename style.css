@@ -479,6 +479,34 @@ footer {
   direction: ltr;
 }
 
+/* TEAM WORK */
+
+.team-work {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #ffffff18;
+  text-align: center;
+}
+
+.team-work p {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+
+.team-names {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 800;
+  direction: ltr;
+}
+
 @media (max-width: 700px) {
   .hero {
     padding: 50px 7%;
@@ -515,5 +543,10 @@ footer {
   .buy-all-btn {
     width: 100%;
   }
-}
 
+  .team-names {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+}
