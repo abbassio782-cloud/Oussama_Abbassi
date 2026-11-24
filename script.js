@@ -1,74 +1,171 @@
 
-const phoneNumber = "212779583670";
-
-const packages = [
-  {
-    name: "100 DIAMONDS",
-    diamonds: 100,
-    price: 14
-  },
-  {
-    name: "210 DIAMONDS",
-    diamonds: 210,
-    price: 28
-  },
-  {
-    name: "530 DIAMONDS",
-    diamonds: 530,
-    price: 70
-  },
-  {
-    name: "1080 DIAMONDS",
-    diamonds: 1080,
-    price: 140
-  },
-  {
-    name: "2200 DIAMONDS",
-    diamonds: 2200,
-    price: 280
-  }
+const products = [
+  { name: "100 Diamonds", price: 15, icon: "💎" },
+  { name: "210 Diamonds", price: 28, icon: "💎" },
+  { name: "530 Diamonds", price: 70, icon: "💎" },
+  { name: "1080 Diamonds", price: 140, icon: "💎" },
+  { name: "2200 Diamonds", price: 280, icon: "💎" },
+  { name: "BOOYAH PASS", price: 45, icon: "🎟️" }
 ];
 
-const productsContainer = document.getElementById("products");
+const whatsappNumber = "212779583670";
+let currentOrder = null;
 
-packages.forEach((item) => {
+// عرض المنتجات
+const productsList = document.getElementById("productsList");
 
+products.forEach((product, index) => {
   const card = document.createElement("div");
-  card.className = "product";
+  card.className = "product-card";
 
-  card.innerHTML = `
-    <div class="diamond-icon">💎</div>
+  const icon = document.createElement("div");
+  icon.className = "product-icon";
+  icon.textContent = product.icon;
 
-    <h3>${item.name}</h3>
+  const name = document.createElement("h3");
+  name.textContent = product.name;
 
-    <div class="price">
-      ${item.price}
-      <span class="currency">DH</span>
-    </div>
+  const price = document.createElement("div");
+  price.className = "price";
+  price.textContent = product.price + " DH";
 
-    <a class="order-btn" href="#" target="_blank">
-      ORDER NOW
-    </a>
-  `;
+  const button = document.createElement("button");
+  button.className = "buy-btn";
+  button.textContent = "اشتر الآن";
+  button.addEventListener("click", () => selectProduct(index));
 
-  const orderButton = card.querySelector(".order-btn");
+  card.append(icon, name, price, button);
+  productsList.appendChild(card);
+});
 
-  orderButton.addEventListener("click", (event) => {
-    event.preventDefault();
+// لائحة الأثمنة
+const priceList = document.getElementById("priceList");
 
-    const message =
-      `Hello OUSSAMA SHOP!\n\n` +
-      `I want to order:\n` +
-      `${item.diamonds} Diamonds\n` +
-      `Price: ${item.price} DH\n\n` +
-      `Please confirm the payment method and delivery.`;
+products.forEach(product => {
+  const row = document.createElement("div");
+  row.className = "price-row";
 
-    const whatsappLink =
-      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  const name = document.createElement("span");
+  name.textContent = product.icon + " " + product.name;
 
-    window.open(whatsappLink, "_blank");
+  const price = document.createElement("strong");
+  price.textContent = product.price + " DH";
+
+  row.append(name, price);
+  priceList.appendChild(row);
+});
+
+// اختيار المنتج
+function selectProduct(index) {
+  const product = products[index];
+
+  document.getElementById("selectedProduct").value =
+    product.name + " - " + product.price + " DH";
+
+  document.getElementById("order").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+// إرسال الطلب
+function sendOrder() {
+  const product = document.getElementById("selectedProduct").value.trim();
+  const playerId = document.getElementById("playerId").value.trim();
+  const name = document.getElementById("customerName").value.trim();
+
+  if (!product || !playerId || !name) {
+    alert("المرجو اختيار الباقة وإدخال الاسم وPlayer ID!");
+    return;
+  }
+
+  if (!/^\d+$/.test(playerId)) {
+    alert("Player ID خاصو يكون أرقام فقط!");
+    return;
+  }
+
+  currentOrder = { product, playerId, name };
+
+  const message =
+`🔥 OUSSAMA SHOP - NEW ORDER
+
+👤 الاسم: ${name}
+🎮 Player ID: ${playerId}
+💎 الباقة: ${product}
+🟠 طريقة الدفع: Orange Money
+
+الحالة: طلب جديد في انتظار المراجعة`;
+
+  const url = "https://wa.me/" + whatsappNumber +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+
+  document.getElementById("codeSection").classList.remove("hidden");
+
+  document.getElementById("codeSection").scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+// خانات رمز الطلب
+const digits = document.querySelectorAll(".code-digit");
+
+digits.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    input.value = input.value.replace(/\D/g, "").slice(0, 1);
+
+    if (input.value && index < digits.length - 1) {
+      digits[index + 1].focus();
+    }
   });
 
-  productsContainer.appendChild(card);
-
+  input.addEventListener("keydown", event => {
+    if (event.key === "Backspace" && !input.value && index > 0) {
+      digits[index - 1].focus();
+    }
+  });
 });
+
+// إرسال رمز الطلب
+function sendCode() {
+  if (!currentOrder) {
+    alert("أرسل الطلب الأول!");
+    return;
+  }
+
+  const code = Array.from(digits)
+    .map(input => input.value)
+    .join("");
+
+  if (!/^\d{4}$/.test(code)) {
+    alert("دخل 4 أرقام كاملة!");
+    return;
+  }
+
+  const message =
+`🔥 OUSSAMA SHOP - ORDER CODE
+
+👤 الاسم: ${currentOrder.name}
+🎮 Player ID: ${currentOrder.playerId}
+💎 الباقة: ${currentOrder.product}
+
+🔢 رمز الطلب: ${code}
+
+الحالة: في انتظار المراجعة`;
+
+  const url = "https://wa.me/" + whatsappNumber +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
+
+// نسخ الأثمنة
+function copyPrices() {
+  const text = products.map(product =>
+    product.name + " - " + product.price + " DH"
+  ).join("\n");
+
+  navigator.clipboard.writeText(text)
+    .then(() => alert("تم نسخ الأثمنة بنجاح!"))
+    .catch(() => alert("تعذر النسخ، حاول من جديد."));
+}
