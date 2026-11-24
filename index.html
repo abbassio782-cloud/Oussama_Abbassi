@@ -1,91 +1,125 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OUSSAMA SHOP | FREE FIRE</title>
+  <meta name="theme-color" content="#090914">
+  <title>OUSSAMA SHOP</title>
   <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header class="header">
-  <div class="logo">OUSSAMA <span>SHOP</span></div>
-  <a href="#diamonds" class="header-btn">BUY DIAMONDS</a>
+<header class="topbar">
+  <div class="logo">🔥 OUSSAMA <span>SHOP</span></div>
+  <span class="online">● ONLINE</span>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <span class="tag">🔥 FREE FIRE DIAMONDS</span>
-    <h1>OUSSAMA <span>SHOP</span></h1>
-    <h2>TOP UP YOUR GAME</h2>
-    <p>Get your Free Fire Diamonds at the best prices!</p>
-    <a href="#diamonds" class="main-btn">EXPLORE PACKAGES</a>
+  <span class="tag">WELCOME TO OUSSAMA SHOP</span>
+  <h1>FREE FIRE <span>DIAMONDS</span></h1>
+  <p>شحن جواهر فري فاير وبوياه باس</p>
+  <a href="#products" class="main-btn">تسوق الآن</a>
+</section>
+
+<main>
+
+<section id="products" class="section">
+  <div class="heading">
+    <span>OUR PRODUCTS</span>
+    <h2>💎 اختار الباقة ديالك</h2>
+  </div>
+  <div class="products" id="productsList"></div>
+</section>
+
+<section id="order" class="section">
+  <div class="heading">
+    <span>ORDER NOW</span>
+    <h2>📦 معلومات الطلب</h2>
+  </div>
+
+  <div class="order-box">
+
+    <label>الباقة المختارة</label>
+    <input id="selectedProduct" readonly placeholder="اختار الباقة">
+
+    <label>Player ID</label>
+    <input id="playerId" placeholder="أدخل Player ID" inputmode="numeric">
+
+    <label>الاسم</label>
+    <input id="customerName" placeholder="اسمك">
+
+    <div class="payment">
+      <h3>🟠 طريقة الدفع</h3>
+      <div class="orange-card">
+        <span class="orange-logo">ORANGE</span>
+        <strong>Orange Money</strong>
+        <p>الدفع عبر Orange Money</p>
+      </div>
+      <p class="hint">تأكد من معلومات الدفع قبل التحويل.</p>
+    </div>
+
+    <button class="whatsapp-btn" onclick="sendOrder()">
+      📲 إرسال الطلب عبر واتساب
+    </button>
+
+    <div id="codeSection" class="code-section hidden">
+      <h3>🔢 رمز الطلب</h3>
+      <p>أدخل رمز الطلب الخاص بك المكون من 4 أرقام</p>
+
+      <div class="code-inputs" dir="ltr">
+        <input maxlength="1" inputmode="numeric" class="code-digit">
+        <input maxlength="1" inputmode="numeric" class="code-digit">
+        <input maxlength="1" inputmode="numeric" class="code-digit">
+        <input maxlength="1" inputmode="numeric" class="code-digit">
+      </div>
+
+      <button class="whatsapp-btn" onclick="sendCode()">
+        إرسال رمز الطلب
+      </button>
+    </div>
+
+    <p class="notice">⚠️ لا تدخل كلمة مرور اللعبة أو PIN أو OTP ديال Orange.</p>
   </div>
 </section>
 
-<section class="diamonds" id="diamonds">
-  <h2 class="section-title">DIAMOND <span>PACKAGES</span></h2>
-  <p class="section-desc">Choose your favorite package</p>
-
-  <div class="products" id="products"></div>
-</section>
-
-<section class="steps">
-  <h2>HOW TO <span>ORDER?</span></h2>
-
-  <div class="steps-grid">
-    <div class="step">
-      <h3>01</h3>
-      <h4>Choose Package</h4>
-      <p>Select your Diamonds package.</p>
-    </div>
-
-    <div class="step">
-      <h3>02</h3>
-      <h4>Send Request</h4>
-      <p>Send your order through WhatsApp.</p>
-    </div>
-
-    <div class="step">
-      <h3>03</h3>
-      <h4>Confirm Payment</h4>
-      <p>Contact the shop to confirm payment and delivery.</p>
-    </div>
+<section class="section">
+  <div class="heading">
+    <span>PRICE LIST</span>
+    <h2>📋 لائحة الأثمنة</h2>
   </div>
+  <div id="priceList" class="price-list"></div>
+  <button class="copy-btn" onclick="copyPrices()">📋 نسخ الأثمنة</button>
 </section>
 
-<section class="contact">
-  <h2>READY TO <span>TOP UP?</span></h2>
-  <p>Contact us for your Diamond order.</p>
-  <a href="https://wa.me/212779583670" target="_blank" class="main-btn">
-    CONTACT WHATSAPP
-  </a>
-</section>
-
-<footer>
-  <div class="footer-logo">OUSSAMA SHOP</div>
-  <p>FREE FIRE DIAMONDS STORE</p>
+<section class="section">
+  <div class="heading">
+    <span>OUR TEAM</span>
+    <h2>👨‍💻 فريق العمل</h2>
+  </div>
 
   <div class="team">
-    <h3>TEAM WORK</h3>
-    <div class="members">
-      <div class="member">
-        <span>OWNER</span>
-        <h4>OUSSAMA ABBASSI</h4>
-      </div>
+    <div class="team-card">
+      <div class="avatar">👑</div>
+      <h3>OUSSAMA ABBASSI</h3>
+      <span>DEVELOPER</span>
+    </div>
 
-      <div class="member">
-        <span>TEAM</span>
-        <h4>MOHAMED AMINE DOUADI</h4>
-      </div>
+    <div class="team-card">
+      <div class="avatar">⚡</div>
+      <h3>MOHAMED AMINE DAOUDI</h3>
+      <span>DEVELOPER</span>
     </div>
   </div>
+</section>
 
-  <p class="copyright">
-    © 2026 OUSSAMA SHOP. ALL RIGHTS RESERVED.
-  </p>
+</main>
+
+<footer>
+  <h2>🔥 OUSSAMA SHOP</h2>
+  <p>شكراً لثقتكم بنا ❤️</p>
+  <small>© 2026 OUSSAMA SHOP</small>
 </footer>
 
 <script src="script.js"></script>
