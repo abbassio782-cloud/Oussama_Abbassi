@@ -1,435 +1,233 @@
-:root {
-  --bg: #080b16;
-  --panel: #11182a;
-  --text: #f5f7ff;
-  --muted: #9da9c2;
-  --purple: #8b5cf6;
-  --cyan: #22d3ee;
-  --border: rgba(255,255,255,.09);
-}
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RIFII CHAMPIONS 2027</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-html {
-  scroll-behavior: smooth;
-}
+<header class="topbar">
+  <a class="brand" href="#">🏆 RIFII <span>CHAMPIONS</span> 2027</a>
+  <button class="admin-top" id="adminTopButton">🔐 ADMIN</button>
+</header>
 
-body {
-  font-family: "Cairo", sans-serif;
-  background:
-    radial-gradient(circle at 15% 10%, rgba(91,55,180,.18), transparent 30%),
-    radial-gradient(circle at 90% 40%, rgba(20,160,190,.12), transparent 30%),
-    var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
+<section class="hero">
+  <div class="hero-content">
+    <span class="tag">FREE FIRE TOURNAMENTS</span>
+    <h1>RIFII CHAMPIONS <span>2027</span></h1>
+    <p>شارك في المنافسة، سجل فريقك، وكن بطل البطولة!</p>
+    <a href="#tournaments" class="main-btn">اكتشف البطولات</a>
+  </div>
+</section>
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+<main>
+  <section class="section" id="tournaments">
+    <div class="section-heading">
+      <span class="tag">COMPETITIONS</span>
+      <h2>البطولات المتاحة</h2>
+      <p>اختار البطولة المناسبة ليك وسجل دابا</p>
+    </div>
+    <div id="tournamentList" class="tournament-list"></div>
+  </section>
 
-.header {
-  min-height: 75px;
-  padding: 14px 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  background: rgba(8,11,22,.9);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
+  <section class="section rules">
+    <h2>📜 شروط المشاركة</h2>
+    <div class="rule-grid">
+      <div class="rule-card">🎮 اختار نوع البطولة المناسب ليك</div>
+      <div class="rule-card">📝 عمر معلومات التسجيل الصحيحة</div>
+      <div class="rule-card">👑 الإدارة هي اللي كتقبل أو ترفض الطلب</div>
+      <div class="rule-card">💰 الأداء اختياري حسب قرار الإدارة</div>
+    </div>
+  </section>
 
-.logo {
-  direction: ltr;
-  font-size: 20px;
-  font-weight: 900;
-}
+  <section class="section contact">
+    <h2>📞 تواصل معنا</h2>
+    <p>للاستفسار حول البطولات والتسجيل</p>
+    <a class="whatsapp-btn" href="https://wa.me/212779583670" target="_blank">تواصل عبر WhatsApp</a>
+  </section>
+</main>
 
-.logo b,
-footer h2 span {
-  color: var(--cyan);
-}
+<section id="admin" class="admin-section hidden">
+  <div class="admin-header">
+    <div>
+      <span class="tag">CONTROL CENTER</span>
+      <h2>لوحة الإدارة</h2>
+      <p id="loggedAdminInfo"></p>
+    </div>
+    <button class="close-btn" id="closeAdmin">إغلاق ✕</button>
+  </div>
 
-.contact,
-.footer-link {
-  padding: 9px 16px;
-  border: 1px solid rgba(34,211,238,.35);
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 700;
-}
+  <div id="loginBox" class="admin-box">
+    <h3>🔐 تسجيل دخول الإدارة</h3>
+    <label>اسم Admin</label>
+    <input id="loginUsername" placeholder="اسم المستخدم">
+    <label>كلمة المرور</label>
+    <input id="loginPassword" type="password" placeholder="كلمة المرور">
+    <button class="gold-btn" id="loginButton">دخول</button>
+    <p class="hint">الحساب الأول: admin | كلمة المرور: RIFII</p>
+    <p id="loginMessage" class="message"></p>
+  </div>
 
-.hero {
-  width: min(1120px, 88%);
-  min-height: 300px;
-  margin: 50px auto 30px;
-  padding: 40px;
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  background: linear-gradient(115deg, #171632, #102438);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
+  <div id="dashboard" class="hidden">
+    <div class="stats">
+      <div class="stat"><span>كل الطلبات</span><strong id="totalRequests">0</strong></div>
+      <div class="stat"><span>المقبولون</span><strong id="acceptedRequests">0</strong></div>
+      <div class="stat"><span>المرفوضون</span><strong id="rejectedRequests">0</strong></div>
+      <div class="stat"><span>قيد المراجعة</span><strong id="pendingRequests">0</strong></div>
+    </div>
 
-.tag {
-  color: var(--cyan);
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  direction: ltr;
-  display: inline-block;
-}
+    <div class="admin-box">
+      <h3>📩 طلبات التسجيل</h3>
+      <div id="adminRequests" class="request-list"></div>
+    </div>
 
-.hero h1 {
-  font-size: clamp(30px, 5vw, 48px);
-  font-weight: 900;
-  margin: 12px 0;
-}
+    <div class="admin-box">
+      <h3>🏆 إدارة البطولات</h3>
+      <div class="form-grid">
+        <div>
+          <label>اسم البطولة</label>
+          <input id="newTournamentName" placeholder="مثلاً RAMADAN SOLO">
+        </div>
+        <div>
+          <label>نوع البطولة</label>
+          <select id="newTournamentType">
+            <option value="SOLO">SOLO</option>
+            <option value="DUO">DUO</option>
+            <option value="SQUAD">SQUAD</option>
+          </select>
+        </div>
+        <div>
+          <label>التاريخ</label>
+          <input id="newTournamentDate" type="date">
+        </div>
+        <div>
+          <label>الساعة</label>
+          <input id="newTournamentTime" type="time" value="21:00">
+        </div>
+        <div>
+          <label>ثمن المشاركة (DH)</label>
+          <input id="newTournamentPrice" type="number" min="0" value="5">
+        </div>
+      </div>
+      <button class="gold-btn" id="addTournamentButton">+ إضافة البطولة</button>
+      <div id="manageTournaments" class="manage-list"></div>
+    </div>
 
-.hero h1 span {
-  color: var(--cyan);
-  direction: ltr;
-  display: inline-block;
-}
+    <div class="admin-box">
+      <h3>👑 إدارة حسابات Admin</h3>
+      <p class="hint">إضافة وحذف حسابات الإدارة متاحة للـ ADMIN الرئيسي فقط.</p>
+      <div id="adminManagement">
+        <div class="form-grid">
+          <div>
+            <label>اسم المستخدم الجديد</label>
+            <input id="newAdminUsername" placeholder="مثلاً admin2">
+          </div>
+          <div>
+            <label>كلمة المرور</label>
+            <input id="newAdminPassword" type="password" placeholder="كلمة مرور جديدة">
+          </div>
+          <div>
+            <label>الرتبة</label>
+            <select id="newAdminRole">
+              <option value="assistant">ADMIN مساعد</option>
+              <option value="main">ADMIN رئيسي</option>
+            </select>
+          </div>
+        </div>
+        <button class="gold-btn" id="addAdminButton">+ إضافة Admin</button>
+        <div id="adminAccounts" class="manage-list"></div>
+      </div>
+      <p id="adminPermissionMessage" class="message"></p>
+    </div>
 
-.hero p,
-.heading p {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 2;
-}
+    <button class="logout-btn" id="logoutButton">تسجيل الخروج</button>
+  </div>
+</section>
 
-.main-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 11px 22px;
-  border-radius: 12px;
-  background: linear-gradient(120deg, var(--purple), #5865ed);
-  font-weight: 800;
-}
+<div class="modal hidden" id="registrationModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeRegistration">✕</button>
+    <span class="tag">TOURNAMENT REGISTRATION</span>
+    <h2>التسجيل في البطولة</h2>
+    <p id="selectedTournamentInfo" class="hint"></p>
 
-.hero-icon {
-  font-size: 120px;
-  filter: drop-shadow(0 0 25px rgba(34,211,238,.5));
-}
+    <form id="registrationForm">
+      <input type="hidden" id="registrationTournamentId">
 
-.features {
-  width: min(1120px, 88%);
-  margin: 25px auto 65px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
+      <label>الاسم الكامل *</label>
+      <input id="playerFullName" required placeholder="الاسم الكامل">
 
-.features div {
-  padding: 18px;
-  border-radius: 15px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  text-align: center;
-  font-weight: 700;
-}
+      <label>اسمك داخل اللعبة *</label>
+      <input id="playerGameName" required placeholder="Game Name">
 
-.products-section,
-.order-section {
-  width: min(1120px, 88%);
-  margin: 0 auto 75px;
-}
+      <label>Player ID *</label>
+      <input id="playerId" required placeholder="ID ديالك">
 
-.heading {
-  text-align: center;
-  margin-bottom: 28px;
-}
+      <label>رقم الهاتف (اختياري)</label>
+      <input id="playerPhone" placeholder="رقم الهاتف">
 
-.heading h2 {
-  font-size: 29px;
-  font-weight: 900;
-  margin: 7px 0;
-}
+      <div id="teamMembersArea"></div>
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
+      <div class="optional-payment">
+        <h3>💰 معلومات الأداء (اختيارية)</h3>
+        <p>تقدر تخلي هاد الخانات خاويين. الإدارة هي اللي كتقرر قبول الطلب.</p>
+        <label>رمز الأداء (اختياري)</label>
+        <input id="paymentCode" placeholder="إلا كان عندك رمز الأداء">
+        <label>ملاحظة حول الأداء (اختياري)</label>
+        <textarea id="paymentNote" rows="3" placeholder="مثلاً: لم أقم بالأداء بعد"></textarea>
+      </div>
 
-.product-card {
-  padding: 23px 18px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, #17223a, #101626);
-  border: 1px solid var(--border);
-  text-align: center;
-  transition: .25s;
-}
+      <button type="submit" class="gold-btn full-btn">إرسال طلب التسجيل</button>
+      <p id="registrationMessage" class="message"></p>
+    </form>
+  </div>
+</div>
 
-.product-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--cyan);
-}
+<div class="modal hidden" id="editTournamentModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closeEditTournament">✕</button>
+    <h2>تعديل البطولة</h2>
+    <input type="hidden" id="editTournamentId">
+    <label>اسم البطولة</label>
+    <input id="editTournamentName">
+    <label>نوع البطولة</label>
+    <select id="editTournamentType">
+      <option value="SOLO">SOLO</option>
+      <option value="DUO">DUO</option>
+      <option value="SQUAD">SQUAD</option>
+    </select>
+    <label>التاريخ</label>
+    <input id="editTournamentDate" type="date">
+    <label>الساعة</label>
+    <input id="editTournamentTime" type="time">
+    <label>الثمن DH</label>
+    <input id="editTournamentPrice" type="number" min="0">
+    <button class="gold-btn full-btn" id="saveTournamentEdit">حفظ التعديلات</button>
+  </div>
+</div>
 
-.product-card.selected {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 1px rgba(34,211,238,.2);
-}
+<footer>
+  <h2>RIFII CHAMPIONS 2027</h2>
+  <p>صناعة المنافسة تبدأ من هنا 🏆</p>
+  <div class="team">
+    <h3>OUR TEAM</h3>
+    <div class="team-member">
+      <span>👑</span>
+      <h4>OUSSAMA ABBASSI</h4>
+      <p>FOUNDER & ORGANIZER</p>
+    </div>
+    <div class="team-member">
+      <span>⚡</span>
+      <h4>MOHAMED AMINE DAOUDI</h4>
+      <p>TEAM MEMBER</p>
+    </div>
+  </div>
+  <p class="copyright">© 2027 RIFII CHAMPIONS. ALL RIGHTS RESERVED.</p>
+</footer>
 
-.product-icon {
-  width: 76px;
-  height: 76px;
-  display: grid;
-  place-items: center;
-  margin: 0 auto 13px;
-  border-radius: 23px;
-  font-size: 39px;
-  background: linear-gradient(135deg, rgba(139,92,246,.25), rgba(34,211,238,.15));
-}
-
-.product-card h3 {
-  font-size: 19px;
-  margin-bottom: 5px;
-}
-
-.product-card p {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.product-price {
-  font-size: 26px;
-  font-weight: 900;
-  color: var(--cyan);
-  margin: 12px 0;
-  direction: ltr;
-}
-
-.choose-button,
-.submit-button {
-  width: 100%;
-  padding: 12px;
-  border: 0;
-  border-radius: 11px;
-  color: white;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
-  transition: .2s;
-}
-
-.choose-button {
-  background: linear-gradient(120deg, var(--purple), #5369ed);
-}
-
-.choose-button:hover,
-.submit-button:hover {
-  filter: brightness(1.15);
-  transform: translateY(-2px);
-}
-
-.order-section {
-  max-width: 650px;
-  padding: 30px;
-  background: linear-gradient(145deg, #151e33, #101625);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-}
-
-.selected-product {
-  padding: 15px;
-  border-radius: 13px;
-  background: rgba(34,211,238,.07);
-  border: 1px solid rgba(34,211,238,.2);
-  margin-bottom: 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.selected-product span {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.selected-product strong {
-  font-size: 14px;
-}
-
-.selected-product b {
-  color: var(--cyan);
-  direction: ltr;
-}
-
-form label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-form input,
-form select,
-form textarea {
-  width: 100%;
-  padding: 13px 14px;
-  margin-bottom: 17px;
-  background: #0b1221;
-  color: white;
-  border: 1px solid var(--border);
-  outline: none;
-  border-radius: 11px;
-  font-family: inherit;
-  font-size: 14px;
-}
-
-form input:focus,
-form select:focus,
-form textarea:focus {
-  border-color: var(--cyan);
-  box-shadow: 0 0 0 3px rgba(34,211,238,.08);
-}
-
-form input::placeholder,
-form textarea::placeholder {
-  color: #78849c;
-}
-
-form textarea {
-  resize: vertical;
-}
-
-.submit-button {
-  background: linear-gradient(110deg, #16a34a, #0d9660);
-  font-size: 15px;
-}
-
-.note {
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.9;
-  margin-top: 12px;
-  text-align: center;
-}
-
-footer {
-  text-align: center;
-  padding: 40px 6% 22px;
-  border-top: 1px solid var(--border);
-  background: rgba(7,10,19,.7);
-}
-
-footer h2 {
-  font-size: 25px;
-  font-weight: 900;
-  direction: ltr;
-}
-
-footer > p {
-  color: var(--muted);
-  font-size: 13px;
-  margin: 5px 0 25px;
-}
-
-footer h3 {
-  color: var(--cyan);
-  font-size: 13px;
-  letter-spacing: 2px;
-  margin-bottom: 15px;
-  direction: ltr;
-}
-
-.team {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.member {
-  min-width: 210px;
-  padding: 12px 17px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--panel);
-  direction: ltr;
-}
-
-.member strong {
-  display: block;
-  font-size: 12px;
-}
-
-.member span {
-  display: inline-block;
-  margin-top: 6px;
-  padding: 2px 9px;
-  border-radius: 20px;
-  background: rgba(139,92,246,.2);
-  color: #c4b5fd;
-  font-size: 9px;
-  font-weight: 800;
-}
-
-.footer-link {
-  display: inline-block;
-  margin: 22px 0;
-  color: #86efac;
-  border-color: rgba(34,197,94,.3);
-}
-
-footer small {
-  display: block;
-  color: #69758e;
-  font-size: 10px;
-  direction: ltr;
-}
-
-@media (max-width: 800px) {
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 560px) {
-  .hero {
-    width: 90%;
-    padding: 28px 20px;
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-icon {
-    font-size: 85px;
-  }
-
-  .features {
-    width: 90%;
-    grid-template-columns: 1fr;
-  }
-
-  .products-section,
-  .order-section {
-    width: 90%;
-  }
-
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .order-section {
-    padding: 22px 16px;
-  }
-
-  .heading h2 {
-    font-size: 25px;
-  }
-}
+<script src="script.js"></script>
+</body>
+</html>
