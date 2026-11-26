@@ -19,19 +19,34 @@
   padding: 0;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  background: #100b1d;
+}
 
 body {
   font-family: 'Cairo', sans-serif;
-  background: var(--bg);
+  background-color: #100b1d;
+  background-image:
+    radial-gradient(ellipse at top, #382052 0%, transparent 55%),
+    linear-gradient(140deg, #100b1d, #160d25 55%, #0b0712);
+  background-attachment: fixed;
   color: var(--text);
   line-height: 1.7;
+  min-height: 100vh;
 }
 
-button, input, select, textarea { font: inherit; }
-button { cursor: pointer; }
+button, input, select, textarea {
+  font: inherit;
+}
 
-.hidden { display: none !important; }
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
 
 .topbar {
   min-height: 75px;
@@ -51,7 +66,9 @@ button { cursor: pointer; }
   text-decoration: none;
 }
 
-.brand span { color: var(--gold); }
+.brand span {
+  color: var(--gold);
+}
 
 .admin-top {
   border: 1px solid var(--gold);
@@ -77,7 +94,9 @@ button { cursor: pointer; }
   border-bottom: 1px solid #f4c75e33;
 }
 
-.hero-content { max-width: 800px; }
+.hero-content {
+  max-width: 800px;
+}
 
 .tag {
   display: inline-block;
@@ -98,9 +117,13 @@ button { cursor: pointer; }
   font-weight: 900;
 }
 
-.hero h1 span { color: var(--gold); }
+.hero h1 span {
+  color: var(--gold);
+}
 
-.hero p, .section-heading p { color: var(--muted); }
+.hero p, .section-heading p {
+  color: var(--muted);
+}
 
 .main-btn, .gold-btn {
   display: inline-block;
@@ -119,8 +142,15 @@ button { cursor: pointer; }
   margin: 65px auto;
 }
 
-.section-heading { text-align: center; margin-bottom: 30px; }
-.section-heading h2, .section h2 { font-size: 27px; margin: 10px 0; }
+.section-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-heading h2, .section h2 {
+  font-size: 27px;
+  margin: 10px 0;
+}
 
 .tournament-list {
   display: flex;
@@ -163,9 +193,14 @@ button { cursor: pointer; }
   font-weight: 900;
 }
 
-.closed-label { color: var(--red); font-weight: 800; }
+.closed-label {
+  color: var(--red);
+  font-weight: 800;
+}
 
-.rules h2, .contact h2 { color: var(--gold); }
+.rules h2, .contact h2 {
+  color: var(--gold);
+}
 
 .rule-grid {
   display: grid;
@@ -188,7 +223,9 @@ button { cursor: pointer; }
   border-radius: 16px;
 }
 
-.contact p { color: var(--muted); }
+.contact p {
+  color: var(--muted);
+}
 
 .whatsapp-btn {
   display: inline-block;
@@ -218,7 +255,9 @@ button { cursor: pointer; }
   margin-bottom: 25px;
 }
 
-.admin-header h2 { color: var(--gold); }
+.admin-header h2 {
+  color: var(--gold);
+}
 
 .close-btn, .logout-btn {
   background: #38233f;
@@ -236,7 +275,10 @@ button { cursor: pointer; }
   margin: 20px 0;
 }
 
-.admin-box h3 { color: var(--gold); margin-bottom: 15px; }
+.admin-box h3 {
+  color: var(--gold);
+  margin-bottom: 15px;
+}
 
 label {
   display: block;
@@ -260,11 +302,20 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--gold);
 }
 
-select option { background: #1b122b; }
+select option {
+  background: #1b122b;
+}
 
-.hint { color: var(--muted); font-size: 13px; margin-top: 8px; }
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 8px;
+}
 
-.message { margin-top: 12px; font-weight: 800; }
+.message {
+  margin-top: 12px;
+  font-weight: 800;
+}
 
 .stats {
   display: grid;
@@ -280,8 +331,17 @@ select option { background: #1b122b; }
   text-align: center;
 }
 
-.stat span { display: block; color: var(--muted); font-size: 13px; }
-.stat strong { display: block; color: var(--gold); font-size: 27px; }
+.stat span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat strong {
+  display: block;
+  color: var(--gold);
+  font-size: 27px;
+}
 
 .form-grid {
   display: grid;
@@ -304,9 +364,15 @@ select option { background: #1b122b; }
   overflow-wrap: anywhere;
 }
 
-.request-card h4, .manage-card h4 { color: var(--gold); font-size: 18px; }
+.request-card h4, .manage-card h4 {
+  color: var(--gold);
+  font-size: 18px;
+}
 
-.request-card p, .manage-card p { color: var(--muted); font-size: 13px; }
+.request-card p, .manage-card p {
+  color: var(--muted);
+  font-size: 13px;
+}
 
 .request-actions, .manage-actions {
   display: flex;
@@ -322,15 +388,40 @@ select option { background: #1b122b; }
   font-weight: 800;
 }
 
-.accept-btn { background: var(--green); color: #071a11; }
-.reject-btn { background: var(--red); color: white; }
-.small-btn { background: #40304f; color: white; }
-.status { font-weight: 900; }
-.status.pending { color: var(--gold); }
-.status.accepted { color: var(--green); }
-.status.rejected { color: var(--red); }
+.accept-btn {
+  background: var(--green);
+  color: #071a11;
+}
 
-.full-btn { width: 100%; }
+.reject-btn {
+  background: var(--red);
+  color: white;
+}
+
+.small-btn {
+  background: #40304f;
+  color: white;
+}
+
+.status {
+  font-weight: 900;
+}
+
+.status.pending {
+  color: var(--gold);
+}
+
+.status.accepted {
+  color: var(--green);
+}
+
+.status.rejected {
+  color: var(--red);
+}
+
+.full-btn {
+  width: 100%;
+}
 
 .modal {
   position: fixed;
@@ -355,7 +446,10 @@ select option { background: #1b122b; }
   margin: auto;
 }
 
-.modal-content h2 { color: var(--gold); margin: 12px 0; }
+.modal-content h2 {
+  color: var(--gold);
+  margin: 12px 0;
+}
 
 .modal-close {
   float: left;
@@ -374,8 +468,15 @@ select option { background: #1b122b; }
   margin-top: 20px;
 }
 
-.optional-payment h3 { color: var(--gold); font-size: 16px; }
-.optional-payment p { color: var(--muted); font-size: 13px; }
+.optional-payment h3 {
+  color: var(--gold);
+  font-size: 16px;
+}
+
+.optional-payment p {
+  color: var(--muted);
+  font-size: 13px;
+}
 
 .team {
   border-top: 1px solid #f4c75e33;
@@ -383,7 +484,10 @@ select option { background: #1b122b; }
   padding-top: 25px;
 }
 
-.team h3 { color: var(--gold); margin-bottom: 20px; }
+.team h3 {
+  color: var(--gold);
+  margin-bottom: 20px;
+}
 
 .team-member {
   display: inline-block;
@@ -396,7 +500,9 @@ select option { background: #1b122b; }
   border-radius: 14px;
 }
 
-.team-member span { font-size: 30px; }
+.team-member span {
+  font-size: 30px;
+}
 
 .team-member h4 {
   color: var(--gold);
@@ -406,7 +512,10 @@ select option { background: #1b122b; }
   overflow-wrap: anywhere;
 }
 
-.team-member p { color: var(--muted); font-size: 12px; }
+.team-member p {
+  color: var(--muted);
+  font-size: 12px;
+}
 
 footer {
   text-align: center;
@@ -415,7 +524,9 @@ footer {
   border-top: 1px solid #f4c75e33;
 }
 
-footer > h2 { color: var(--gold); }
+footer > h2 {
+  color: var(--gold);
+}
 
 .copyright {
   color: #877995;
@@ -424,10 +535,28 @@ footer > h2 { color: var(--gold); }
 }
 
 @media (max-width: 600px) {
-  .topbar { padding: 12px 4%; }
-  .hero { min-height: 330px; padding: 55px 15px; }
-  .tournament-card { padding: 17px; }
-  .admin-section { padding: 14px; }
-  .admin-box { padding: 15px; }
-  .admin-header { align-items: flex-start; }
+  .topbar {
+    padding: 12px 4%;
+  }
+
+  .hero {
+    min-height: 330px;
+    padding: 55px 15px;
+  }
+
+  .tournament-card {
+    padding: 17px;
+  }
+
+  .admin-section {
+    padding: 14px;
+  }
+
+  .admin-box {
+    padding: 15px;
+  }
+
+  .admin-header {
+    align-items: flex-start;
+  }
 }
