@@ -1,11 +1,19 @@
 
-const ADMIN_KEY = "rifii_admins_v6";
-const TOURNAMENT_KEY = "rifii_tournaments_v6";
-const REQUEST_KEY = "rifii_requests_v6";
-
 const $ = id => document.getElementById(id);
 
-function load(key, fallback) {
+const KEYS = {
+  admins: "rifii_admins_v6",
+  tournaments: "rifii_tournaments_v6",
+  requests: "rifii_requests_v6"
+};
+
+const defaultTournaments = [
+  { id: "solo2027", name: "RAMADAN SOLO", type: "SOLO", date: "2027-02-12", time: "21:00", price: 5, open: true },
+  { id: "duo2027", name: "RAMADAN DUO", type: "DUO", date: "2027-02-17", time: "21:00", price: 5, open: true },
+  { id: "squad2027", name: "RAMADAN SQUAD", type: "SQUAD", date: "2027-02-22", time: "21:00", price: 5, open: true }
+];
+
+function read(key, fallback) {
   try {
     const value = JSON.parse(localStorage.getItem(key));
     return value ?? fallback;
@@ -14,72 +22,36 @@ function load(key, fallback) {
   }
 }
 
-function save(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
-}
-
-let admins = load(ADMIN_KEY, null);
-let tournaments = load(TOURNAMENT_KEY, null);
-let requests = load(REQUEST_KEY, []);
+let admins = read(KEYS.admins, []);
+let tournaments = read(KEYS.tournaments, defaultTournaments);
+let requests = read(KEYS.requests, []);
 let currentAdmin = null;
 
-if (!admins) {
-  admins = [{
-    id: "main-admin",
+function saveAll() {
+  localStorage.setItem(KEYS.admins, JSON.stringify(admins));
+  localStorage.setItem(KEYS.tournaments, JSON.stringify(tournaments));
+  localStorage.setItem(KEYS.requests, JSON.stringify(requests));
+}
+
+/* إنشاء حساب الدخول الأول أو إضافته إذا لم يكن موجوداً */
+if (!admins.some(a => a.username === "admin1")) {
+  admins.push({
     username: "admin1",
     password: "oussama2014",
     role: "main"
-  }];
-  save(ADMIN_KEY, admins);
+  });
+  saveAll();
 }
 
-if (!tournaments) {
-  tournaments = [
-    {
-      id: "solo-2027",
-      name: "RAMADAN SOLO",
-      type: "SOLO",
-      date: "2027-02-12",
-      time: "21:00",
-      price: 5,
-      open: true
-    },
-    {
-      id: "duo-2027",
-      name: "RAMADAN DUO",
-      type: "DUO",
-      date: "2027-02-17",
-      time: "21:00",
-      price: 5,
-      open: true
-    },
-    {
-      id: "squad-2027",
-      name: "RAMADAN SQUAD",
-      type: "SQUAD",
-      date: "2027-02-22",
-      time: "21:00",
-      price: 5,
-      open: true
-    }
-  ];
-  save(TOURNAMENT_KEY, tournaments);
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;",
+    '"': "&quot;", "'": "&#39;"
+  })[c]);
 }
 
-function saveAll() {
-  save(ADMIN_KEY, admins);
-  save(TOURNAMENT_KEY, tournaments);
-  save(REQUEST_KEY, requests);
+function teamSize(type) {
+  return type === "DUO" ? 1 : type === "SQUAD" ? 3 : 0;
 }
 
 function formatDate(date) {
@@ -87,589 +59,413 @@ function formatDate(date) {
   return new Date(date + "T12:00:00").toLocaleDateString("ar-MA");
 }
 
-function roleName(role) {
-  return role === "main" ? "ADMIN رئيسي" : "ADMIN مساعد";
-}
-
-/* عرض البطولات */
-
 function renderTournaments() {
   const container = $("tournamentList");
+  container.innerHTML = "";
 
   if (!tournaments.length) {
-    container.innerHTML = "<p>لا توجد بطولات حاليا.</p>";
+    container.innerHTML = "<p>لا توجد بطولات حالياً.</p>";
     return;
   }
 
-  container.innerHTML = tournaments.map(t => {
-    const accepted = requests.filter(
-      r => r.tournamentId === t.id && r.status === "accepted"
-    );
-
-    return `
-      <article class="tournament-card">
-        <div>
-          <span class="tag">${escapeHTML(t.type)}</span>
-          <h3>${escapeHTML(t.name)}</h3>
-          <div class="tournament-info">
-            <span>📅 ${formatDate(t.date)}</span>
-            <span>🕘 ${escapeHTML(t.time)}</span>
-            <span>💰 ${Number(t.price) || 0} DH</span>
-            <span>👥 ${accepted.length} مشارك مقبول</span>
-          </div>
-        </div>
-        <div>
-          ${t.open
-            ? `<button class="join-btn" onclick="openRegistration('${t.id}')">سجل الآن</button>`
-            : `<span class="closed-label">التسجيل مغلق</span>`}
-        </div>
-      </article>
-    `;
-  }).join("");
+  tournaments.forEach(t => {
+    const accepted = requests.filter(r => r.tournamentId === t.id && r.status === "accepted").length;
+    const card = document.createElement("article");
+    card.className = "tournament-card";
+    card.innerHTML = `
+      <div>
+        <h3>${escapeHTML(t.name)}</h3>
+        <p>🎮 النوع: ${escapeHTML(t.type)}</p>
+        <p>📅 التاريخ: ${formatDate(t.date)} - ${escapeHTML(t.time)}</p>
+        <p>💰 التسجيل: ${Number(t.price)} DH</p>
+        <p>👥 المقبولون: ${accepted}</p>
+        <p class="status ${t.open ? "" : "closed"}">${t.open ? "التسجيل مفتوح" : "التسجيل مغلق"}</p>
+      </div>
+      <div class="card-actions">
+        <button class="main-btn" ${t.open ? "" : "disabled"} data-register="${escapeHTML(t.id)}">
+          ${t.open ? "سجل الآن" : "التسجيل مغلق"}
+        </button>
+      </div>`;
+    container.appendChild(card);
+  });
 }
 
-/* التسجيل */
+function renderTeamInputs(type) {
+  const count = teamSize(type);
+  $("teamMembersArea").innerHTML = "";
+
+  for (let i = 1; i <= count; i++) {
+    $("teamMembersArea").insertAdjacentHTML("beforeend", `
+      <h3>عضو الفريق ${i}</h3>
+      <label>اسم العضو</label>
+      <input class="member-name" required placeholder="اسم اللاعب ${i}">
+      <label>Player ID للعضو</label>
+      <input class="member-id" required placeholder="ID اللاعب ${i}">
+    `);
+  }
+}
 
 function openRegistration(id) {
-  const tournament = tournaments.find(t => t.id === id);
-
-  if (!tournament || !tournament.open) {
-    alert("التسجيل في هذه البطولة مغلق.");
-    return;
-  }
-
-  $("registrationTournamentId").value = id;
-
-  $("selectedTournamentInfo").textContent =
-    `${tournament.name} | ${tournament.type} | ${formatDate(tournament.date)} | ${tournament.price} DH`;
-
-  const members = $("teamMembersArea");
-
-  const extraCount = tournament.type === "DUO" ? 1 :
-                     tournament.type === "SQUAD" ? 3 : 0;
-
-  members.innerHTML = "";
-
-  for (let i = 1; i <= extraCount; i++) {
-    members.innerHTML += `
-      <label>اسم اللاعب ${i + 1} في الفريق *</label>
-      <input class="member-name" required placeholder="اسم اللاعب ${i + 1}">
-      <label>Player ID للاعب ${i + 1} *</label>
-      <input class="member-id" required placeholder="Player ID">
-    `;
-  }
+  const t = tournaments.find(x => x.id === id);
+  if (!t || !t.open) return;
 
   $("registrationForm").reset();
   $("registrationTournamentId").value = id;
-
   $("selectedTournamentInfo").textContent =
-    `${tournament.name} | ${tournament.type} | ${formatDate(tournament.date)} | ${tournament.price} DH`;
-
+    `${t.name} | ${t.type} | ${formatDate(t.date)} | ${t.price} DH`;
   $("registrationMessage").textContent = "";
-  $("registrationModal").classList.remove("hidden");
+  renderTeamInputs(t.type);
+  $("registrationModal").classList.add("show");
 }
 
-$("closeRegistration").addEventListener("click", () => {
-  $("registrationModal").classList.add("hidden");
+function closeModal(id) {
+  $(id).classList.remove("show");
+}
+
+function renderStats() {
+  $("totalRequests").textContent = requests.length;
+  $("acceptedRequests").textContent = requests.filter(r => r.status === "accepted").length;
+  $("rejectedRequests").textContent = requests.filter(r => r.status === "rejected").length;
+  $("pendingRequests").textContent = requests.filter(r => r.status === "pending").length;
+}
+
+function renderAdminRequests() {
+  const box = $("adminRequests");
+  box.innerHTML = "";
+
+  if (!requests.length) {
+    box.innerHTML = "<p>لا توجد طلبات تسجيل حتى الآن.</p>";
+    return;
+  }
+
+  requests.forEach(r => {
+    const tournament = tournaments.find(t => t.id === r.tournamentId);
+    const card = document.createElement("article");
+    card.className = "request-card";
+    const members = (r.members || []).map(m =>
+      `<p>عضو: ${escapeHTML(m.name)} — ID: ${escapeHTML(m.id)}</p>`
+    ).join("");
+
+    card.innerHTML = `
+      <h4>${escapeHTML(r.fullName)} — ${escapeHTML(r.gameName)}</h4>
+      <p>البطولة: ${escapeHTML(tournament?.name || "بطولة محذوفة")}</p>
+      <p>Player ID: ${escapeHTML(r.playerId)}</p>
+      <p>الهاتف: ${escapeHTML(r.phone || "غير متوفر")}</p>
+      ${members}
+      <p>رمز الأداء: ${escapeHTML(r.paymentCode || "غير متوفر")}</p>
+      <p>ملاحظة الأداء: ${escapeHTML(r.paymentNote || "لا توجد")}</p>
+      <p>حالة الطلب: <strong>${r.status === "accepted" ? "مقبول" : r.status === "rejected" ? "مرفوض" : "معلق"}</strong></p>
+      <p>الأداء: <strong>${r.paid ? "تم التأكيد" : "لم يتم التأكيد"}</strong></p>
+      <div class="actions">
+        <button class="success-btn" data-action="accept" data-id="${r.id}">قبول</button>
+        <button class="danger-btn" data-action="reject" data-id="${r.id}">رفض</button>
+        <button class="small-btn" data-action="paid" data-id="${r.id}">${r.paid ? "إلغاء تأكيد الأداء" : "تأكيد الأداء"}</button>
+        <button class="small-btn" data-action="delete-request" data-id="${r.id}">حذف الطلب</button>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+function renderManageTournaments() {
+  const box = $("manageTournaments");
+  box.innerHTML = "";
+
+  tournaments.forEach(t => {
+    const card = document.createElement("article");
+    card.className = "manage-card";
+    card.innerHTML = `
+      <h4>${escapeHTML(t.name)}</h4>
+      <p>${escapeHTML(t.type)} | ${formatDate(t.date)} | ${t.price} DH</p>
+      <p>${t.open ? "التسجيل مفتوح" : "التسجيل مغلق"}</p>
+      <div class="actions">
+        <button class="small-btn" data-action="edit-tournament" data-id="${t.id}">تعديل</button>
+        <button class="small-btn" data-action="toggle-tournament" data-id="${t.id}">${t.open ? "إغلاق التسجيل" : "فتح التسجيل"}</button>
+        <button class="danger-btn" data-action="delete-tournament" data-id="${t.id}">حذف</button>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+function renderAdmins() {
+  const box = $("adminAccounts");
+  box.innerHTML = "";
+
+  admins.forEach(a => {
+    const card = document.createElement("article");
+    card.className = "account-card";
+    card.innerHTML = `
+      <p><strong>${escapeHTML(a.username)}</strong> — ${a.role === "main" ? "ADMIN رئيسي" : "ADMIN مساعد"}</p>
+      ${a.username === "admin1" ? "<p>الحساب الرئيسي الأصلي</p>" :
+      `<button class="danger-btn" data-action="delete-admin" data-id="${escapeHTML(a.username)}">حذف الحساب</button>`}`;
+    box.appendChild(card);
+  });
+}
+
+function renderDashboard() {
+  renderStats();
+  renderAdminRequests();
+  renderManageTournaments();
+  renderAdmins();
+
+  $("loggedAdminInfo").textContent =
+    `مرحباً ${currentAdmin.username} — ${currentAdmin.role === "main" ? "ADMIN رئيسي" : "ADMIN مساعد"}`;
+
+  $("adminPermissionMessage").textContent =
+    currentAdmin.role === "main" ? "يمكنك إدارة حسابات الإدارة." : "إدارة حسابات Admin متاحة للحساب الرئيسي فقط.";
+
+  $("adminManagement").classList.toggle("hidden", currentAdmin.role !== "main");
+}
+
+function showDashboard() {
+  $("loginBox").classList.add("hidden");
+  $("dashboard").classList.remove("hidden");
+  renderDashboard();
+}
+
+function showLogin() {
+  currentAdmin = null;
+  $("loginBox").classList.remove("hidden");
+  $("dashboard").classList.add("hidden");
+  $("loginUsername").value = "";
+  $("loginPassword").value = "";
+  $("loginMessage").textContent = "";
+}
+
+$("adminTopButton").addEventListener("click", () => {
+  $("admin").classList.add("show");
+  showLogin();
 });
 
-$("registrationForm").addEventListener("submit", event => {
-  event.preventDefault();
+$("closeAdmin").addEventListener("click", () => closeModal("admin"));
+
+$("loginButton").addEventListener("click", () => {
+  const username = $("loginUsername").value.trim();
+  const password = $("loginPassword").value;
+  const account = admins.find(a => a.username === username && a.password === password);
+
+  if (!account) {
+    $("loginMessage").textContent = "اسم المستخدم أو كلمة المرور غير صحيحة.";
+    $("loginMessage").className = "message error";
+    return;
+  }
+
+  currentAdmin = account;
+  $("loginMessage").textContent = "";
+  showDashboard();
+});
+
+$("logoutButton").addEventListener("click", showLogin);
+
+$("tournamentList").addEventListener("click", e => {
+  const button = e.target.closest("[data-register]");
+  if (button) openRegistration(button.dataset.register);
+});
+
+$("closeRegistration").addEventListener("click", () => closeModal("registrationModal"));
+$("closeEditTournament").addEventListener("click", () => closeModal("editTournamentModal"));
+
+$("registrationForm").addEventListener("submit", e => {
+  e.preventDefault();
 
   const tournamentId = $("registrationTournamentId").value;
   const tournament = tournaments.find(t => t.id === tournamentId);
-
   if (!tournament || !tournament.open) {
-    alert("هذه البطولة غير متاحة حاليا.");
+    $("registrationMessage").textContent = "التسجيل في هذه البطولة مغلق.";
     return;
   }
 
-  const fullName = $("playerFullName").value.trim();
-  const gameName = $("playerGameName").value.trim();
-  const playerId = $("playerId").value.trim();
-
-  if (!fullName || !gameName || !playerId) {
-    $("registrationMessage").textContent = "عمر المعلومات الإجبارية.";
-    return;
-  }
-
-  const memberNames = [
-    ...document.querySelectorAll(".member-name")
-  ];
-
-  const memberIds = [
-    ...document.querySelectorAll(".member-id")
-  ];
-
-  const members = memberNames.map((input, i) => ({
+  const members = [...document.querySelectorAll(".member-name")].map((input, i) => ({
     name: input.value.trim(),
-    playerId: memberIds[i].value.trim()
+    id: document.querySelectorAll(".member-id")[i].value.trim()
   }));
 
-  if (members.some(m => !m.name || !m.playerId)) {
-    $("registrationMessage").textContent =
-      "عمر معلومات جميع أعضاء الفريق.";
-    return;
-  }
-
   const request = {
-    id: "req-" + Date.now() + "-" + Math.floor(Math.random() * 10000),
+    id: "req_" + Date.now(),
     tournamentId,
-    fullName,
-    gameName,
-    playerId,
+    fullName: $("playerFullName").value.trim(),
+    gameName: $("playerGameName").value.trim(),
+    playerId: $("playerId").value.trim(),
     phone: $("playerPhone").value.trim(),
     members,
     paymentCode: $("paymentCode").value.trim(),
     paymentNote: $("paymentNote").value.trim(),
-    paymentStatus: "not-confirmed",
     status: "pending",
+    paid: false,
     createdAt: new Date().toISOString()
   };
 
   requests.push(request);
   saveAll();
 
-  $("registrationMessage").textContent =
-    "✅ توصلنا بطلبك! غادي تبقى النتيجة حتى تراجع الإدارة.";
-
-  $("registrationMessage").style.color = "#21c77a";
+  $("registrationMessage").textContent = "تم إرسال طلبك بنجاح. انتظر قرار الإدارة.";
+  $("registrationMessage").className = "message";
 
   $("registrationForm").reset();
-
-  setTimeout(() => {
-    $("registrationModal").classList.add("hidden");
-    renderTournaments();
-  }, 1800);
+  setTimeout(() => closeModal("registrationModal"), 1800);
 });
 
-/* فتح لوحة الإدارة */
+$("adminRequests").addEventListener("click", e => {
+  const button = e.target.closest("[data-action]");
+  if (!button) return;
 
-$("adminTopButton").addEventListener("click", () => {
-  $("admin").classList.remove("hidden");
-  $("admin").scrollIntoView({ behavior: "smooth" });
-});
-
-$("closeAdmin").addEventListener("click", () => {
-  $("admin").classList.add("hidden");
-});
-
-$("loginButton").addEventListener("click", login);
-
-function login() {
-  const username = $("loginUsername").value.trim();
-  const password = $("loginPassword").value;
-
-  const account = admins.find(a =>
-    a.username.toLowerCase() === username.toLowerCase() &&
-    a.password === password
-  );
-
-  if (!account) {
-    $("loginMessage").textContent =
-      "❌ اسم المستخدم أو كلمة المرور غير صحيحة.";
-
-    $("loginMessage").style.color = "#f05b65";
-    return;
-  }
-
-  currentAdmin = account;
-
-  $("loginBox").classList.add("hidden");
-  $("dashboard").classList.remove("hidden");
-
-  $("loggedAdminInfo").textContent =
-    `مرحبا ${account.username} — ${roleName(account.role)}`;
-
-  renderDashboard();
-}
-
-function logout() {
-  currentAdmin = null;
-
-  $("dashboard").classList.add("hidden");
-  $("loginBox").classList.remove("hidden");
-
-  $("loginPassword").value = "";
-  $("loginMessage").textContent = "";
-}
-
-$("logoutButton").addEventListener("click", logout);
-
-function isMainAdmin() {
-  return currentAdmin && currentAdmin.role === "main";
-}
-
-/* الإحصائيات والطلبات */
-
-function renderDashboard() {
-  renderStats();
-  renderRequests();
-  renderManageTournaments();
-  renderAdminAccounts();
-}
-
-function renderStats() {
-  $("totalRequests").textContent = requests.length;
-
-  $("acceptedRequests").textContent =
-    requests.filter(r => r.status === "accepted").length;
-
-  $("rejectedRequests").textContent =
-    requests.filter(r => r.status === "rejected").length;
-
-  $("pendingRequests").textContent =
-    requests.filter(r => r.status === "pending").length;
-}
-
-function renderRequests() {
-  const container = $("adminRequests");
-
-  if (!requests.length) {
-    container.innerHTML =
-      "<p>ما كاين حتى طلب تسجيل حاليا.</p>";
-    return;
-  }
-
-  container.innerHTML = [...requests].reverse().map(r => {
-    const tournament = tournaments.find(
-      t => t.id === r.tournamentId
-    );
-
-    const statusText =
-      r.status === "accepted" ? "مقبول" :
-      r.status === "rejected" ? "مرفوض" :
-      "قيد المراجعة";
-
-    const membersText = (r.members || []).map(m =>
-      `${escapeHTML(m.name)} (ID: ${escapeHTML(m.playerId)})`
-    ).join("<br>");
-
-    return `
-      <div class="request-card">
-        <h4>${escapeHTML(r.fullName)} — ${escapeHTML(r.gameName)}</h4>
-
-        <p>البطولة: ${escapeHTML(tournament?.name || "بطولة محذوفة")}</p>
-        <p>Player ID: ${escapeHTML(r.playerId)}</p>
-        <p>الهاتف: ${escapeHTML(r.phone || "لم يقدم")}</p>
-        <p>أعضاء الفريق: ${membersText || "لا يوجد"}</p>
-        <p>رمز الأداء: ${escapeHTML(r.paymentCode || "لم يقدم")}</p>
-        <p>ملاحظة الأداء: ${escapeHTML(r.paymentNote || "لا توجد")}</p>
-        <p>حالة الأداء: ${r.paymentStatus === "paid" ? "مؤكد من الإدارة" : "غير مؤكد"}</p>
-        <p>تاريخ الطلب: ${new Date(r.createdAt).toLocaleString("ar-MA")}</p>
-
-        <p>
-          الحالة:
-          <span class="status ${r.status}">${statusText}</span>
-        </p>
-
-        <div class="request-actions">
-          <button class="accept-btn"
-            onclick="changeRequestStatus('${r.id}','accepted')">
-            قبول الطلب
-          </button>
-
-          <button class="reject-btn"
-            onclick="changeRequestStatus('${r.id}','rejected')">
-            رفض الطلب
-          </button>
-
-          <button class="small-btn" onclick="togglePayment('${r.id}')">
-            ${r.paymentStatus === "paid"
-              ? "إلغاء تأكيد الأداء"
-              : "تأكيد الأداء"}
-          </button>
-
-          <button class="small-btn" onclick="deleteRequest('${r.id}')">
-            حذف الطلب
-          </button>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-function changeRequestStatus(id, status) {
-  const request = requests.find(r => r.id === id);
+  const request = requests.find(r => r.id === button.dataset.id);
   if (!request) return;
 
-  const word = status === "accepted" ? "قبول" : "رفض";
-
-  if (!confirm(`واش متأكد بغيتي ${word} هاد الطلب؟`)) {
-    return;
+  switch (button.dataset.action) {
+    case "accept":
+      request.status = "accepted";
+      break;
+    case "reject":
+      request.status = "rejected";
+      break;
+    case "paid":
+      request.paid = !request.paid;
+      break;
+    case "delete-request":
+      if (!confirm("واش متأكد من حذف الطلب؟")) return;
+      requests = requests.filter(r => r.id !== request.id);
+      break;
   }
 
-  request.status = status;
-
   saveAll();
   renderDashboard();
-  renderTournaments();
-}
-
-function togglePayment(id) {
-  const request = requests.find(r => r.id === id);
-  if (!request) return;
-
-  request.paymentStatus =
-    request.paymentStatus === "paid"
-      ? "not-confirmed"
-      : "paid";
-
-  saveAll();
-  renderDashboard();
-}
-
-function deleteRequest(id) {
-  if (!confirm("واش متأكد بغيتي تحذف هاد الطلب نهائيا؟")) {
-    return;
-  }
-
-  requests = requests.filter(r => r.id !== id);
-
-  saveAll();
-  renderDashboard();
-  renderTournaments();
-}
-
-/* إضافة وتعديل البطولات */
+});
 
 $("addTournamentButton").addEventListener("click", () => {
-  if (!currentAdmin) return;
-
   const name = $("newTournamentName").value.trim();
-  const type = $("newTournamentType").value;
   const date = $("newTournamentDate").value;
   const time = $("newTournamentTime").value;
+  const type = $("newTournamentType").value;
   const price = Number($("newTournamentPrice").value);
 
-  if (!name || !date || !time ||
-      price < 0 || !Number.isFinite(price)) {
-    alert("عمر جميع معلومات البطولة بشكل صحيح.");
+  if (!name || !date || !time || price < 0) {
+    alert("عمر معلومات البطولة بشكل صحيح.");
     return;
   }
 
   tournaments.push({
-    id: "t-" + Date.now(),
-    name,
-    type,
-    date,
-    time,
-    price,
-    open: true
+    id: "t_" + Date.now(),
+    name, type, date, time, price, open: true
   });
 
   saveAll();
-
   $("newTournamentName").value = "";
   $("newTournamentDate").value = "";
-
-  renderDashboard();
   renderTournaments();
+  renderDashboard();
+  alert("تمت إضافة البطولة.");
 });
 
-function renderManageTournaments() {
-  $("manageTournaments").innerHTML = tournaments.map(t => `
-    <div class="manage-card">
-      <h4>${escapeHTML(t.name)}</h4>
+$("manageTournaments").addEventListener("click", e => {
+  const button = e.target.closest("[data-action]");
+  if (!button) return;
 
-      <p>
-        ${escapeHTML(t.type)} |
-        ${formatDate(t.date)} |
-        ${escapeHTML(t.time)} |
-        ${Number(t.price)} DH
-      </p>
-
-      <p>التسجيل: ${t.open ? "مفتوح" : "مغلق"}</p>
-
-      <div class="manage-actions">
-        <button class="small-btn" onclick="editTournament('${t.id}')">
-          ✏️ تعديل
-        </button>
-
-        <button class="small-btn" onclick="toggleTournament('${t.id}')">
-          ${t.open ? "إغلاق التسجيل" : "فتح التسجيل"}
-        </button>
-
-        <button class="reject-btn" onclick="deleteTournament('${t.id}')">
-          حذف
-        </button>
-      </div>
-    </div>
-  `).join("");
-}
-
-function editTournament(id) {
-  const t = tournaments.find(item => item.id === id);
+  const t = tournaments.find(x => x.id === button.dataset.id);
   if (!t) return;
 
-  $("editTournamentId").value = t.id;
-  $("editTournamentName").value = t.name;
-  $("editTournamentType").value = t.type;
-  $("editTournamentDate").value = t.date;
-  $("editTournamentTime").value = t.time;
-  $("editTournamentPrice").value = t.price;
+  switch (button.dataset.action) {
+    case "toggle-tournament":
+      t.open = !t.open;
+      break;
 
-  $("editTournamentModal").classList.remove("hidden");
-}
+    case "delete-tournament":
+      if (!confirm("حذف البطولة؟")) return;
+      tournaments = tournaments.filter(x => x.id !== t.id);
+      break;
 
-$("closeEditTournament").addEventListener("click", () => {
-  $("editTournamentModal").classList.add("hidden");
+    case "edit-tournament":
+      $("editTournamentId").value = t.id;
+      $("editTournamentName").value = t.name;
+      $("editTournamentType").value = t.type;
+      $("editTournamentDate").value = t.date;
+      $("editTournamentTime").value = t.time;
+      $("editTournamentPrice").value = t.price;
+      $("editTournamentModal").classList.add("show");
+      return;
+  }
+
+  saveAll();
+  renderTournaments();
+  renderDashboard();
 });
 
 $("saveTournamentEdit").addEventListener("click", () => {
-  const id = $("editTournamentId").value;
-  const t = tournaments.find(item => item.id === id);
-
+  const t = tournaments.find(x => x.id === $("editTournamentId").value);
   if (!t) return;
 
   const name = $("editTournamentName").value.trim();
+  const date = $("editTournamentDate").value;
+  const time = $("editTournamentTime").value;
   const price = Number($("editTournamentPrice").value);
 
-  if (!name ||
-      !$("editTournamentDate").value ||
-      !$("editTournamentTime").value ||
-      !Number.isFinite(price) ||
-      price < 0) {
-    alert("راجع معلومات البطولة.");
+  if (!name || !date || !time || price < 0) {
+    alert("راجع المعلومات.");
     return;
   }
 
   t.name = name;
   t.type = $("editTournamentType").value;
-  t.date = $("editTournamentDate").value;
-  t.time = $("editTournamentTime").value;
+  t.date = date;
+  t.time = time;
   t.price = price;
 
   saveAll();
-
-  $("editTournamentModal").classList.add("hidden");
-
-  renderDashboard();
+  closeModal("editTournamentModal");
   renderTournaments();
+  renderDashboard();
 });
 
-function toggleTournament(id) {
-  const t = tournaments.find(item => item.id === id);
-  if (!t) return;
-
-  t.open = !t.open;
-
-  saveAll();
-  renderDashboard();
-  renderTournaments();
-}
-
-function deleteTournament(id) {
-  if (!confirm("واش متأكد بغيتي تحذف هاد البطولة؟")) {
-    return;
-  }
-
-  tournaments = tournaments.filter(t => t.id !== id);
-
-  saveAll();
-  renderDashboard();
-  renderTournaments();
-}
-
-/* إضافة Admin وحسابات الإدارة */
-
-function renderAdminAccounts() {
-  const area = $("adminManagement");
-  const message = $("adminPermissionMessage");
-
-  if (!isMainAdmin()) {
-    area.classList.add("hidden");
-    message.textContent =
-      "هذه الخاصية متاحة فقط للـ ADMIN الرئيسي.";
-    return;
-  }
-
-  area.classList.remove("hidden");
-  message.textContent = "";
-
-  $("adminAccounts").innerHTML = admins.map(a => `
-    <div class="manage-card">
-      <h4>👤 ${escapeHTML(a.username)}</h4>
-
-      <p>الرتبة: ${roleName(a.role)}</p>
-
-      <p>
-        ${a.id === currentAdmin.id
-          ? "هذا هو الحساب الحالي"
-          : ""}
-      </p>
-
-      <div class="manage-actions">
-        ${a.id !== currentAdmin.id && a.id !== "main-admin"
-          ? `<button class="reject-btn"
-               onclick="deleteAdmin('${a.id}')">
-               حذف Admin
-             </button>`
-          : ""}
-      </div>
-    </div>
-  `).join("");
-}
-
 $("addAdminButton").addEventListener("click", () => {
-  if (!isMainAdmin()) {
-    alert("غير ADMIN الرئيسي يقدر يزيد Admin جديد.");
-    return;
-  }
+  if (!currentAdmin || currentAdmin.role !== "main") return;
 
   const username = $("newAdminUsername").value.trim();
-  const password = $("newAdminPassword").value.trim();
+  const password = $("newAdminPassword").value;
   const role = $("newAdminRole").value;
 
-  if (username.length < 3 || password.length < 4) {
-    alert("اسم المستخدم خاصو 3 حروف على الأقل وكلمة المرور 4 حروف على الأقل.");
+  if (!username || !password) {
+    alert("دخل اسم المستخدم وكلمة المرور.");
     return;
   }
 
-  if (admins.some(a =>
-    a.username.toLowerCase() === username.toLowerCase()
-  )) {
-    alert("هاد اسم المستخدم مستعمل من قبل.");
+  if (admins.some(a => a.username === username)) {
+    alert("اسم المستخدم موجود من قبل.");
     return;
   }
 
-  admins.push({
-    id: "admin-" + Date.now(),
-    username,
-    password,
-    role
-  });
-
+  admins.push({ username, password, role });
   saveAll();
 
   $("newAdminUsername").value = "";
   $("newAdminPassword").value = "";
-
-  renderAdminAccounts();
-
-  alert("✅ تزاد Admin الجديد بنجاح.");
+  renderAdmins();
+  alert("تمت إضافة حساب Admin.");
 });
 
-function deleteAdmin(id) {
-  if (!isMainAdmin()) return;
+$("adminAccounts").addEventListener("click", e => {
+  const button = e.target.closest('[data-action="delete-admin"]');
+  if (!button || !currentAdmin || currentAdmin.role !== "main") return;
 
-  const target = admins.find(a => a.id === id);
+  const username = button.dataset.id;
+  if (username === "admin1") return alert("لا يمكن حذف الحساب الرئيسي الأصلي.");
+  if (!confirm("حذف حساب الإدارة؟")) return;
 
-  if (!target || target.id === "main-admin") {
-    alert("ما يمكنش تحذف الحساب الرئيسي الأصلي.");
-    return;
-  }
-
-  if (!confirm(`واش متأكد بغيتي تحذف Admin: ${target.username} ؟`)) {
-    return;
-  }
-
-  admins = admins.filter(a => a.id !== id);
-
+  admins = admins.filter(a => a.username !== username);
   saveAll();
-  renderAdminAccounts();
-}
+  renderAdmins();
+});
 
-/* بداية الموقع */
+$("admin").addEventListener("click", e => {
+  if (e.target === $("admin")) closeModal("admin");
+});
 
+$("registrationModal").addEventListener("click", e => {
+  if (e.target === $("registrationModal")) closeModal("registrationModal");
+});
+
+$("editTournamentModal").addEventListener("click", e => {
+  if (e.target === $("editTournamentModal")) closeModal("editTournamentModal");
+});
+
+/* تحديث الواجهة عند فتح الموقع */
 renderTournaments();
+saveAll();
