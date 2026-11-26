@@ -132,16 +132,19 @@ function renderTournaments() {
 
 function openRegistration(id) {
   const tournament = tournaments.find(t => t.id === id);
+
   if (!tournament || !tournament.open) {
     alert("التسجيل في هذه البطولة مغلق.");
     return;
   }
 
   $("registrationTournamentId").value = id;
+
   $("selectedTournamentInfo").textContent =
     `${tournament.name} | ${tournament.type} | ${formatDate(tournament.date)} | ${tournament.price} DH`;
 
   const members = $("teamMembersArea");
+
   const extraCount = tournament.type === "DUO" ? 1 :
                      tournament.type === "SQUAD" ? 3 : 0;
 
@@ -156,12 +159,13 @@ function openRegistration(id) {
     `;
   }
 
-  $("registrationMessage").textContent = "";
   $("registrationForm").reset();
   $("registrationTournamentId").value = id;
+
   $("selectedTournamentInfo").textContent =
     `${tournament.name} | ${tournament.type} | ${formatDate(tournament.date)} | ${tournament.price} DH`;
 
+  $("registrationMessage").textContent = "";
   $("registrationModal").classList.remove("hidden");
 }
 
@@ -189,13 +193,22 @@ $("registrationForm").addEventListener("submit", event => {
     return;
   }
 
-  const members = [...document.querySelectorAll(".member-name")].map((input, i) => ({
+  const memberNames = [
+    ...document.querySelectorAll(".member-name")
+  ];
+
+  const memberIds = [
+    ...document.querySelectorAll(".member-id")
+  ];
+
+  const members = memberNames.map((input, i) => ({
     name: input.value.trim(),
-    playerId: document.querySelectorAll(".member-id")[i].value.trim()
+    playerId: memberIds[i].value.trim()
   }));
 
   if (members.some(m => !m.name || !m.playerId)) {
-    $("registrationMessage").textContent = "عمر معلومات جميع أعضاء الفريق.";
+    $("registrationMessage").textContent =
+      "عمر معلومات جميع أعضاء الفريق.";
     return;
   }
 
@@ -218,10 +231,12 @@ $("registrationForm").addEventListener("submit", event => {
   saveAll();
 
   $("registrationMessage").textContent =
-    "✅ توصلنا بطلبك! غادي تبقى النتيجة حتى تراجع الإدارة الطلب.";
+    "✅ توصلنا بطلبك! غادي تبقى النتيجة حتى تراجع الإدارة.";
+
   $("registrationMessage").style.color = "#21c77a";
 
   $("registrationForm").reset();
+
   setTimeout(() => {
     $("registrationModal").classList.add("hidden");
     renderTournaments();
@@ -251,12 +266,15 @@ function login() {
   );
 
   if (!account) {
-    $("loginMessage").textContent = "❌ اسم المستخدم أو كلمة المرور غير صحيحة.";
+    $("loginMessage").textContent =
+      "❌ اسم المستخدم أو كلمة المرور غير صحيحة.";
+
     $("loginMessage").style.color = "#f05b65";
     return;
   }
 
   currentAdmin = account;
+
   $("loginBox").classList.add("hidden");
   $("dashboard").classList.remove("hidden");
 
@@ -268,8 +286,10 @@ function login() {
 
 function logout() {
   currentAdmin = null;
+
   $("dashboard").classList.add("hidden");
   $("loginBox").classList.remove("hidden");
+
   $("loginPassword").value = "";
   $("loginMessage").textContent = "";
 }
@@ -291,10 +311,13 @@ function renderDashboard() {
 
 function renderStats() {
   $("totalRequests").textContent = requests.length;
+
   $("acceptedRequests").textContent =
     requests.filter(r => r.status === "accepted").length;
+
   $("rejectedRequests").textContent =
     requests.filter(r => r.status === "rejected").length;
+
   $("pendingRequests").textContent =
     requests.filter(r => r.status === "pending").length;
 }
@@ -303,14 +326,20 @@ function renderRequests() {
   const container = $("adminRequests");
 
   if (!requests.length) {
-    container.innerHTML = "<p>ما كاين حتى طلب تسجيل حاليا.</p>";
+    container.innerHTML =
+      "<p>ما كاين حتى طلب تسجيل حاليا.</p>";
     return;
   }
 
   container.innerHTML = [...requests].reverse().map(r => {
-    const tournament = tournaments.find(t => t.id === r.tournamentId);
-    const statusText = r.status === "accepted" ? "مقبول" :
-                       r.status === "rejected" ? "مرفوض" : "قيد المراجعة";
+    const tournament = tournaments.find(
+      t => t.id === r.tournamentId
+    );
+
+    const statusText =
+      r.status === "accepted" ? "مقبول" :
+      r.status === "rejected" ? "مرفوض" :
+      "قيد المراجعة";
 
     const membersText = (r.members || []).map(m =>
       `${escapeHTML(m.name)} (ID: ${escapeHTML(m.playerId)})`
@@ -319,6 +348,7 @@ function renderRequests() {
     return `
       <div class="request-card">
         <h4>${escapeHTML(r.fullName)} — ${escapeHTML(r.gameName)}</h4>
+
         <p>البطولة: ${escapeHTML(tournament?.name || "بطولة محذوفة")}</p>
         <p>Player ID: ${escapeHTML(r.playerId)}</p>
         <p>الهاتف: ${escapeHTML(r.phone || "لم يقدم")}</p>
@@ -327,15 +357,32 @@ function renderRequests() {
         <p>ملاحظة الأداء: ${escapeHTML(r.paymentNote || "لا توجد")}</p>
         <p>حالة الأداء: ${r.paymentStatus === "paid" ? "مؤكد من الإدارة" : "غير مؤكد"}</p>
         <p>تاريخ الطلب: ${new Date(r.createdAt).toLocaleString("ar-MA")}</p>
-        <p>الحالة: <span class="status ${r.status}">${statusText}</span></p>
+
+        <p>
+          الحالة:
+          <span class="status ${r.status}">${statusText}</span>
+        </p>
 
         <div class="request-actions">
-          <button class="accept-btn" onclick="changeRequestStatus('${r.id}','accepted')">قبول الطلب</button>
-          <button class="reject-btn" onclick="changeRequestStatus('${r.id}','rejected')">رفض الطلب</button>
-          <button class="small-btn" onclick="togglePayment('${r.id}')">
-            ${r.paymentStatus === "paid" ? "إلغاء تأكيد الأداء" : "تأكيد الأداء"}
+          <button class="accept-btn"
+            onclick="changeRequestStatus('${r.id}','accepted')">
+            قبول الطلب
           </button>
-          <button class="small-btn" onclick="deleteRequest('${r.id}')">حذف الطلب</button>
+
+          <button class="reject-btn"
+            onclick="changeRequestStatus('${r.id}','rejected')">
+            رفض الطلب
+          </button>
+
+          <button class="small-btn" onclick="togglePayment('${r.id}')">
+            ${r.paymentStatus === "paid"
+              ? "إلغاء تأكيد الأداء"
+              : "تأكيد الأداء"}
+          </button>
+
+          <button class="small-btn" onclick="deleteRequest('${r.id}')">
+            حذف الطلب
+          </button>
         </div>
       </div>
     `;
@@ -347,9 +394,13 @@ function changeRequestStatus(id, status) {
   if (!request) return;
 
   const word = status === "accepted" ? "قبول" : "رفض";
-  if (!confirm(`واش متأكد بغيتي ${word} هاد الطلب؟`)) return;
+
+  if (!confirm(`واش متأكد بغيتي ${word} هاد الطلب؟`)) {
+    return;
+  }
 
   request.status = status;
+
   saveAll();
   renderDashboard();
   renderTournaments();
@@ -360,16 +411,21 @@ function togglePayment(id) {
   if (!request) return;
 
   request.paymentStatus =
-    request.paymentStatus === "paid" ? "not-confirmed" : "paid";
+    request.paymentStatus === "paid"
+      ? "not-confirmed"
+      : "paid";
 
   saveAll();
   renderDashboard();
 }
 
 function deleteRequest(id) {
-  if (!confirm("واش متأكد بغيتي تحذف هاد الطلب نهائيا؟")) return;
+  if (!confirm("واش متأكد بغيتي تحذف هاد الطلب نهائيا؟")) {
+    return;
+  }
 
   requests = requests.filter(r => r.id !== id);
+
   saveAll();
   renderDashboard();
   renderTournaments();
@@ -386,7 +442,8 @@ $("addTournamentButton").addEventListener("click", () => {
   const time = $("newTournamentTime").value;
   const price = Number($("newTournamentPrice").value);
 
-  if (!name || !date || !time || price < 0 || !Number.isFinite(price)) {
+  if (!name || !date || !time ||
+      price < 0 || !Number.isFinite(price)) {
     alert("عمر جميع معلومات البطولة بشكل صحيح.");
     return;
   }
@@ -402,8 +459,10 @@ $("addTournamentButton").addEventListener("click", () => {
   });
 
   saveAll();
+
   $("newTournamentName").value = "";
   $("newTournamentDate").value = "";
+
   renderDashboard();
   renderTournaments();
 });
@@ -412,14 +471,28 @@ function renderManageTournaments() {
   $("manageTournaments").innerHTML = tournaments.map(t => `
     <div class="manage-card">
       <h4>${escapeHTML(t.name)}</h4>
-      <p>${escapeHTML(t.type)} | ${formatDate(t.date)} | ${escapeHTML(t.time)} | ${Number(t.price)} DH</p>
+
+      <p>
+        ${escapeHTML(t.type)} |
+        ${formatDate(t.date)} |
+        ${escapeHTML(t.time)} |
+        ${Number(t.price)} DH
+      </p>
+
       <p>التسجيل: ${t.open ? "مفتوح" : "مغلق"}</p>
+
       <div class="manage-actions">
-        <button class="small-btn" onclick="editTournament('${t.id}')">✏️ تعديل</button>
+        <button class="small-btn" onclick="editTournament('${t.id}')">
+          ✏️ تعديل
+        </button>
+
         <button class="small-btn" onclick="toggleTournament('${t.id}')">
           ${t.open ? "إغلاق التسجيل" : "فتح التسجيل"}
         </button>
-        <button class="reject-btn" onclick="deleteTournament('${t.id}')">حذف</button>
+
+        <button class="reject-btn" onclick="deleteTournament('${t.id}')">
+          حذف
+        </button>
       </div>
     </div>
   `).join("");
@@ -446,14 +519,17 @@ $("closeEditTournament").addEventListener("click", () => {
 $("saveTournamentEdit").addEventListener("click", () => {
   const id = $("editTournamentId").value;
   const t = tournaments.find(item => item.id === id);
+
   if (!t) return;
 
   const name = $("editTournamentName").value.trim();
   const price = Number($("editTournamentPrice").value);
 
-  if (!name || !$("editTournamentDate").value ||
+  if (!name ||
+      !$("editTournamentDate").value ||
       !$("editTournamentTime").value ||
-      !Number.isFinite(price) || price < 0) {
+      !Number.isFinite(price) ||
+      price < 0) {
     alert("راجع معلومات البطولة.");
     return;
   }
@@ -465,7 +541,9 @@ $("saveTournamentEdit").addEventListener("click", () => {
   t.price = price;
 
   saveAll();
+
   $("editTournamentModal").classList.add("hidden");
+
   renderDashboard();
   renderTournaments();
 });
@@ -475,15 +553,19 @@ function toggleTournament(id) {
   if (!t) return;
 
   t.open = !t.open;
+
   saveAll();
   renderDashboard();
   renderTournaments();
 }
 
 function deleteTournament(id) {
-  if (!confirm("واش متأكد بغيتي تحذف هاد البطولة؟")) return;
+  if (!confirm("واش متأكد بغيتي تحذف هاد البطولة؟")) {
+    return;
+  }
 
   tournaments = tournaments.filter(t => t.id !== id);
+
   saveAll();
   renderDashboard();
   renderTournaments();
@@ -497,7 +579,8 @@ function renderAdminAccounts() {
 
   if (!isMainAdmin()) {
     area.classList.add("hidden");
-    message.textContent = "هذه الخاصية متاحة فقط للـ ADMIN الرئيسي.";
+    message.textContent =
+      "هذه الخاصية متاحة فقط للـ ADMIN الرئيسي.";
     return;
   }
 
@@ -507,11 +590,21 @@ function renderAdminAccounts() {
   $("adminAccounts").innerHTML = admins.map(a => `
     <div class="manage-card">
       <h4>👤 ${escapeHTML(a.username)}</h4>
+
       <p>الرتبة: ${roleName(a.role)}</p>
-      <p>${a.id === currentAdmin.id ? "هذا هو الحساب الحالي" : ""}</p>
+
+      <p>
+        ${a.id === currentAdmin.id
+          ? "هذا هو الحساب الحالي"
+          : ""}
+      </p>
+
       <div class="manage-actions">
         ${a.id !== currentAdmin.id && a.id !== "main-admin"
-          ? `<button class="reject-btn" onclick="deleteAdmin('${a.id}')">حذف Admin</button>`
+          ? `<button class="reject-btn"
+               onclick="deleteAdmin('${a.id}')">
+               حذف Admin
+             </button>`
           : ""}
       </div>
     </div>
@@ -533,7 +626,9 @@ $("addAdminButton").addEventListener("click", () => {
     return;
   }
 
-  if (admins.some(a => a.username.toLowerCase() === username.toLowerCase())) {
+  if (admins.some(a =>
+    a.username.toLowerCase() === username.toLowerCase()
+  )) {
     alert("هاد اسم المستخدم مستعمل من قبل.");
     return;
   }
@@ -551,6 +646,7 @@ $("addAdminButton").addEventListener("click", () => {
   $("newAdminPassword").value = "";
 
   renderAdminAccounts();
+
   alert("✅ تزاد Admin الجديد بنجاح.");
 });
 
@@ -558,14 +654,18 @@ function deleteAdmin(id) {
   if (!isMainAdmin()) return;
 
   const target = admins.find(a => a.id === id);
+
   if (!target || target.id === "main-admin") {
     alert("ما يمكنش تحذف الحساب الرئيسي الأصلي.");
     return;
   }
 
-  if (!confirm(`واش متأكد بغيتي تحذف Admin: ${target.username} ؟`)) return;
+  if (!confirm(`واش متأكد بغيتي تحذف Admin: ${target.username} ؟`)) {
+    return;
+  }
 
   admins = admins.filter(a => a.id !== id);
+
   saveAll();
   renderAdminAccounts();
 }
