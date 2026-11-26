@@ -5,168 +5,167 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#100b1d">
-  <title>RIFII CHAMPIONS 2027</title>
+  <title>OUSSAMA ET MOHAMED AMIN SHOP</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">🏆 RIFII <span>CHAMPIONS</span> 2027</div>
-  <nav>
-    <a href="#home">الرئيسية</a>
-    <a href="#tournaments">البطولات</a>
-    <a href="#register">التسجيل</a>
-    <a href="#adminLogin">الإدارة</a>
-  </nav>
-</header>
+  <!-- الصفحة الرئيسية الرمضانية -->
+  <section id="landing" class="landing">
+    <div class="moon">☾</div>
+    <div class="lantern lantern-one">🏮</div>
+    <div class="lantern lantern-two">🏮</div>
 
-<section class="hero" id="home">
-  <div class="hero-content">
-    <span class="tag">FREE FIRE TOURNAMENT</span>
-    <h1>RIFII CHAMPIONS <span>2027</span></h1>
-    <p>عيش المنافسة، وبيّن المهارة ديالك، وكون بطل RIFII CHAMPIONS!</p>
-    <a class="main-btn" href="#tournaments">اكتشف البطولات</a>
-  </div>
-</section>
+    <div class="landing-content">
+      <div class="ramadan-label">🌙 RAMADAN KAREEM 🌙</div>
 
-<section class="section" id="tournaments">
-  <div class="section-title">
-    <span>🏆</span>
-    <h2>البطولات المتاحة</h2>
-    <p>اختار البطولة اللي بغيتي تشارك فيها</p>
-  </div>
-  <div id="tournamentList" class="tournament-list">
-    <p class="loading">جاري تحميل البطولات...</p>
-  </div>
-</section>
+      <h1>OUSSAMA <span>ET</span><br>MOHAMED AMIN SHOP</h1>
+      <p>متجرك المفضل للألعاب والشحن والحسابات</p>
 
-<section class="section register-section" id="register">
-  <div class="section-title">
-    <span>📝</span>
-    <h2>طلب المشاركة</h2>
-    <p>عمر المعلومات ديالك لإرسال طلب التسجيل</p>
-  </div>
+      <div class="landing-image">
+        <img src="banner.png" alt="OUSSAMA ET MOHAMED AMIN SHOP">
+      </div>
 
-  <form id="registrationForm" class="panel">
-    <label>اختار البطولة</label>
-    <select id="tournamentId" required>
-      <option value="">اختار البطولة</option>
-    </select>
+      <button class="enter-btn" onclick="enterShop()">
+        SHOP MAINTENANT <span>←</span>
+      </button>
 
-    <label>الاسم الكامل</label>
-    <input id="playerFullName" required maxlength="70" placeholder="الاسم الكامل">
+      <div class="landing-note">✨ رمضان كريم، مرحبا بكم في متجرنا ✨</div>
 
-    <label>اسمك داخل اللعبة</label>
-    <input id="playerGameName" required maxlength="40" placeholder="Game Name">
-
-    <label>Player ID</label>
-    <input id="playerId" required maxlength="30" placeholder="Free Fire ID">
-
-    <label>رقم الهاتف (اختياري)</label>
-    <input id="playerPhone" maxlength="20" placeholder="رقم الهاتف">
-
-    <label>أسماء أعضاء الفريق (DUO / SQUAD)</label>
-    <textarea id="teamMembers" rows="3" placeholder="كل عضو فسطـر، وخليها فارغة فـ SOLO"></textarea>
-
-    <label>كود الأداء (اختياري)</label>
-    <input id="paymentCode" maxlength="80" placeholder="كود أو مرجع الأداء">
-
-    <label>ملاحظة الأداء (اختياري)</label>
-    <textarea id="paymentNote" rows="2" maxlength="250" placeholder="أي ملاحظة إضافية"></textarea>
-
-    <div class="price-note">
-      <strong>5 DH</strong>
-      <span>ثمن المشاركة — تأكيد الأداء من طرف الإدارة</span>
+      <a class="landing-whatsapp" href="https://wa.me/212779583670"
+         target="_blank" rel="noopener">
+        💬 تواصل معنا عبر WhatsApp
+      </a>
     </div>
+  </section>
 
-    <button class="main-btn full" type="submit">إرسال طلب المشاركة</button>
-    <p id="registrationMessage" class="message"></p>
-  </form>
-</section>
+  <!-- المتجر -->
+  <main id="shop" class="shop hidden">
 
-<section class="section contact-section">
-  <h2>تواصل معنا</h2>
-  <p>للاستفسار أو التواصل مع المنظمين</p>
-  <a class="whatsapp-btn" href="https://wa.me/212779583670" target="_blank">
-    تواصل عبر WhatsApp
+    <header class="topbar">
+      <div class="brand">🌙 OUSSAMA <span>ET MOHAMED AMIN</span> SHOP</div>
+      <button class="back-btn" onclick="backHome()">الرئيسية</button>
+    </header>
+
+    <section class="shop-hero">
+      <span class="small-label">RAMADAN SPECIAL</span>
+      <h2>مرحبا بك في متجرنا 🌙</h2>
+      <p>اختار الخدمة اللي بغيتي واستمتع بأفضل العروض</p>
+    </section>
+
+    <nav class="navigation">
+      <button onclick="showSection('accounts')">🎮 الحسابات</button>
+      <button onclick="showSection('diamonds')">💎 شحن الجواهر</button>
+      <button onclick="showSection('sell')">➕ بيع حسابك</button>
+      <button onclick="showSection('unlock')">🔓 فتح التواصل</button>
+      <button onclick="showSection('admin')">⚙️ الإدارة</button>
+    </nav>
+
+    <!-- الحسابات -->
+    <section id="accounts" class="content-section">
+      <h2>🎮 الحسابات المتوفرة</h2>
+      <p class="section-desc">الحسابات المقبولة من الإدارة فقط هي اللي كيبانو هنا.</p>
+      <div id="accountsList" class="cards"></div>
+    </section>
+
+    <!-- الجواهر -->
+    <section id="diamonds" class="content-section hidden">
+      <h2>💎 شحن Free Fire</h2>
+      <p class="section-desc">اختار العرض المناسب ليك.</p>
+      <div id="diamondProducts" class="cards"></div>
+
+      <div class="form-card">
+        <h3>🛒 طلب الشحن</h3>
+        <form id="diamondForm">
+          <input type="hidden" id="diamondProduct">
+          <input id="playerName" placeholder="اسم اللاعب" required>
+          <input id="playerId" placeholder="ID اللاعب" required>
+          <input id="diamondReference" placeholder="مرجع الأداء Orange Money" required>
+          <button type="submit">إرسال طلب الشحن</button>
+        </form>
+        <p class="payment-info">
+          الأداء عبر Orange Money فقط.
+          <br>رقم الأداء: <b>ضع رقم Orange Money هنا</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- بيع حساب -->
+    <section id="sell" class="content-section hidden">
+      <h2>➕ عرض حسابك للبيع</h2>
+      <div class="form-card">
+        <form id="sellForm">
+          <input id="sellerTitle" placeholder="عنوان الحساب (مثلا Free Fire)" required>
+          <textarea id="sellerDescription" placeholder="وصف الحساب والتفاصيل..." required></textarea>
+          <input id="sellerPrice" type="number" min="1" placeholder="الثمن اللي بغيتي بالدرهم" required>
+          <input id="sellerWhatsapp" placeholder="رقم WhatsApp ديالك" required>
+          <label class="upload-label">صور الحساب (حتى 4 صور)</label>
+          <input id="sellerPhotos" type="file" accept="image/*" multiple>
+          <button type="submit">إرسال الحساب للمراجعة</button>
+        </form>
+        <p class="hint">من بعد الإرسال، الإدارة غادي تراجع الحساب قبل ما يظهر في المتجر.</p>
+      </div>
+    </section>
+
+    <!-- فتح التواصل -->
+    <section id="unlock" class="content-section hidden">
+      <h2>🔓 فتح التواصل مع البائعين</h2>
+      <div class="form-card">
+        <h3>الثمن: 10 DH مرة واحدة</h3>
+        <p>أرسل طلب فتح التواصل بعد أداء 10 دراهم عبر Orange Money.</p>
+        <input id="unlockName" placeholder="الاسم ديالك">
+        <input id="unlockReference" placeholder="مرجع الأداء">
+        <button onclick="sendUnlockRequest()">إرسال طلب فتح التواصل</button>
+        <p class="payment-info">
+          رقم Orange Money:
+          <b>ضع رقم Orange Money هنا</b>
+        </p>
+        <p id="unlockStatus"></p>
+      </div>
+    </section>
+
+    <!-- الإدارة -->
+    <section id="admin" class="content-section hidden">
+      <h2>⚙️ لوحة الإدارة</h2>
+
+      <div id="adminLogin" class="form-card">
+        <h3>AMIN ET OUSSAMA</h3>
+        <input id="adminPassword" type="password" placeholder="كلمة المرور">
+        <button onclick="adminLogin()">دخول الإدارة</button>
+        <p id="loginMessage"></p>
+      </div>
+
+      <div id="adminPanel" class="hidden">
+        <div class="admin-heading">
+          <h3>طلبات الحسابات</h3>
+          <button class="logout-btn" onclick="adminLogout()">تسجيل الخروج</button>
+        </div>
+        <div id="pendingAds"></div>
+
+        <h3 class="admin-section-title">طلبات شحن الجواهر</h3>
+        <div id="diamondOrders"></div>
+
+        <h3 class="admin-section-title">طلبات فتح التواصل</h3>
+        <div id="unlockRequests"></div>
+      </div>
+    </section>
+
+    <footer>
+      <h3>OUSSAMA ET MOHAMED AMIN SHOP</h3>
+      <p>🌙 رمضان كريم | شكرا على ثقتكم بنا</p>
+      <p>WhatsApp: 0779583670</p>
+      <small>© جميع الحقوق محفوظة</small>
+    </footer>
+  </main>
+
+  <!-- زر WhatsApp العائم -->
+  <a class="whatsapp-float"
+     href="https://wa.me/212779583670"
+     target="_blank"
+     rel="noopener">
+    <span>💬</span> WhatsApp
   </a>
-</section>
 
-<section class="section admin-login-section" id="adminLogin">
-  <div class="section-title">
-    <span>🔐</span>
-    <h2>دخول الإدارة</h2>
-    <p>هذه المنطقة مخصصة للمسؤولين</p>
-  </div>
-
-  <form id="loginForm" class="panel login-panel">
-    <label>اسم المستخدم</label>
-    <input id="adminUsername" required placeholder="اسم المستخدم" autocomplete="username">
-
-    <label>كلمة المرور</label>
-    <input id="adminPassword" type="password" required placeholder="كلمة المرور" autocomplete="current-password">
-
-    <button class="main-btn full" type="submit">دخول الإدارة</button>
-    <p id="loginMessage" class="message"></p>
-  </form>
-</section>
-
-<section class="section admin-section" id="adminPanel" hidden>
-  <div class="admin-heading">
-    <div>
-      <span class="tag">CONTROL PANEL</span>
-      <h2>لوحة الإدارة</h2>
-    </div>
-    <button class="danger-btn" id="logoutBtn">تسجيل الخروج</button>
-  </div>
-
-  <div class="stats">
-    <div class="stat"><span>كل الطلبات</span><strong id="totalCount">0</strong></div>
-    <div class="stat"><span>مقبولة</span><strong id="acceptedCount">0</strong></div>
-    <div class="stat"><span>مرفوضة</span><strong id="rejectedCount">0</strong></div>
-    <div class="stat"><span>في الانتظار</span><strong id="pendingCount">0</strong></div>
-  </div>
-
-  <div class="admin-block">
-    <h3>📋 طلبات المشاركة</h3>
-    <div id="adminRequests"></div>
-  </div>
-
-  <div class="admin-block">
-    <h3>🏆 تدبير البطولات</h3>
-    <form id="tournamentForm" class="panel">
-      <input type="hidden" id="editTournamentId">
-      <label>اسم البطولة</label>
-      <input id="tournamentName" required placeholder="مثلاً RAMADAN SOLO">
-      <label>التاريخ</label>
-      <input id="tournamentDate" type="date" required>
-      <label>التوقيت</label>
-      <input id="tournamentTime" type="time" required>
-      <label>نوع البطولة</label>
-      <select id="tournamentType">
-        <option value="SOLO">SOLO</option>
-        <option value="DUO">DUO</option>
-        <option value="SQUAD">SQUAD</option>
-      </select>
-      <button class="main-btn full" type="submit">حفظ البطولة</button>
-      <button class="secondary-btn full" type="button" id="cancelEditBtn">إلغاء التعديل</button>
-      <p id="tournamentMessage" class="message"></p>
-    </form>
-    <div id="adminTournaments"></div>
-  </div>
-</section>
-
-<footer>
-  <div class="logo">RIFII CHAMPIONS 2027</div>
-  <p>تنظيم وإشراف</p>
-  <strong>OUSSAMA ABBASSI</strong>
-  <strong>MOHAMED AMINE DAOUDI</strong>
-  <p class="copyright">© 2027 RIFII CHAMPIONS. جميع الحقوق محفوظة.</p>
-</footer>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
