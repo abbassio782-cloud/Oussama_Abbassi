@@ -31,7 +31,9 @@
       <h2>🏆 البطولات المتاحة</h2>
       <p>اختار البطولة المناسبة ليك وسجل دابا</p>
     </div>
-    <div id="tournamentList" class="tournament-list"></div>
+    <div id="tournamentList" class="tournament-list">
+      <p class="message">جاري تحميل البطولات...</p>
+    </div>
   </section>
 
   <section class="section rules">
@@ -40,16 +42,30 @@
       <h2>📜 شروط المشاركة</h2>
     </div>
     <div class="rule-grid">
-      <article class="rule-card"><b>01</b><h3>معلومات صحيحة</h3><p>دخل الاسم وPlayer ID ديالك بشكل صحيح.</p></article>
-      <article class="rule-card"><b>02</b><h3>احترام المنافسين</h3><p>احترم قوانين البطولة وجميع المشاركين.</p></article>
-      <article class="rule-card"><b>03</b><h3>التسجيل</h3><p>ثمن التسجيل هو 5 DH لكل مشارك.</p></article>
+      <article class="rule-card">
+        <b>01</b>
+        <h3>معلومات صحيحة</h3>
+        <p>دخل الاسم وPlayer ID ديالك بشكل صحيح.</p>
+      </article>
+      <article class="rule-card">
+        <b>02</b>
+        <h3>احترام المنافسين</h3>
+        <p>احترم قوانين البطولة وجميع المشاركين.</p>
+      </article>
+      <article class="rule-card">
+        <b>03</b>
+        <h3>التسجيل</h3>
+        <p>ثمن التسجيل هو 5 DH لكل مشارك.</p>
+      </article>
     </div>
   </section>
 
   <section class="section contact">
     <h2>📞 تواصل معنا</h2>
     <p>للاستفسار حول البطولات والتسجيل</p>
-    <a href="https://wa.me/212779583670" target="_blank" rel="noopener" class="whatsapp-btn">تواصل عبر WhatsApp</a>
+    <a href="https://wa.me/212779583670" target="_blank" rel="noopener" class="whatsapp-btn">
+      تواصل عبر WhatsApp
+    </a>
   </section>
 </main>
 
@@ -67,6 +83,7 @@
 <div id="admin" class="overlay">
   <div class="modal admin-modal">
     <button id="closeAdmin" class="close-btn">×</button>
+
     <div class="modal-heading">
       <span class="eyebrow">CONTROL PANEL</span>
       <h2>👑 ADMIN PANEL</h2>
@@ -74,8 +91,21 @@
 
     <div id="loginBox" class="login-box">
       <h3>تسجيل دخول الإدارة</h3>
-      <input id="loginUsername" type="text" placeholder="اسم المستخدم" autocomplete="username">
-      <input id="loginPassword" type="password" placeholder="كلمة المرور" autocomplete="current-password">
+
+      <input
+        id="loginUsername"
+        type="email"
+        placeholder="البريد الإلكتروني للإدارة"
+        autocomplete="username"
+      >
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="كلمة المرور"
+        autocomplete="current-password"
+      >
+
       <button id="loginButton" class="main-btn full">دخول</button>
       <p id="loginMessage" class="message"></p>
     </div>
@@ -84,10 +114,22 @@
       <p id="loggedAdminInfo" class="admin-info"></p>
 
       <div class="stats">
-        <div><b id="totalRequests">0</b><span>كل الطلبات</span></div>
-        <div><b id="acceptedRequests">0</b><span>مقبولة</span></div>
-        <div><b id="rejectedRequests">0</b><span>مرفوضة</span></div>
-        <div><b id="pendingRequests">0</b><span>معلقة</span></div>
+        <div>
+          <b id="totalRequests">0</b>
+          <span>كل الطلبات</span>
+        </div>
+        <div>
+          <b id="acceptedRequests">0</b>
+          <span>مقبولة</span>
+        </div>
+        <div>
+          <b id="rejectedRequests">0</b>
+          <span>مرفوضة</span>
+        </div>
+        <div>
+          <b id="pendingRequests">0</b>
+          <span>معلقة</span>
+        </div>
       </div>
 
       <h3>📩 طلبات التسجيل</h3>
@@ -96,15 +138,20 @@
       <h3>➕ إضافة بطولة</h3>
       <div class="admin-form">
         <input id="newTournamentName" placeholder="اسم البطولة">
+
         <select id="newTournamentType">
           <option value="SOLO">SOLO</option>
           <option value="DUO">DUO</option>
           <option value="SQUAD">SQUAD</option>
         </select>
+
         <input id="newTournamentDate" type="date">
         <input id="newTournamentTime" type="time" value="21:00">
         <input id="newTournamentPrice" type="number" min="0" value="5" placeholder="الثمن DH">
-        <button id="addTournamentButton" class="main-btn full">إضافة البطولة</button>
+
+        <button id="addTournamentButton" class="main-btn full">
+          إضافة البطولة
+        </button>
       </div>
 
       <h3>⚙️ إدارة البطولات</h3>
@@ -113,19 +160,27 @@
       <div id="adminManagement">
         <h3>👥 إدارة حسابات Admin</h3>
         <p id="adminPermissionMessage" class="message"></p>
+
         <div class="admin-form">
           <input id="newAdminUsername" placeholder="اسم المستخدم الجديد">
           <input id="newAdminPassword" type="password" placeholder="كلمة المرور الجديدة">
+
           <select id="newAdminRole">
             <option value="assistant">ADMIN مساعد</option>
             <option value="main">ADMIN رئيسي</option>
           </select>
-          <button id="addAdminButton" class="main-btn full">إضافة Admin</button>
+
+          <button id="addAdminButton" class="main-btn full">
+            إضافة Admin
+          </button>
         </div>
+
         <div id="adminAccounts" class="admin-list"></div>
       </div>
 
-      <button id="logoutButton" class="danger-btn full">تسجيل الخروج</button>
+      <button id="logoutButton" class="danger-btn full">
+        تسجيل الخروج
+      </button>
     </div>
   </div>
 </div>
@@ -134,32 +189,37 @@
 <div id="registrationModal" class="overlay">
   <div class="modal">
     <button id="closeRegistration" class="close-btn">×</button>
+
     <h2>📝 التسجيل في البطولة</h2>
     <p id="selectedTournamentInfo" class="message"></p>
 
     <form id="registrationForm">
       <input type="hidden" id="registrationTournamentId">
+
       <label>الاسم الكامل</label>
-      <input id="playerFullName" required placeholder="الاسم الكامل">
+      <input id="playerFullName" required maxlength="80" placeholder="الاسم الكامل">
 
       <label>اسمك داخل اللعبة</label>
-      <input id="playerGameName" required placeholder="Game Name">
+      <input id="playerGameName" required maxlength="60" placeholder="Game Name">
 
       <label>Player ID</label>
-      <input id="playerId" required placeholder="Player ID">
+      <input id="playerId" required maxlength="40" placeholder="Player ID">
 
       <label>رقم الهاتف (اختياري)</label>
-      <input id="playerPhone" type="tel" placeholder="رقم الهاتف">
+      <input id="playerPhone" type="tel" maxlength="25" placeholder="رقم الهاتف">
 
       <div id="teamMembersArea"></div>
 
       <label>رمز الأداء (اختياري)</label>
-      <input id="paymentCode" placeholder="رمز الأداء إن وجد">
+      <input id="paymentCode" maxlength="100" placeholder="رمز الأداء إن وجد">
 
       <label>ملاحظة حول الأداء (اختياري)</label>
-      <textarea id="paymentNote" placeholder="ملاحظة إضافية"></textarea>
+      <textarea id="paymentNote" maxlength="500" placeholder="ملاحظة إضافية"></textarea>
 
-      <button type="submit" class="main-btn full">إرسال طلب التسجيل</button>
+      <button type="submit" class="main-btn full">
+        إرسال طلب التسجيل
+      </button>
+
       <p id="registrationMessage" class="message"></p>
     </form>
   </div>
@@ -169,25 +229,42 @@
 <div id="editTournamentModal" class="overlay">
   <div class="modal">
     <button id="closeEditTournament" class="close-btn">×</button>
+
     <h2>✏️ تعديل البطولة</h2>
+
     <input type="hidden" id="editTournamentId">
+
     <label>اسم البطولة</label>
     <input id="editTournamentName">
+
     <label>النوع</label>
     <select id="editTournamentType">
       <option value="SOLO">SOLO</option>
       <option value="DUO">DUO</option>
       <option value="SQUAD">SQUAD</option>
     </select>
+
     <label>التاريخ</label>
     <input id="editTournamentDate" type="date">
+
     <label>الوقت</label>
     <input id="editTournamentTime" type="time">
+
     <label>الثمن DH</label>
     <input id="editTournamentPrice" type="number" min="0">
-    <button id="saveTournamentEdit" class="main-btn full">حفظ التعديلات</button>
+
+    <button id="saveTournamentEdit" class="main-btn full">
+      حفظ التعديلات
+    </button>
+
+    <p id="editTournamentMessage" class="message"></p>
   </div>
 </div>
+
+<!-- FIREBASE LIBRARIES -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
 <script src="./script.js"></script>
 </body>
