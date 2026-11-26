@@ -36,8 +36,8 @@ let currentAdmin = null;
 if (!admins) {
   admins = [{
     id: "main-admin",
-    username: "admin",
-    password: "RIFII",
+    username: "admin1",
+    password: "oussama2014",
     role: "main"
   }];
   save(ADMIN_KEY, admins);
