@@ -1,38 +1,26 @@
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAP9f5GvtzTmFJM_i8tLDK0ax7-ypCNcrk",
-  authDomain: "rifii-champions.firebaseapp.com",
-  projectId: "rifii-champions",
-  storageBucket: "rifii-champions.firebasestorage.app",
-  messagingSenderId: "523105636336",
-  appId: "1:523105636336:web:dbbab2a3b9d425a67a1735",
-  measurementId: "G-BLHHEVFPR3"
+const ADMIN_PASSWORD = "shop";
+
+const KEYS = {
+  ads: "oam_ads",
+  orders: "oam_diamond_orders",
+  unlocks: "oam_unlock_requests",
+  unlocked: "oam_contact_unlocked"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-const tournamentsRef = db.collection("tournaments");
-const requestsRef = db.collection("requests");
-const adminsRef = db.collection("admins");
-
-let currentAdmin = null;
-let tournaments = [];
-let requests = [];
-let unsubscribeRequests = null;
-let unsubscribeAdmins = null;
-
-const $ = id => document.getElementById(id);
-
-function showMessage(id, message, type = "") {
-  const element = $(id);
-  element.textContent = message;
-  element.className = "message " + type;
+function getData(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) || [];
+  } catch {
+    return [];
+  }
 }
 
-function escapeHTML(value) {
+function saveData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function safe(value) {
   return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&": "&amp;",
     "<": "&lt;",
@@ -42,473 +30,385 @@ function escapeHTML(value) {
   })[char]);
 }
 
-function formatDate(date) {
-  if (!date) return "";
-  const parts = String(date).split("-");
-  return parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : date;
+/* التنقل */
+function enterShop() {
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("shop").classList.remove("hidden");
+  showSection("accounts");
+  window.scrollTo(0, 0);
 }
 
-const defaultTournaments = [
-  {
-    id: "ramadan-solo",
-    name: "RAMADAN SOLO",
-    type: "SOLO",
-    date: "2027-02-12",
-    time: "21:00",
-    open: true
-  },
-  {
-    id: "ramadan-duo",
-    name: "RAMADAN DUO",
-    type: "DUO",
-    date: "2027-02-17",
-    time: "21:00",
-    open: true
-  },
-  {
-    id: "ramadan-squad",
-    name: "RAMADAN SQUAD",
-    type: "SQUAD",
-    date: "2027-02-22",
-    time: "21:00",
-    open: true
+function backHome() {
+  document.getElementById("shop").classList.add("hidden");
+  document.getElementById("landing").classList.remove("hidden");
+  window.scrollTo(0, 0);
+}
+
+function showSection(id) {
+  document.querySelectorAll(".content-section").forEach(section => {
+    section.classList.add("hidden");
+  });
+
+  document.getElementById(id).classList.remove("hidden");
+
+  if (id === "accounts") renderAccounts();
+
+  if (id === "admin" && sessionStorage.getItem("oam_admin") === "yes") {
+    document.getElementById("adminLogin").classList.add("hidden");
+    document.getElementById("adminPanel").classList.remove("hidden");
+    renderAdmin();
   }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* عروض الجواهر */
+const products = [
+  { name: "100 Diamonds", price: 15, description: "شحن 100 جوهرة" },
+  { name: "210 Diamonds", price: 28, description: "شحن 210 جوهرة" },
+  { name: "530 Diamonds", price: 70, description: "شحن 530 جوهرة" },
+  { name: "1080 Diamonds", price: 140, description: "شحن 1080 جوهرة" },
+  { name: "2200 Diamonds", price: 280, description: "شحن 2200 جوهرة" },
+  { name: "BOOYAH PASS", price: 45, description: "Booyah Pass - 300 Diamonds" }
 ];
 
-// تحميل البطولات للزوار
-tournamentsRef.onSnapshot(snapshot => {
-  tournaments = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+function renderProducts() {
+  const container = document.getElementById("diamondProducts");
 
-  renderPublicTournaments();
-  renderTournamentOptions();
-
-  if (currentAdmin) renderAdminTournaments();
-}, error => {
-  console.error(error);
-  $("tournamentList").innerHTML =
-    '<p class="empty">تعذر تحميل البطولات. تحقق من قواعد Firestore.</p>';
-});
-
-function renderPublicTournaments() {
-  const container = $("tournamentList");
-
-  if (!tournaments.length) {
-    container.innerHTML = '<p class="empty">لا توجد بطولات حالياً.</p>';
-    return;
-  }
-
-  container.innerHTML = tournaments.map(t => `
-    <article class="tournament-card">
-      <div>
-        <h3>${escapeHTML(t.name)}</h3>
-        <p>نوع البطولة: ${escapeHTML(t.type)}</p>
-        <div class="tournament-meta">
-          <p>📅 ${escapeHTML(formatDate(t.date))}</p>
-          <p>⏰ ${escapeHTML(t.time)}</p>
-          <p>💰 5 DH</p>
-        </div>
-      </div>
-      <div>
-        <p class="tournament-status ${t.open ? "" : "closed"}">
-          ${t.open ? "التسجيل مفتوح" : "التسجيل مغلق"}
-        </p>
-        ${t.open ? `<a class="main-btn" href="#register" onclick="selectTournament('${escapeHTML(t.id)}')">سجل الآن</a>` : ""}
-      </div>
-    </article>
+  container.innerHTML = products.map((product, index) => `
+    <div class="card">
+      <h3>💎 ${safe(product.name)}</h3>
+      <p>${safe(product.description)}</p>
+      <div class="price">${product.price} DH</div>
+      <button onclick="selectProduct(${index})">اختيار العرض</button>
+    </div>
   `).join("");
 }
 
-function renderTournamentOptions() {
-  const select = $("tournamentId");
-  const oldValue = select.value;
-
-  select.innerHTML = '<option value="">اختار البطولة</option>';
-
-  tournaments.filter(t => t.open).forEach(t => {
-    const option = document.createElement("option");
-    option.value = t.id;
-    option.textContent = `${t.name} - ${formatDate(t.date)}`;
-    select.appendChild(option);
-  });
-
-  if (tournaments.some(t => t.id === oldValue && t.open)) {
-    select.value = oldValue;
-  }
+function selectProduct(index) {
+  document.getElementById("diamondProduct").value = products[index].name;
+  document.getElementById("diamonds").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("playerName").focus();
 }
 
-function selectTournament(id) {
-  $("tournamentId").value = id;
-}
-
-$("registrationForm").addEventListener("submit", async event => {
+/* إرسال طلب الشحن */
+document.getElementById("diamondForm").addEventListener("submit", function(event) {
   event.preventDefault();
 
-  const tournamentId = $("tournamentId").value;
-  const tournament = tournaments.find(t => t.id === tournamentId);
+  const product = document.getElementById("diamondProduct").value;
+  const playerName = document.getElementById("playerName").value.trim();
+  const playerId = document.getElementById("playerId").value.trim();
+  const reference = document.getElementById("diamondReference").value.trim();
 
-  if (!tournament || !tournament.open) {
-    showMessage("registrationMessage", "هذه البطولة غير متاحة للتسجيل.", "error");
+  if (!product) {
+    alert("اختار عرض الجواهر أولا.");
     return;
   }
 
-  const members = $("teamMembers").value
-    .split("\n")
-    .map(name => name.trim())
-    .filter(Boolean)
-    .slice(0, 3);
+  const selected = products.find(item => item.name === product);
+  const orders = getData(KEYS.orders);
 
-  const submitButton = event.submitter;
-  submitButton.disabled = true;
-  submitButton.textContent = "جاري إرسال الطلب...";
+  orders.push({
+    id: Date.now(),
+    product,
+    price: selected.price,
+    playerName,
+    playerId,
+    reference,
+    status: "pending",
+    date: new Date().toLocaleString("ar-MA")
+  });
+
+  saveData(KEYS.orders, orders);
+  alert("تم إرسال طلبك! انتظر مراجعة الإدارة.");
+  this.reset();
+});
+
+/* إرسال حساب للبيع */
+document.getElementById("sellForm").addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  const title = document.getElementById("sellerTitle").value.trim();
+  const description = document.getElementById("sellerDescription").value.trim();
+  const price = Number(document.getElementById("sellerPrice").value);
+  const whatsapp = document.getElementById("sellerWhatsapp").value.trim();
+  const files = Array.from(document.getElementById("sellerPhotos").files).slice(0, 4);
+
+  if (price <= 0) {
+    alert("دخل ثمن صحيح.");
+    return;
+  }
 
   try {
-    await requestsRef.add({
-      tournamentId,
-      fullName: $("playerFullName").value.trim(),
-      gameName: $("playerGameName").value.trim(),
-      playerId: $("playerId").value.trim(),
-      phone: $("playerPhone").value.trim(),
-      members,
-      paymentCode: $("paymentCode").value.trim(),
-      paymentNote: $("paymentNote").value.trim(),
+    const photos = await Promise.all(files.map(file => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }));
+
+    const ads = getData(KEYS.ads);
+
+    ads.push({
+      id: Date.now(),
+      title,
+      description,
+      sellerPrice: price,
+      displayPrice: price + 15,
+      whatsapp,
+      photos,
       status: "pending",
-      paid: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      date: new Date().toLocaleString("ar-MA")
     });
 
-    $("registrationForm").reset();
-    showMessage(
-      "registrationMessage",
-      "تم إرسال طلبك بنجاح! انتظر مراجعة الإدارة.",
-      "success"
-    );
+    saveData(KEYS.ads, ads);
+    alert("توصلنا بطلبك! غادي تراجع الإدارة الحساب ديالك.");
+    this.reset();
+
   } catch (error) {
-    console.error(error);
-    showMessage(
-      "registrationMessage",
-      "وقع مشكل في الإرسال. تأكد من نشر قواعد Firestore.",
-      "error"
-    );
-  } finally {
-    submitButton.disabled = false;
-    submitButton.textContent = "إرسال طلب المشاركة";
+    alert("ما قدرناش نحفظو الصور. جرب صور أقل أو أصغر.");
   }
 });
 
-// تسجيل دخول الإدارة
-$("loginForm").addEventListener("submit", async event => {
-  event.preventDefault();
+/* عرض الحسابات المقبولة */
+function renderAccounts() {
+  const container = document.getElementById("accountsList");
+  const ads = getData(KEYS.ads).filter(ad => ad.status === "approved");
+  const unlocked = localStorage.getItem(KEYS.unlocked) === "yes";
 
-  const username = $("adminUsername").value.trim();
-  const password = $("adminPassword").value;
-
-  // admin1 هو اسم الدخول، أما التحقق من كلمة المرور فيتم عبر Firebase
-  if (username !== "admin1") {
-    showMessage("loginMessage", "اسم المستخدم غير صحيح.", "error");
+  if (!ads.length) {
+    container.innerHTML = "<p>ما كاين حتى حساب متوفر حاليا. رجع من بعد!</p>";
     return;
   }
 
-  const button = event.submitter;
-  button.disabled = true;
-  button.textContent = "جاري الدخول...";
+  container.innerHTML = ads.map(ad => `
+    <div class="card">
+      ${ad.photos?.length ? `<img src="${ad.photos[0]}" alt="صورة الحساب">` : ""}
+      <h3>${safe(ad.title)}</h3>
+      <p>${safe(ad.description)}</p>
+      <div class="price">${Number(ad.displayPrice)} DH</div>
+      <p>الثمن الأصلي: ${Number(ad.sellerPrice)} DH + 15 DH</p>
+      ${
+        unlocked
+          ? `<a href="https://wa.me/${safe(ad.whatsapp).replace(/\D/g, "")}" target="_blank" rel="noopener">
+               <button>تواصل مع البائع</button>
+             </a>`
+          : `<button onclick="showSection('unlock')">فتح التواصل مع البائعين</button>`
+      }
+    </div>
+  `).join("");
+}
 
-  try {
-    const result = await auth.signInWithEmailAndPassword(
-      "oussamaabbassi733@gmail.com",
-      password
-    );
+/* طلب فتح التواصل */
+function sendUnlockRequest() {
+  const name = document.getElementById("unlockName").value.trim();
+  const reference = document.getElementById("unlockReference").value.trim();
 
-    const adminDoc = await adminsRef.doc(result.user.uid).get();
-
-    if (!adminDoc.exists) {
-      await auth.signOut();
-      showMessage("loginMessage", "هذا الحساب غير مسجل كأدمن.", "error");
-      return;
-    }
-
-    currentAdmin = {
-      uid: result.user.uid,
-      ...adminDoc.data()
-    };
-
-    await createDefaultTournaments();
-    openAdminPanel();
-
-  } catch (error) {
-    console.error(error);
-    showMessage("loginMessage", "اسم المستخدم أو كلمة المرور غير صحيحة.", "error");
-  } finally {
-    button.disabled = false;
-    button.textContent = "دخول الإدارة";
+  if (!name || !reference) {
+    alert("عمر الاسم ومرجع الأداء.");
+    return;
   }
-});
 
-async function createDefaultTournaments() {
-  const snapshot = await tournamentsRef.limit(1).get();
+  const requests = getData(KEYS.unlocks);
 
-  if (!snapshot.empty) return;
-
-  const batch = db.batch();
-
-  defaultTournaments.forEach(t => {
-    const ref = tournamentsRef.doc(t.id);
-    const { id, ...data } = t;
-    batch.set(ref, data);
+  requests.push({
+    id: Date.now(),
+    name,
+    reference,
+    status: "pending",
+    date: new Date().toLocaleString("ar-MA")
   });
 
-  await batch.commit();
+  saveData(KEYS.unlocks, requests);
+
+  document.getElementById("unlockStatus").textContent =
+    "تم إرسال الطلب، انتظر موافقة الإدارة.";
+
+  document.getElementById("unlockName").value = "";
+  document.getElementById("unlockReference").value = "";
 }
 
-function openAdminPanel() {
-  $("adminPanel").hidden = false;
-  $("adminLogin").hidden = true;
-  $("adminPanel").scrollIntoView({ behavior: "smooth" });
+/* دخول الإدارة */
+function adminLogin() {
+  const password = document.getElementById("adminPassword").value;
 
-  if (unsubscribeRequests) unsubscribeRequests();
-
-  unsubscribeRequests = requestsRef
-    .orderBy("createdAt", "desc")
-    .onSnapshot(snapshot => {
-      requests = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-
-      renderAdminRequests();
-      renderStats();
-    }, error => {
-      console.error(error);
-      $("adminRequests").innerHTML =
-        '<p class="empty">تعذر تحميل الطلبات. راجع قواعد Firestore.</p>';
-    });
-
-  renderAdminTournaments();
+  if (password === ADMIN_PASSWORD) {
+    sessionStorage.setItem("oam_admin", "yes");
+    document.getElementById("adminLogin").classList.add("hidden");
+    document.getElementById("adminPanel").classList.remove("hidden");
+    document.getElementById("loginMessage").textContent = "";
+    renderAdmin();
+  } else {
+    document.getElementById("loginMessage").textContent =
+      "كلمة المرور غير صحيحة!";
+  }
 }
 
-function renderStats() {
-  $("totalCount").textContent = requests.length;
-  $("acceptedCount").textContent = requests.filter(r => r.status === "accepted").length;
-  $("rejectedCount").textContent = requests.filter(r => r.status === "rejected").length;
-  $("pendingCount").textContent = requests.filter(r => r.status === "pending").length;
+function adminLogout() {
+  sessionStorage.removeItem("oam_admin");
+  document.getElementById("adminPanel").classList.add("hidden");
+  document.getElementById("adminLogin").classList.remove("hidden");
+  document.getElementById("adminPassword").value = "";
 }
 
-function getTournamentName(id) {
-  const tournament = tournaments.find(t => t.id === id);
-  return tournament ? tournament.name : "بطولة غير معروفة";
+/* لوحة الإدارة */
+function renderAdmin() {
+  renderPendingAds();
+  renderDiamondOrders();
+  renderUnlockRequests();
 }
 
-function renderAdminRequests() {
-  const container = $("adminRequests");
+function renderPendingAds() {
+  const container = document.getElementById("pendingAds");
+  const ads = getData(KEYS.ads);
 
-  if (!requests.length) {
-    container.innerHTML = '<p class="empty">ما كاين حتى طلب مشاركة حالياً.</p>';
+  if (!ads.length) {
+    container.innerHTML = "<p>ما كايناش طلبات حسابات.</p>";
     return;
   }
 
-  container.innerHTML = requests.map(r => {
-    const statusClass = r.status === "accepted"
-      ? "status-accepted"
-      : r.status === "rejected"
-        ? "status-rejected"
-        : "status-pending";
+  container.innerHTML = ads.map(ad => `
+    <div class="admin-item">
+      <h3>${safe(ad.title)}</h3>
+      <p>${safe(ad.description)}</p>
+      <p>ثمن البائع: ${Number(ad.sellerPrice)} DH</p>
+      <p>ثمن العرض: ${Number(ad.displayPrice)} DH</p>
+      <p>WhatsApp البائع: ${safe(ad.whatsapp)}</p>
+      <p>الحالة: ${safe(ad.status)}</p>
 
-    const statusText = r.status === "accepted"
-      ? "مقبول"
-      : r.status === "rejected"
-        ? "مرفوض"
-        : "في الانتظار";
+      ${ad.photos?.map(photo =>
+        `<img src="${photo}" style="width:85px;height:75px;object-fit:cover;border-radius:8px;margin:4px">`
+      ).join("") || ""}
 
-    const members = Array.isArray(r.members) ? r.members : [];
-
-    return `
-      <div class="request-card">
-        <h4>${escapeHTML(r.fullName)}</h4>
-        <p>🏆 البطولة: ${escapeHTML(getTournamentName(r.tournamentId))}</p>
-        <p>🎮 اسم اللعبة: ${escapeHTML(r.gameName)}</p>
-        <p>🆔 Player ID: ${escapeHTML(r.playerId)}</p>
-        <p>📞 الهاتف: ${escapeHTML(r.phone || "غير متوفر")}</p>
-        <p>👥 الأعضاء: ${members.map(escapeHTML).join("، ") || "لا يوجد"}</p>
-        <p>💳 كود الأداء: ${escapeHTML(r.paymentCode || "غير متوفر")}</p>
-        <p>📝 ملاحظة: ${escapeHTML(r.paymentNote || "لا توجد")}</p>
-        <p>الحالة: <span class="status-label ${statusClass}">${statusText}</span></p>
-        <p>الأداء: <strong>${r.paid ? "تم الأداء" : "لم يتم تأكيد الأداء"}</strong></p>
-
-        <div class="action-row">
-          <button class="accept-btn" onclick="updateRequest('${r.id}', 'accepted')">قبول</button>
-          <button class="reject-btn" onclick="updateRequest('${r.id}', 'rejected')">رفض</button>
-          <button class="neutral-btn" onclick="togglePaid('${r.id}', ${!r.paid})">
-            ${r.paid ? "إلغاء تأكيد الأداء" : "تأكيد الأداء"}
-          </button>
-          <button class="delete-btn" onclick="deleteRequest('${r.id}')">حذف</button>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-async function updateRequest(id, status) {
-  if (!currentAdmin) return;
-
-  try {
-    await requestsRef.doc(id).update({ status });
-  } catch (error) {
-    alert("تعذر تحديث الطلب: " + error.message);
-  }
-}
-
-async function togglePaid(id, paid) {
-  if (!currentAdmin) return;
-
-  try {
-    await requestsRef.doc(id).update({ paid });
-  } catch (error) {
-    alert("تعذر تحديث الأداء: " + error.message);
-  }
-}
-
-async function deleteRequest(id) {
-  if (!currentAdmin || !confirm("واش متأكد من حذف هذا الطلب؟")) return;
-
-  try {
-    await requestsRef.doc(id).delete();
-  } catch (error) {
-    alert("تعذر حذف الطلب: " + error.message);
-  }
-}
-
-// إدارة البطولات
-$("tournamentForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  if (!currentAdmin) return;
-
-  const editId = $("editTournamentId").value;
-
-  const data = {
-    name: $("tournamentName").value.trim(),
-    date: $("tournamentDate").value,
-    time: $("tournamentTime").value,
-    type: $("tournamentType").value,
-    open: true
-  };
-
-  try {
-    if (editId) {
-      const existing = tournaments.find(t => t.id === editId);
-      data.open = existing ? existing.open : true;
-      await tournamentsRef.doc(editId).update(data);
-      showMessage("tournamentMessage", "تم تعديل البطولة بنجاح.", "success");
-    } else {
-      const newId = "tournament-" + Date.now();
-      await tournamentsRef.doc(newId).set(data);
-      showMessage("tournamentMessage", "تمت إضافة البطولة بنجاح.", "success");
-    }
-
-    $("tournamentForm").reset();
-    $("editTournamentId").value = "";
-  } catch (error) {
-    showMessage("tournamentMessage", "تعذر حفظ البطولة: " + error.message, "error");
-  }
-});
-
-function renderAdminTournaments() {
-  const container = $("adminTournaments");
-
-  if (!tournaments.length) {
-    container.innerHTML = '<p class="empty">لا توجد بطولات.</p>';
-    return;
-  }
-
-  container.innerHTML = tournaments.map(t => `
-    <div class="admin-tournament-card">
-      <h4>${escapeHTML(t.name)}</h4>
-      <p>${escapeHTML(t.type)} — ${escapeHTML(formatDate(t.date))} — ${escapeHTML(t.time)}</p>
-      <p>${t.open ? "التسجيل مفتوح" : "التسجيل مغلق"}</p>
-      <div class="action-row">
-        <button class="neutral-btn" onclick="editTournament('${t.id}')">تعديل</button>
-        <button class="accept-btn" onclick="toggleTournament('${t.id}', ${!t.open})">
-          ${t.open ? "إغلاق التسجيل" : "فتح التسجيل"}
-        </button>
-        <button class="delete-btn" onclick="deleteTournament('${t.id}')">حذف</button>
+      <div>
+        <button onclick="approveAd(${ad.id})">قبول</button>
+        <button onclick="editAdPrice(${ad.id})">تعديل الثمن</button>
+        <button class="reject" onclick="rejectAd(${ad.id})">رفض / حذف</button>
       </div>
     </div>
   `).join("");
 }
 
-function editTournament(id) {
-  const t = tournaments.find(item => item.id === id);
-  if (!t) return;
+function approveAd(id) {
+  const ads = getData(KEYS.ads);
+  const ad = ads.find(item => item.id === id);
+  if (!ad) return;
 
-  $("editTournamentId").value = t.id;
-  $("tournamentName").value = t.name || "";
-  $("tournamentDate").value = t.date || "";
-  $("tournamentTime").value = t.time || "";
-  $("tournamentType").value = t.type || "SOLO";
-
-  $("tournamentForm").scrollIntoView({ behavior: "smooth" });
+  ad.status = "approved";
+  saveData(KEYS.ads, ads);
+  renderAdmin();
 }
 
-async function toggleTournament(id, open) {
-  if (!currentAdmin) return;
+function rejectAd(id) {
+  if (!confirm("واش متأكد بغيتي تحذف هاد الحساب؟")) return;
 
-  try {
-    await tournamentsRef.doc(id).update({ open });
-  } catch (error) {
-    alert("تعذر تغيير حالة البطولة: " + error.message);
-  }
+  saveData(KEYS.ads, getData(KEYS.ads).filter(ad => ad.id !== id));
+  renderAdmin();
 }
 
-async function deleteTournament(id) {
-  if (!currentAdmin || !confirm("واش متأكد من حذف البطولة؟")) return;
+function editAdPrice(id) {
+  const ads = getData(KEYS.ads);
+  const ad = ads.find(item => item.id === id);
+  if (!ad) return;
 
-  try {
-    await tournamentsRef.doc(id).delete();
-  } catch (error) {
-    alert("تعذر حذف البطولة: " + error.message);
-  }
+  const newPrice = Number(prompt("دخل الثمن الجديد للبائع بالدرهم:", ad.sellerPrice));
+  if (!Number.isFinite(newPrice) || newPrice <= 0) return;
+
+  ad.sellerPrice = newPrice;
+  ad.displayPrice = newPrice + 15;
+
+  saveData(KEYS.ads, ads);
+  renderAdmin();
 }
 
-$("cancelEditBtn").addEventListener("click", () => {
-  $("tournamentForm").reset();
-  $("editTournamentId").value = "";
-  showMessage("tournamentMessage", "");
-});
+/* إدارة طلبات الجواهر */
+function renderDiamondOrders() {
+  const container = document.getElementById("diamondOrders");
+  const orders = getData(KEYS.orders);
 
-$("logoutBtn").addEventListener("click", async () => {
-  if (unsubscribeRequests) unsubscribeRequests();
-
-  await auth.signOut();
-  currentAdmin = null;
-  requests = [];
-
-  $("adminPanel").hidden = true;
-  $("adminLogin").hidden = false;
-  $("loginForm").reset();
-  $("loginMessage").textContent = "";
-  $("adminLogin").scrollIntoView({ behavior: "smooth" });
-});
-
-// التحقق من الجلسة الحالية
-auth.onAuthStateChanged(async user => {
-  if (!user) return;
-
-  try {
-    const adminDoc = await adminsRef.doc(user.uid).get();
-
-    if (adminDoc.exists) {
-      currentAdmin = {
-        uid: user.uid,
-        ...adminDoc.data()
-      };
-
-      await createDefaultTournaments();
-      openAdminPanel();
-    } else {
-      await auth.signOut();
-    }
-  } catch (error) {
-    console.error("Admin session check:", error);
+  if (!orders.length) {
+    container.innerHTML = "<p>ما كايناش طلبات شحن حاليا.</p>";
+    return;
   }
-});
+
+  container.innerHTML = orders.map(order => `
+    <div class="admin-item">
+      <h3>${safe(order.product)}</h3>
+      <p>الثمن: ${Number(order.price)} DH</p>
+      <p>اسم اللاعب: ${safe(order.playerName)}</p>
+      <p>ID اللاعب: ${safe(order.playerId)}</p>
+      <p>مرجع الأداء: ${safe(order.reference)}</p>
+      <p>الحالة: ${safe(order.status)}</p>
+      ${
+        order.status === "pending"
+          ? `<button onclick="completeDiamondOrder(${order.id})">تم تنفيذ الطلب</button>`
+          : ""
+      }
+      <button class="reject" onclick="deleteDiamondOrder(${order.id})">حذف</button>
+    </div>
+  `).join("");
+}
+
+function completeDiamondOrder(id) {
+  const orders = getData(KEYS.orders);
+  const order = orders.find(item => item.id === id);
+  if (!order) return;
+
+  order.status = "completed";
+  saveData(KEYS.orders, orders);
+  renderAdmin();
+}
+
+function deleteDiamondOrder(id) {
+  saveData(KEYS.orders, getData(KEYS.orders).filter(order => order.id !== id));
+  renderAdmin();
+}
+
+/* إدارة طلبات فتح التواصل */
+function renderUnlockRequests() {
+  const container = document.getElementById("unlockRequests");
+  const requests = getData(KEYS.unlocks);
+
+  if (!requests.length) {
+    container.innerHTML = "<p>ما كايناش طلبات فتح التواصل.</p>";
+    return;
+  }
+
+  container.innerHTML = requests.map(request => `
+    <div class="admin-item">
+      <h3>${safe(request.name)}</h3>
+      <p>مرجع الأداء: ${safe(request.reference)}</p>
+      <p>الحالة: ${safe(request.status)}</p>
+      ${
+        request.status === "pending"
+          ? `<button onclick="approveUnlock(${request.id})">قبول الطلب</button>`
+          : ""
+      }
+      <button class="reject" onclick="deleteUnlock(${request.id})">حذف</button>
+    </div>
+  `).join("");
+}
+
+function approveUnlock(id) {
+  const requests = getData(KEYS.unlocks);
+  const request = requests.find(item => item.id === id);
+  if (!request) return;
+
+  request.status = "approved";
+  saveData(KEYS.unlocks, requests);
+  localStorage.setItem(KEYS.unlocked, "yes");
+
+  renderAdmin();
+  renderAccounts();
+}
+
+function deleteUnlock(id) {
+  saveData(KEYS.unlocks, getData(KEYS.unlocks).filter(item => item.id !== id));
+  renderAdmin();
+}
+
+/* تشغيل المتجر */
+renderProducts();
+renderAccounts();
