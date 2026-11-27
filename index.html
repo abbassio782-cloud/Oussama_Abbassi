@@ -4,168 +4,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100b1d">
-  <title>OUSSAMA ET MOHAMED AMIN SHOP</title>
+  <meta name="theme-color" content="#080d20">
+  <title>WORK WITH FRIENDS | FREE FIRE SHOP</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- الصفحة الرئيسية الرمضانية -->
-  <section id="landing" class="landing">
-    <div class="moon">☾</div>
-    <div class="lantern lantern-one">🏮</div>
-    <div class="lantern lantern-two">🏮</div>
+<header class="navbar">
+  <a href="#home" class="logo">WORK <span>WITH</span> FRIENDS</a>
 
-    <div class="landing-content">
-      <div class="ramadan-label">🌙 RAMADAN KAREEM 🌙</div>
+  <nav>
+    <a href="#home">الرئيسية</a>
+    <a href="#shop">الجواهر</a>
+    <a href="#payment">طرق الدفع</a>
+    <a href="#team">فريق العمل</a>
+  </nav>
 
-      <h1>OUSSAMA <span>ET</span><br>MOHAMED AMIN SHOP</h1>
-      <p>متجرك المفضل للألعاب والشحن والحسابات</p>
+  <a class="channel-btn"
+     href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+     target="_blank">قناة WhatsApp</a>
+</header>
 
-      <div class="landing-image">
-        <img src="banner.png" alt="OUSSAMA ET MOHAMED AMIN SHOP">
-      </div>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <span class="small-label">🔥 FREE FIRE SHOP</span>
+    <h1>WORK WITH<br><span>FRIENDS</span></h1>
+    <p>مرحبا بك في متجر الجواهر و Booyah Pass 💎</p>
+    <a href="#shop" class="primary-btn">تسوق الآن 🛒</a>
+  </div>
 
-      <button class="enter-btn" onclick="enterShop()">
-        SHOP MAINTENANT <span>←</span>
-      </button>
+  <div class="hero-art">
+    <div class="glow"></div>
+    <div class="big-diamond">💎</div>
+    <h2>DIAMONDS STORE</h2>
+  </div>
+</section>
 
-      <div class="landing-note">✨ رمضان كريم، مرحبا بكم في متجرنا ✨</div>
+<section class="features">
+  <div>💎 جواهر Free Fire</div>
+  <div>🎟️ Booyah Pass</div>
+  <div>📲 طلب عبر WhatsApp</div>
+</section>
 
-      <a class="landing-whatsapp" href="https://wa.me/212779583670"
-         target="_blank" rel="noopener">
-        💬 تواصل معنا عبر WhatsApp
-      </a>
+<!-- STORE -->
+<section class="section" id="shop">
+  <div class="section-heading">
+    <span>OUR PRODUCTS</span>
+    <h2>💎 متجر الجواهر</h2>
+    <p>اختار الباقة اللي بغيتي واضغط على شراء الآن</p>
+  </div>
+
+  <div class="products" id="products"></div>
+</section>
+
+<!-- ORDER -->
+<section class="order-section" id="order">
+  <div class="section-heading">
+    <span>COMPLETE YOUR ORDER</span>
+    <h2>🛒 إتمام عملية الشراء</h2>
+    <p>عمر المعلومات باش ترسل الطلب ديالك</p>
+  </div>
+
+  <form id="orderForm">
+    <label for="playerName">الاسم الكامل</label>
+    <input id="playerName" type="text"
+           placeholder="دخل الاسم ديالك" required>
+
+    <label for="playerID">Free Fire ID</label>
+    <input id="playerID" type="text"
+           placeholder="دخل ID ديال الحساب" required>
+
+    <label for="packName">الباقة المختارة</label>
+    <input id="packName" type="text"
+           placeholder="اختار باقة من المتجر" readonly required>
+
+    <label for="packPrice">الثمن</label>
+    <input id="packPrice" type="text"
+           placeholder="الثمن" readonly required>
+
+    <label for="paymentMethod">طريقة الدفع</label>
+    <select id="paymentMethod" required>
+      <option value="">اختار طريقة الدفع</option>
+      <option value="Cash">Cash - الدفع نقداً</option>
+      <option value="Orange Money">Orange Money</option>
+    </select>
+
+    <div class="payment-note">
+      <p>💵 Cash: الدفع نقداً إذا كنت تعرف البائع.</p>
+      <p>🟠 Orange Money: تواصل معنا لمعرفة معلومات الأداء.</p>
     </div>
-  </section>
 
-  <!-- المتجر -->
-  <main id="shop" class="shop hidden">
+    <button type="submit" class="submit-btn">
+      تأكيد وإرسال الطلب 📲
+    </button>
+  </form>
+</section>
 
-    <header class="topbar">
-      <div class="brand">🌙 OUSSAMA <span>ET MOHAMED AMIN</span> SHOP</div>
-      <button class="back-btn" onclick="backHome()">الرئيسية</button>
-    </header>
+<!-- PAYMENT -->
+<section class="payment-section" id="payment">
+  <div class="section-heading">
+    <span>PAYMENT METHODS</span>
+    <h2>💳 طرق الدفع</h2>
+  </div>
 
-    <section class="shop-hero">
-      <span class="small-label">RAMADAN SPECIAL</span>
-      <h2>مرحبا بك في متجرنا 🌙</h2>
-      <p>اختار الخدمة اللي بغيتي واستمتع بأفضل العروض</p>
-    </section>
+  <div class="payment-cards">
+    <div class="payment-card">
+      <div>💵</div>
+      <h3>Cash</h3>
+      <p>الدفع نقداً إذا كنت تعرف البائع</p>
+    </div>
 
-    <nav class="navigation">
-      <button onclick="showSection('accounts')">🎮 الحسابات</button>
-      <button onclick="showSection('diamonds')">💎 شحن الجواهر</button>
-      <button onclick="showSection('sell')">➕ بيع حسابك</button>
-      <button onclick="showSection('unlock')">🔓 فتح التواصل</button>
-      <button onclick="showSection('admin')">⚙️ الإدارة</button>
-    </nav>
+    <div class="payment-card orange">
+      <div>🟠</div>
+      <h3>Orange Money</h3>
+      <p>تواصل معنا عبر WhatsApp لمعرفة معلومات الأداء</p>
+    </div>
+  </div>
+</section>
 
-    <!-- الحسابات -->
-    <section id="accounts" class="content-section">
-      <h2>🎮 الحسابات المتوفرة</h2>
-      <p class="section-desc">الحسابات المقبولة من الإدارة فقط هي اللي كيبانو هنا.</p>
-      <div id="accountsList" class="cards"></div>
-    </section>
+<!-- WHATSAPP -->
+<section class="community">
+  <div class="community-icon">📢</div>
+  <h2>انضم إلى مجتمعنا</h2>
+  <p>تابع العروض والأخبار الجديدة ديال المتجر</p>
 
-    <!-- الجواهر -->
-    <section id="diamonds" class="content-section hidden">
-      <h2>💎 شحن Free Fire</h2>
-      <p class="section-desc">اختار العرض المناسب ليك.</p>
-      <div id="diamondProducts" class="cards"></div>
-
-      <div class="form-card">
-        <h3>🛒 طلب الشحن</h3>
-        <form id="diamondForm">
-          <input type="hidden" id="diamondProduct">
-          <input id="playerName" placeholder="اسم اللاعب" required>
-          <input id="playerId" placeholder="ID اللاعب" required>
-          <input id="diamondReference" placeholder="مرجع الأداء Orange Money" required>
-          <button type="submit">إرسال طلب الشحن</button>
-        </form>
-        <p class="payment-info">
-          الأداء عبر Orange Money فقط.
-          <br>رقم الأداء: <b>ضع رقم Orange Money هنا</b>
-        </p>
-      </div>
-    </section>
-
-    <!-- بيع حساب -->
-    <section id="sell" class="content-section hidden">
-      <h2>➕ عرض حسابك للبيع</h2>
-      <div class="form-card">
-        <form id="sellForm">
-          <input id="sellerTitle" placeholder="عنوان الحساب (مثلا Free Fire)" required>
-          <textarea id="sellerDescription" placeholder="وصف الحساب والتفاصيل..." required></textarea>
-          <input id="sellerPrice" type="number" min="1" placeholder="الثمن اللي بغيتي بالدرهم" required>
-          <input id="sellerWhatsapp" placeholder="رقم WhatsApp ديالك" required>
-          <label class="upload-label">صور الحساب (حتى 4 صور)</label>
-          <input id="sellerPhotos" type="file" accept="image/*" multiple>
-          <button type="submit">إرسال الحساب للمراجعة</button>
-        </form>
-        <p class="hint">من بعد الإرسال، الإدارة غادي تراجع الحساب قبل ما يظهر في المتجر.</p>
-      </div>
-    </section>
-
-    <!-- فتح التواصل -->
-    <section id="unlock" class="content-section hidden">
-      <h2>🔓 فتح التواصل مع البائعين</h2>
-      <div class="form-card">
-        <h3>الثمن: 10 DH مرة واحدة</h3>
-        <p>أرسل طلب فتح التواصل بعد أداء 10 دراهم عبر Orange Money.</p>
-        <input id="unlockName" placeholder="الاسم ديالك">
-        <input id="unlockReference" placeholder="مرجع الأداء">
-        <button onclick="sendUnlockRequest()">إرسال طلب فتح التواصل</button>
-        <p class="payment-info">
-          رقم Orange Money:
-          <b>ضع رقم Orange Money هنا</b>
-        </p>
-        <p id="unlockStatus"></p>
-      </div>
-    </section>
-
-    <!-- الإدارة -->
-    <section id="admin" class="content-section hidden">
-      <h2>⚙️ لوحة الإدارة</h2>
-
-      <div id="adminLogin" class="form-card">
-        <h3>AMIN ET OUSSAMA</h3>
-        <input id="adminPassword" type="password" placeholder="كلمة المرور">
-        <button onclick="adminLogin()">دخول الإدارة</button>
-        <p id="loginMessage"></p>
-      </div>
-
-      <div id="adminPanel" class="hidden">
-        <div class="admin-heading">
-          <h3>طلبات الحسابات</h3>
-          <button class="logout-btn" onclick="adminLogout()">تسجيل الخروج</button>
-        </div>
-        <div id="pendingAds"></div>
-
-        <h3 class="admin-section-title">طلبات شحن الجواهر</h3>
-        <div id="diamondOrders"></div>
-
-        <h3 class="admin-section-title">طلبات فتح التواصل</h3>
-        <div id="unlockRequests"></div>
-      </div>
-    </section>
-
-    <footer>
-      <h3>OUSSAMA ET MOHAMED AMIN SHOP</h3>
-      <p>🌙 رمضان كريم | شكرا على ثقتكم بنا</p>
-      <p>WhatsApp: 0779583670</p>
-      <small>© جميع الحقوق محفوظة</small>
-    </footer>
-  </main>
-
-  <!-- زر WhatsApp العائم -->
-  <a class="whatsapp-float"
-     href="https://wa.me/212779583670"
-     target="_blank"
-     rel="noopener">
-    <span>💬</span> WhatsApp
+  <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+     target="_blank" class="channel-large">
+    انضم إلى قناة WhatsApp
   </a>
+</section>
 
-  <script src="script.js"></script>
+<!-- TEAM -->
+<section class="team-section" id="team">
+  <div class="section-heading">
+    <span>OUR TEAM</span>
+    <h2>🏆 فريق العمل</h2>
+    <p>الفريق المسؤول عن WORK WITH FRIENDS</p>
+  </div>
+
+  <div class="team-grid">
+
+    <div class="member main-developer">
+      <div class="avatar">👑</div>
+      <span class="rank">MAIN DEVELOPER</span>
+      <h3>أسامة العباسي</h3>
+      <p>مطور رئيسي</p>
+    </div>
+
+    <div class="member main-developer">
+      <div class="avatar">👑</div>
+      <span class="rank">MAIN DEVELOPER</span>
+      <h3>محمد أمين الداودي</h3>
+      <p>مطور رئيسي</p>
+    </div>
+
+    <div class="member">
+      <div class="avatar">⚡</div>
+      <span class="rank member-rank">TEAM MEMBER</span>
+      <h3>مروان فاريسي</h3>
+      <p>عضو فريق العمل</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <h2>WORK WITH FRIENDS 💎</h2>
+  <p>FREE FIRE DIAMONDS & BOOYAH PASS</p>
+  <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
+     target="_blank">WhatsApp Channel</a>
+  <p class="copyright">© 2026 WORK WITH FRIENDS</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
