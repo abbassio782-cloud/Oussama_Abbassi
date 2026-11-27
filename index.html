@@ -2,181 +2,162 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d20">
-  <title>WORK WITH FRIENDS | FREE FIRE SHOP</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORK WITH FRIENDS</title>
+<meta name="theme-color" content="#080d20">
+
+<!-- ربط CSS -->
+<link rel="stylesheet" href="./style.css?v=2">
+
 </head>
 <body>
 
 <header class="navbar">
-  <a href="#home" class="logo">WORK <span>WITH</span> FRIENDS</a>
-
+  <a class="logo" href="#home">WORK <span>WITH</span> FRIENDS</a>
   <nav>
     <a href="#home">الرئيسية</a>
-    <a href="#shop">الجواهر</a>
-    <a href="#payment">طرق الدفع</a>
-    <a href="#team">فريق العمل</a>
+    <a href="#shop">المتجر</a>
+    <a href="#payment">الدفع</a>
+    <a href="#team">الفريق</a>
   </nav>
-
-  <a class="channel-btn"
-     href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
-     target="_blank">قناة WhatsApp</a>
+  <a class="wa-top" target="_blank"
+  href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v">
+  WhatsApp
+  </a>
 </header>
 
 <section class="hero" id="home">
-  <div class="hero-content">
-    <span class="small-label">🔥 FREE FIRE SHOP</span>
+  <div>
+    <span class="tag">FREE FIRE DIAMONDS STORE</span>
     <h1>WORK WITH<br><span>FRIENDS</span></h1>
-    <p>مرحبا بك في متجر الجواهر و Booyah Pass 💎</p>
-    <a href="#shop" class="primary-btn">تسوق الآن 🛒</a>
+    <p>متجر الجواهر و Booyah Pass 💎</p>
+    <a class="buy-main" href="#shop">ابدأ التسوق الآن</a>
   </div>
-
-  <div class="hero-art">
-    <div class="glow"></div>
-    <div class="big-diamond">💎</div>
-    <h2>DIAMONDS STORE</h2>
-  </div>
+  <div class="hero-image">💎</div>
 </section>
 
 <section class="features">
-  <div>💎 جواهر Free Fire</div>
+  <div>💎 جواهر فري فاير</div>
   <div>🎟️ Booyah Pass</div>
   <div>📲 طلب عبر WhatsApp</div>
 </section>
 
-<!-- STORE -->
 <section class="section" id="shop">
-  <div class="section-heading">
-    <span>OUR PRODUCTS</span>
+  <div class="heading">
+    <span>OUR STORE</span>
     <h2>💎 متجر الجواهر</h2>
-    <p>اختار الباقة اللي بغيتي واضغط على شراء الآن</p>
+    <p>اختار الباقة واضغط على BUY NOW</p>
   </div>
-
   <div class="products" id="products"></div>
 </section>
 
-<!-- ORDER -->
 <section class="order-section" id="order">
-  <div class="section-heading">
-    <span>COMPLETE YOUR ORDER</span>
-    <h2>🛒 إتمام عملية الشراء</h2>
-    <p>عمر المعلومات باش ترسل الطلب ديالك</p>
+  <div class="heading">
+    <span>YOUR ORDER</span>
+    <h2>🛒 إتمام الطلب</h2>
   </div>
 
   <form id="orderForm">
-    <label for="playerName">الاسم الكامل</label>
-    <input id="playerName" type="text"
-           placeholder="دخل الاسم ديالك" required>
+    <label>الاسم</label>
+    <input id="playerName" placeholder="الاسم ديالك" required>
 
-    <label for="playerID">Free Fire ID</label>
-    <input id="playerID" type="text"
-           placeholder="دخل ID ديال الحساب" required>
+    <label>Free Fire ID</label>
+    <input id="playerID" placeholder="ID ديال اللاعب" required>
 
-    <label for="packName">الباقة المختارة</label>
-    <input id="packName" type="text"
-           placeholder="اختار باقة من المتجر" readonly required>
+    <label>الباقة</label>
+    <input id="packName" placeholder="اختار الباقة" readonly required>
 
-    <label for="packPrice">الثمن</label>
-    <input id="packPrice" type="text"
-           placeholder="الثمن" readonly required>
+    <label>الثمن</label>
+    <input id="packPrice" placeholder="الثمن" readonly required>
 
-    <label for="paymentMethod">طريقة الدفع</label>
+    <label>طريقة الدفع</label>
     <select id="paymentMethod" required>
       <option value="">اختار طريقة الدفع</option>
-      <option value="Cash">Cash - الدفع نقداً</option>
+      <option value="Cash">Cash - نقداً إذا كنت تعرف البائع</option>
       <option value="Orange Money">Orange Money</option>
     </select>
 
-    <div class="payment-note">
-      <p>💵 Cash: الدفع نقداً إذا كنت تعرف البائع.</p>
-      <p>🟠 Orange Money: تواصل معنا لمعرفة معلومات الأداء.</p>
+    <div class="note">
+      💵 Cash: الدفع نقداً إذا كنت تعرف البائع.<br>
+      🟠 Orange Money: تواصل معنا لمعلومات الأداء.
     </div>
 
-    <button type="submit" class="submit-btn">
-      تأكيد وإرسال الطلب 📲
+    <button class="submit-btn" type="submit">
+      إرسال الطلب إلى WhatsApp 🚀
     </button>
   </form>
 </section>
 
-<!-- PAYMENT -->
-<section class="payment-section" id="payment">
-  <div class="section-heading">
-    <span>PAYMENT METHODS</span>
+<section class="section payment-section" id="payment">
+  <div class="heading">
+    <span>PAYMENT</span>
     <h2>💳 طرق الدفع</h2>
   </div>
-
-  <div class="payment-cards">
+  <div class="payment-grid">
     <div class="payment-card">
-      <div>💵</div>
+      <h2>💵</h2>
       <h3>Cash</h3>
       <p>الدفع نقداً إذا كنت تعرف البائع</p>
     </div>
-
-    <div class="payment-card orange">
-      <div>🟠</div>
+    <div class="payment-card">
+      <h2>🟠</h2>
       <h3>Orange Money</h3>
-      <p>تواصل معنا عبر WhatsApp لمعرفة معلومات الأداء</p>
+      <p>تواصل معنا لمعلومات الأداء</p>
     </div>
   </div>
 </section>
 
-<!-- WHATSAPP -->
 <section class="community">
-  <div class="community-icon">📢</div>
-  <h2>انضم إلى مجتمعنا</h2>
-  <p>تابع العروض والأخبار الجديدة ديال المتجر</p>
-
-  <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
-     target="_blank" class="channel-large">
-    انضم إلى قناة WhatsApp
+  <h2>📢 انضم إلى مجتمعنا</h2>
+  <p>تابع جديد متجر WORK WITH FRIENDS</p>
+  <a target="_blank"
+  href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v">
+  انضم إلى قناة WhatsApp
   </a>
 </section>
 
-<!-- TEAM -->
-<section class="team-section" id="team">
-  <div class="section-heading">
+<section class="section team-section" id="team">
+  <div class="heading">
     <span>OUR TEAM</span>
     <h2>🏆 فريق العمل</h2>
-    <p>الفريق المسؤول عن WORK WITH FRIENDS</p>
   </div>
 
   <div class="team-grid">
-
-    <div class="member main-developer">
-      <div class="avatar">👑</div>
-      <span class="rank">MAIN DEVELOPER</span>
+    <div class="member main">
+      <div>👑</div>
+      <span>MAIN DEVELOPER</span>
       <h3>أسامة العباسي</h3>
       <p>مطور رئيسي</p>
     </div>
 
-    <div class="member main-developer">
-      <div class="avatar">👑</div>
-      <span class="rank">MAIN DEVELOPER</span>
+    <div class="member main">
+      <div>👑</div>
+      <span>MAIN DEVELOPER</span>
       <h3>محمد أمين الداودي</h3>
       <p>مطور رئيسي</p>
     </div>
 
     <div class="member">
-      <div class="avatar">⚡</div>
-      <span class="rank member-rank">TEAM MEMBER</span>
+      <div>⚡</div>
+      <span>TEAM MEMBER</span>
       <h3>مروان فاريسي</h3>
-      <p>عضو فريق العمل</p>
+      <p>عضو الفريق</p>
     </div>
-
   </div>
 </section>
 
 <footer>
   <h2>WORK WITH FRIENDS 💎</h2>
   <p>FREE FIRE DIAMONDS & BOOYAH PASS</p>
-  <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v"
-     target="_blank">WhatsApp Channel</a>
-  <p class="copyright">© 2026 WORK WITH FRIENDS</p>
+  <a href="https://whatsapp.com/channel/0029Vb9Nu757DAX6jzwBv11v">
+  WhatsApp Channel
+  </a>
+  <p>© 2026 WORK WITH FRIENDS</p>
 </footer>
 
-<script src="script.js"></script>
+<!-- ربط JavaScript -->
+<script src="./script.js?v=2"></script>
+
 </body>
 </html>
